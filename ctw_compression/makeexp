@@ -1,0 +1,2 @@
+exp : exp.cpp bitio_file.cpp ctw_bcoder.cpp ctw_bcoder_incr.cpp float_ex.cpp btree_source.cpp my_rand.cpp bitio.h bitio_file.h ctw_bcoder.h ctw_bcoder_incr.h errormac.h float_ex.h btree_source.h my_rand.h gradient.h
+	g++ -o exp ctw.cpp bitio_file.cpp ctw_bcoder.cpp ctw_bcoder_incr.cpp float_ex.cpp btree_source.cpp my_rand.cpp gradient.cpp
