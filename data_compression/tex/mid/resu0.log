@@ -1,0 +1,18 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jlplain 95.9.23)  1 NOV 1999 14:27
+**resu0.tex
+(resu0.tex
+** JLaTeX ver.1.3......Isozaki
+! Undefined control sequence.
+l.1 \abstract
+             ^^M
+? x
+ 
+Here is how much of TeX's memory you used:
+ 4 strings out of 10525
+ 27 string characters out of 75156
+ 31035 words of memory out of 262141
+ 2782 multiletter control sequences out of 9500
+ 16246 words of font info for 60 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 4i,0n,1p,24b,7s stack positions out of 300i,80n,60p,3000b,4000s
+No pages of output.

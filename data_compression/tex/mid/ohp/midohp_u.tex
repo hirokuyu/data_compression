@@ -1,0 +1,47 @@
+\documentstyle[epsf,mathsymb,fancybox]{slides}
+\topmargin -2cm
+\oddsidemargin -1cm
+\evensidemargin -1cm
+\textwidth 18cm
+\textheight 26cm
+
+\newcommand{\Tree}{T}
+\newcommand{\Leaf}{\partial T}
+\def\neareq{\setbox0=\hbox{$\cdot$} \setbox1\hbox{=}
+ \hss{\raise0.3em\copy0} \box1 \hss{\raise-0.3em\box0}\hspace{-0.5em}}
+\newcommand{\nearleq}{\setlength{\unitlength}{0.1em}
+                      \begin{picture}(3,3)(,)
+                       \put(2.7,3){\makebox(0,0){=}}
+                       \put(-1.0,3.8){$\cdot$}
+                       \put(3.5,-1.5){$\cdot$}
+                      \end{picture}}
+
+\newcommand{\mathrm}[1]{{\rm {#1}}}
+\newcommand{\mathit}[1]{{\mit {#1}}}
+
+\begin{document}
+\underline{\tiny 平成11年度 電子情報学科中間発表OHP}
+
+\vspace{3cm}
+\begin{center}
+{\Large 文脈木重み付け法と\\
+増分文脈アルゴリズム}
+
+\vspace{1cm}
+清~水~弘~和$^\dagger$
+
+{\tiny Shimizu Hirokazu}
+
+\vfill
+指導教官:~~川端~勉~助教授$^\dagger$
+\end{center}
+
+\vspace{2cm} 
+\tiny
+ $^\dagger$ 電気通信大学 電気通信学部 電子情報学科, 東京都調布市調布ヶ丘1-5-1, \\
+ Dept. Communications and Systems, Univ. Electro-Communications, \\
+ 1-5-1, Chofugaoka, Chofu-shi, Tokyo 182-8585, Japan,\\
+ Email: simizu@w-one.cas.uec.ac.jp\\
+
+\blackandwhite{midohp}
+\end{document}

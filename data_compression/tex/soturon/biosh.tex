@@ -1,0 +1,80 @@
+\section{bitio\_stream.h}
+\begin{verbatim}
+/********************************************
+ --------------------------------------------
+bitio_stream.h
+
+             bit io for stream
+
+  Initialize bit_input_stream
+    with (binary mode) stdin etc.
+  Initialize bit_output_stream
+    with (binary mode) stdout etc.
+
+*********************************************/
+
+#if !defined __bitio_stream_h__
+#define __bitio_stream_h__
+
+#include <stdio.h>
+#include "bitio.h"
+
+/********************************************/
+/*           bit input for stream           */
+/********************************************/
+class bit_input_stream : public bit_input
+{
+private:
+
+  FILE *is;                // input stream
+
+public:
+
+  bit_input_stream(){ is = NULL; }
+
+  /* initialize
+     p_is : input stream
+     x : 1:compressed */
+  int init( FILE *p_is, int x );
+  void finish(){}
+
+  /* cannot get length of input stream */
+  long get_length(){ return -1; }
+
+  /* input a bit */
+  int input_bit();
+
+};
+
+/********************************************/
+/*          bit output for stream           */
+/********************************************/
+class bit_output_stream : public bit_output
+{
+private:
+
+  FILE *os;                // output stream
+
+public:
+
+  bit_output_stream(){ os = NULL; }
+
+  /* initialize
+     p_ostream : output stream
+     x : 1:compressed
+     sl : source length; if unknown, -1*/
+  int init
+    ( FILE *p_os, int x, long sl=-1 );
+  /* finish outputting */
+  void finish();
+
+  /* output a bit */
+  int output_bit( int bit );
+
+private:
+  void inner_output_bit( int bit );
+
+};
+
+#endif
+\end{verbatim}

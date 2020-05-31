@@ -1,0 +1,31 @@
+% mycaption.sty:
+%                                           H.Sakaguchi Sep.27.1996
+%
+%
+
+% ずっと通し番号で表示する。
+%
+% 図 1 みたいにである。
+\newcommand{\myfigcaption}[1]{\refstepcounter{figure} 図\thefigure: #1 \addcontentsline{lof}{figure} {\protect\numberline{\thefigure}{#1}}}
+% 表 2 みたいにである。
+\newcommand{\mytablecaption}[1]{\refstepcounter{table} 表\thetable: #1 \addcontentsline{lot}{table} {\protect\numberline{\thetable}{#1}}}
+
+
+% 節ごとにカウンタをリセットし 節.番号という形式で 番号を表示する.
+%
+% 図 1.2 みたいにである。 (jarticleにのみ有効)
+\newcounter{myfigure}[section]
+\def\themyfigure{\thesection.\arabic{myfigure}}
+\newcommand{\myfigscaption}[1]{\refstepcounter{myfigure} 図\themyfigure: #1 \addcontentsline{lmf}{myfigure} {\protect\numberline{\themyfigure}{#1}}}
+% 表 2.3 みたいにである。 (jarticleにのみ有効)
+\newcounter{mytable}[section]
+\def\themytable{\thesection.\arabic{mytable}}
+\newcommand{\mytablescaption}[1]{\refstepcounter{mytable} 表\themytable: #1 \addcontentsline{lmt}{mytable} {\protect\numberline{\themytable}{#1}}}
+%
+% 図目次,表目次を作成 (jarticleにのみ有効)
+\def\listofmyfigures{\section*{図目次\markboth
+ {図目次}{図目次}}\@starttoc{lmf}}
+\def\l@myfigure{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\listofmytables{\section*{表目次\markboth
+ {表目次}{表目次}}\@starttoc{lmt}}
+\let\l@mytable\l@myfigure

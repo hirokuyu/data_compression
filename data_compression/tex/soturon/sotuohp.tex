@@ -1,0 +1,1017 @@
+\unitlength 0.001in
+\newcommand{\tabtopsp}[1]{\vbox{\vbox to#1{}\vbox to1zw{}}}
+\begin{slide}{}
+
+\begin{center}
+{\small 平成１１年度卒論発表} 
+\vspace{2cm} \\
+
+\shadowbox{
+\begin{minipage}{0.85\textwidth} 
+\begin{center}
+{\Large 増分文脈木重み付け法の\\
+新しい設計とその評価}
+\end{center}
+\end{minipage}
+}\\
+\vspace{1cm}
+ 電子情報学科\\
+情報システム学講座 川端研究室\\
+ 9511089~~清水~弘和
+\end{center}
+\vspace{0.5cm}
+\ovalbox{発表内容}\\
+\vspace{5mm}\\
+\begin{minipage}[cbt]{1\textwidth}
+\begin{itemize}
+ \baselineskip 40pt
+ \item 算術符号
+ \item 木情報源と推定確率
+ \item 文脈木重み付け法(CTW法)
+ \item 増分CTW法
+ \item 実験的評価
+ \item まとめ
+\end{itemize}
+\end{minipage}
+\end{slide}
+
+\begin{note}
+川端研究室の清水弘和です。
+
+テーマは『増分文脈木重み付け法の新しい設計とその評価』です。
+
+まず文脈木重み付け法、略してCTW法はデータ圧縮法の一種で、増分CTW法はその一つのバリエーションです。
+
+その増分CTW法について、設計上の新しいアイディアを与え、また実験的な評価も行いました。
+\end{note}
+
+\begin{slide}{}
+
+\begin{center}
+\shadowbox{算術符号}
+\end{center}
+
+\framebox{算術符号化の様子}
+\vspace{-1.5cm}
+
+\hspace{2cm}
+\begin{picture}(2500,3400)
+\special{pn 16}%
+%
+\special{pa 300 -100}%pole
+\special{pa 300 -3100}%
+\special{fp}%
+\special{pa 270 -100}%
+\special{pa 330 -100}%
+\special{fp}%
+\special{pa 270 -3100}%
+\special{pa 330 -3100}%
+\special{fp}%
+\put(80,50){0}%
+\put(80,3000){1}%
+%
+\special{pa 600 -3100}%lambda box
+\special{pa 2000 -3100}%
+\special{pa 2000 -100}%
+\special{pa 600 -100}%
+\special{pa 600 -3100}%
+\special{fp}%
+\special{pa 600 -3100}%
+\special{pa 750 -2500}%
+\special{pa 800 -1800}%
+\special{sp}%
+\special{pa 600 -100}%
+\special{pa 750 -700}%
+\special{pa 800 -1400}%
+\special{sp}%
+\put(700,1500){$p(\lambda)$}%
+\put(800,-100){n=0}%
+%
+\special{pa 2000 -3100}%1 box
+\special{pa 3400 -3100}%
+\special{pa 3400 -1700}%
+\special{pa 2000 -1700}%
+\special{pa 2000 -3100}%
+\special{fp}%
+\special{pa 2000 -3100}%
+\special{pa 2150 -2700}%
+\special{pa 2180 -2550}%
+\special{sp}%
+\special{pa 2000 -1700}%
+\special{pa 2150 -2100}%
+\special{pa 2180 -2250}%
+\special{sp}%
+\put(2100,2300){$p(1)$}%
+\special{pa 2000 -1700}%0 box
+\special{pa 3400 -1700}%
+\special{pa 3400 -100}%
+\special{pa 2000 -100}%
+\special{pa 2000 -1700}%
+\special{fp}%
+\special{pa 2000 -1700}%
+\special{pa 2150 -1400}%
+\special{pa 2180 -1150}%
+\special{sp}%
+\special{pa 2000 -100}%
+\special{pa 2150 -400}%
+\special{pa 2180 -650}%
+\special{sp}%
+\put(2100,800){$p(0)$}%
+\put(2200,-100){n=1}%
+%
+\special{pa 4800 -3100}%11 box
+\special{pa 4800 -2600}%
+\special{pa 3400 -2600}%
+\special{pa 3400 -3100}%
+\special{pa 5200 -3100}%
+\special{fp}%
+\special{pa 3400 -3100}%
+\special{pa 3480 -3000}%
+\special{pa 3500 -2980}%
+\special{sp}%
+\special{pa 3400 -2600}%
+\special{pa 3480 -2700}%
+\special{pa 3500 -2720}%
+\special{sp}%
+\put(3500,2800){$p(11)$}%
+\special{pa 3400 -2600}%10 box
+\special{pa 4800 -2600}%
+\special{pa 4800 -1700}%
+\special{pa 3400 -1700}%
+\special{pa 3400 -2600}%
+\special{fp}%
+\special{pa 3400 -2600}%
+\special{pa 3480 -2400}%
+\special{pa 3500 -2250}%
+\special{sp}%
+\special{pa 3400 -1700}%
+\special{pa 3480 -1900}%
+\special{pa 3500 -2050}%
+\special{sp}%
+\put(3500,2050){$p(10)$}%
+\special{pa 3400 -1700}%01 box
+\special{pa 4800 -1700}%
+\special{pa 4800 -800}%
+\special{pa 3400 -800}%
+\special{pa 3400 -1700}%
+\special{fp}%
+\special{pa 3400 -1700}%
+\special{pa 3480 -1450}%
+\special{pa 3500 -1350}%
+\special{sp}%
+\special{pa 3400 -800}%
+\special{pa 3480 -1050}%
+\special{pa 3500 -1150}%
+\special{sp}%
+\put(3500,1150){$p(01)$}%
+\special{pa 4800 -100}%00 box
+\special{pa 4800 -800}%
+\special{pa 3400 -800}%
+\special{pa 3400 -100}%
+\special{pa 5200 -100}%
+\special{fp}%
+\special{pa 3400 -800}%
+\special{pa 3480 -600}%
+\special{pa 3500 -550}%
+\special{sp}%
+\special{pa 3400 -100}%
+\special{pa 3480 -300}%
+\special{pa 3500 -350}%
+\special{sp}%
+\put(3500,350){$p(00)$}%
+\put(3600,-100){n=2}%
+%
+\put(5000,1500){$\cdots$}%
+%
+\put(187,960){$\times$}%c0
+\put(-50,1000){$c_0$}%
+\special{pa 300 -1040}%
+\special{pa 5300 -1040}%
+\special{dt 0.05}%
+%
+\put(187,2850){$\times$}%
+\put(-50,2860){$c_1$}%
+\special{pa 300 -2940}%
+\special{pa 5300 -2940}%
+\special{dt 0.05}%
+%
+\end{picture}
+
+%\framebox{累積確率}
+%\[
+%  F(x_{1}^n) = \sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+%\]
+\vspace{3cm}
+
+\framebox{符号長}
+\[
+  L(x_{1}^n) \le -\log_2 p(x_{1}^n) + 2
+\]
+\vspace{0.5cm}
+\end{slide}
+
+\begin{note}
+まず、算術符号について述べます。
+
+算術符号は、0と1の間の小数を符号として用います。この図はその例です。符号の値は、たとえば00ならこの間のどこかになります。復号は、例えば符号の値が$c_0$で情報源系列の長さが1なら0、符号の値が$c_1$で情報源系列の長さが2なら11と決定されます。
+
+この時、この$p$は符号化確率と呼ばれ、符号化確率が$p(x_{1}^n)$の時必要な符号長は、計算精度が無限ならこのように\\
+$-\log p(x_{1}^n)+2$で上界が与えられます。
+
+CTW法はこの符号化確率を与えます。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{木情報源}
+\end{center}
+
+\begin{minipage}[b]{9.5cm}
+\begin{tabular}{ccccc}
+$\cdots$ & $x_{t-3}$ & $x_{t-2}$ & $x_{t-1}$ & $x_t$ \\
+$\cdots$ & 1         & 0         & 0         & \fbox{?}
+\end{tabular}
+
+\begin{picture}(3500,1500)
+\special{pn 64}%
+\special{pa 1700 -1500}%
+\special{pa 3000 -1500}%
+\special{fp}%
+\special{pn 16}%
+\special{pa 2350 -1500}%
+\special{pa 2800 -500}%
+\special{pa 3300 0}%
+\special{pa 3800 180}%
+\special{sp}%
+\special{pa 3600 -50}%
+\special{pa 3800 180}%
+\special{pa 3500 230}%
+\special{fp}%
+\special{sh 0}%
+\special{pa 100 -550}%
+\special{pa 3500 -550}%
+\special{pa 3500 -1000}%
+\special{pa 100 -1000}%
+\special{pa 100 -550}%
+\special{fp}%
+\put(2700,1150){\underline{文脈}}%
+\put(200,700){$x_t=1$を生じる確率は$\theta_{00}$}%
+\end{picture}
+\end{minipage}
+\begin{picture}(3000,2000)
+\special{pn 16}%
+\special{pa 200 -100}%
+\special{pa 800 -900}%
+\special{pa 1100 -100}%
+\special{pa 800 -900}%
+\special{pa 1500 -1700}%
+\special{pa 2200 -900}%
+\special{pa 1900 -100}%
+\special{pa 2200 -900}%
+\special{pa 2800 -100}%
+\special{fp}%
+\put(1680,1600){$\lambda$}%
+\special{sh 1}%
+\special{ar 1500 -1700 100 100 0 6.29}%
+\put(980,800){0}%
+\special{sh 1}%
+\special{ar 800 -900 100 100 0 6.29}%
+\put(2380,800){1}%
+\special{sh 1}%
+\special{ar 2200 -900 100 100 0 6.29}%
+\put(330,0){00}%
+\special{sh 0}%
+\special{ar 200 -100 100 100 0 6.29}%
+\put(1230,0){10}%
+\special{sh 0}%
+\special{ar 1100 -100 100 100 0 6.29}%
+\put(2030,0){01}%
+\special{sh 0}%
+\special{ar 1900 -100 100 100 0 6.29}%
+\put(2930,0){11}%
+\special{sh 0}%
+\special{ar 2800 -100 100 100 0 6.29}%
+\put(100,-300){$\theta_{00}$}%
+\put(1000,-300){$\theta_{10}$}%
+\put(1800,-300){$\theta_{01}$}%
+\put(2700,-300){$\theta_{11}$}%
+\put(2430,1700){$\in T$}%
+\special{sh 1}%
+\special{ar 2300 -1800 100 100 0 6.29}%
+\put(2430,1400){$\in\partial T$}%
+\special{ar 2300 -1500 100 100 0 6.29}%
+\end{picture}
+
+ある木情報源$(T,\theta,x_{-\infty}^0)$が\\
+系列$x_{1}^t=x_1x_2\ldots x_t$を生じる確率
+\[
+ p(x_{1}^t|T,\theta,x_{-\infty}^0)=\prod_{s\in\partial T}(1-\theta_s)^{n_{s}^0}\theta_{s}^{n_{s}^1}
+\]
+$n_{s}^0,n_{s}^1$ : 文脈$s$の後にそれぞれ0、1を生じた回数
+\begin{center}
+\shadowbox{推定確率}
+\end{center}
+\vspace{-0.7cm}
+ある木モデル$T$を持つパラメータ$\theta$が未知の情報源に与える推定確率
+\[
+ p(x_{1}^t|T,x_{-\infty}^0)=\prod_{s\in\partial T}p_{KT}(n_{s}^0,n_{s}^1)
+\]
+\shadowbox{
+\begin{minipage}{17cm}
+$p_{KT}(n_{s}^0,n_{s}^1)$は、Krichevski-Trofimov推定量(KT推定量)であり、$(1-\theta_s)^{n_{s}^0}\theta_{s}^{n_{s}^1}$という確率で生じる系列を圧縮するために用いる。
+\end{minipage}
+}
+\end{slide}
+
+\begin{note}
+次に、木情報源を定義します。
+
+木情報源は、例えばこのような木モデルを持っています。親ノードは子ノードの語尾になっています。$\lambda$は空の系列を表しています。この白丸のノードは外部葉と呼ばれ、各外部葉ノードはパラメータ$\theta$を持っています。このパラメータは、例えば$\theta_{11}$なら、「11の次に1を生じる確率」です。
+
+例えばこのように$x_t$の前が011であった時、この木情報源が$x_t=1$を生じる確率は$\theta_{11}$となります。この時、この11は文脈と呼ばれます。
+
+ある木情報源が$x_{1}^t$を生じる確率はこのように表せます。$T$は木モデルで$\theta$はパラメータの集合、$x_{-\infty}^0$は、$x_1$などの文脈を決定するために必要になります。$n_{s}^0$、$n_{s}^1$は文脈$s$の後にそれぞれ0、1を生じた回数で、系列を生じる確率は、各シンボルを生じる確率の積になるので、$\theta$と$1-\theta$の積の形をしています。
+
+そして、ある木モデル$T$を持つパラメータが未知の情報源に対して、このような推定確率を与えます。この$p_{KT}$はKT推定量と呼ばれるもので、$(1-\theta_s)^{n_{s}^0}\theta_{s}^{n_{s}^1}$という確率で生じる系列を圧縮するために使います。
+
+つまりこれは、このようなある一つの木モデルに関する圧縮を行っていることになります。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{文脈木重み付け法(CTW法)}
+\end{center}
+\vspace{-0.8cm}
+重み付け文脈木${\cal T}$に関する推定確率(重み付け確率)\\
+\begin{center}
+\vspace{-2.7cm}
+\begin{tabular}[b]{|c||c|c|c|c|c|}
+\hline
+${\cal T}$ & \multicolumn{5}{|l|}{${\cal T}$に含まれる文脈木$T$} \\
+\hline\hline
+\begin{picture}(200,500)
+\special{pn 16}%
+\special{ar 100 -400 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(200,550)
+\special{pn 16}%
+\special{ar 100 -400 100 100 0 6.29}%
+\end{picture}
+&
+&
+&
+&
+\\
+\hline
+\begin{picture}(800,800)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(200,800)
+\special{pn 16}%
+\special{ar 100 -600 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(800,800)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%0
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%1
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+&
+&
+\\
+\hline
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 500 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 500 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(200,1200)
+\special{pn 16}%
+\special{ar 100 -800 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(800,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -800}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -800 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 500 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 500 -200 100 100 0 6.29}%
+\end{picture}
+&
+&
+\\
+\hline
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -600}%
+\special{pa 400 -1000}%
+\special{pa 600 -600}%
+\special{pa 500 -200}%
+\special{pa 600 -600}%
+\special{pa 800 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 400 -1000 100 100 0 6.29}%
+\special{sh 0}%0
+\special{ar 200 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 600 -600 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 500 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 800 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(200,1200)
+\special{pn 16}%
+\special{ar 100 -800 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(800,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -800}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -800 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -600}%
+\special{pa 400 -1000}%
+\special{pa 600 -600}%
+\special{pa 500 -200}%
+\special{pa 600 -600}%
+\special{pa 800 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 400 -1000 100 100 0 6.29}%
+\special{sh 0}%0
+\special{ar 200 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 600 -600 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 500 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 800 -200 100 100 0 6.29}%
+\end{picture}
+&
+&
+\\
+\hline
+\begin{picture}(1200,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 450 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{pa 750 -200}%
+\special{pa 800 -600}%
+\special{pa 1000 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 450 -200 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 750 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 1000 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(200,1200)
+\special{pn 16}%
+\special{ar 100 -800 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(800,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -800}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -800 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 500 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 500 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -600}%
+\special{pa 400 -1000}%
+\special{pa 600 -600}%
+\special{pa 500 -200}%
+\special{pa 600 -600}%
+\special{pa 800 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 400 -1000 100 100 0 6.29}%
+\special{sh 0}%0
+\special{ar 200 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 600 -600 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 500 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 800 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1200,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 450 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{pa 750 -200}%
+\special{pa 800 -600}%
+\special{pa 1000 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 450 -200 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 750 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 1000 -200 100 100 0 6.29}%
+\end{picture}
+\\
+\hline
+$\cdot$&&&&&\\
+$\cdot$&&&&&\\
+\end{tabular}\\
+%\vspace{-0.8cm}
+\vspace{0.4cm}
+\begin{picture}(0,100)
+%\special{pn 16}%
+%\special{pa -3200 -4300}%
+%\special{pa -3800 -4000}%
+%\special{pa -3800 -500}%
+%\special{pa -3000 0}%
+\special{pa 0 -5300}%
+\special{pa -400 -5000}%
+\special{pa -400 -1500}%
+\special{pa 0 -1000}%
+\special{sp}%
+%\special{pa -3200 -20}%
+%\special{pa -3000 0}%
+%\special{pa -3100 -200}%
+\special{pa -50 -1180}%
+\special{pa 0 -1000}%
+\special{pa -180 -1070}%
+\special{fp}%
+\end{picture}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$T\cup\partial T$
+&
+\begin{picture}(800,1000)
+\special{pn 16}%
+\put(530,700){$\lambda$}%
+\special{ar 400 -800 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1000,1000)
+\special{pn 16}%
+\special{pa 200 -500}%
+\special{pa 500 -900}%
+\special{pa 800 -500}%
+\special{fp}%
+\put(630,800){$\lambda$}%
+\special{sh 1}%
+\special{ar 500 -900 100 100 0 6.29}%
+\put(330,400){0}%
+\special{sh 0}%
+\special{ar 200 -500 100 100 0 6.29}%
+\put(930,400){1}%
+\special{sh 0}%
+\special{ar 800 -500 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1300,1100)
+\special{pn 16}%
+\special{pa 100 -100}%
+\special{pa 500 -500}%
+\special{pa 700 -100}%
+\special{pa 500 -500}%
+\special{pa 800 -900}%
+\special{pa 1100 -500}%
+\special{fp}%
+\put(930,800){$\lambda$}%
+\special{sh 1}%
+\special{ar 800 -900 100 100 0 6.29}%
+\put(630,400){0}%
+\special{sh 1}%
+\special{ar 500 -500 100 100 0 6.29}%
+\put(1230,400){1}%
+\special{sh 0}%
+\special{ar 1100 -500 100 100 0 6.29}%
+\put(230,0){00}%
+\special{sh 0}%
+\special{ar 100 -100 100 100 0 6.29}%
+\put(830,0){10}%
+\special{sh 0}%
+\special{ar 700 -100 100 100 0 6.29}%
+\end{picture}
+\\
+\hline
+\tabtopsp{3mm}
+$w_1(T)$ & $\frac{1}{2}$
+& $\frac{1}{4}$
+& $\frac{1}{4}$\\[3mm]
+\hline
+$\displaystyle\prod_{s\in\partial T}p_e(s)$ & $p_{e}(\lambda)$
+& $p_{e}(0)p_{e}(1)$
+& $p_{e}(00)p_{e}(10)p_{e}(1)$\\
+\hline
+\end{tabular}
+\end{center}
+\end{slide}
+
+\begin{note}
+次にCTW法について述べます。ただし、ここで述べるのは実装法よりも、理論的な背景というべきものです。
+
+CTW法では重み付け文脈木を用います。重み付け文脈木は、木モデルの集合と考えることができて、左のこれらの重み付け文脈木は、それぞれ右にあるような木モデルを含みます。重み付け文脈木が大きければ大きいほど、多くのモデルを含みます。そして、それぞれの木モデルに対して推定確率を求めて、適当な重み付けをして平均を取ります。
+
+例えば、この重み付け文脈木に関しては、このようになります。$w_1(T)$は木モデルに対する重み付けを表しています。この$p_e$はKT推定量で、これらは先程の推定確率です。この上と下をそれぞれ掛け合わせてその和を取ると、CTW法の与える符号化確率が得られます。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{増分CTW法}
+\end{center}
+深さ$D$の文脈木を使うと$\cdots$\\
+\begin{tabular}{ccc|ccc}
+$x_{1-D}$ & $\cdots$ & $x_0$ & $x_1$ & $x_2$ & $\cdots$ \\
+\end{tabular}
+\\
+\begin{picture}(3000,400)
+\special{pn 16}%
+\special{pa 100 -400}%
+\special{pa 300 -250}%
+\special{pa 1100 -200}%
+\special{pa 1900 -250}%
+\special{pa 2100 -400}%
+\special{sp}%
+\put(1000,-100){$D$}%
+\end{picture}
+
+深さ$D$を大きく取れば、その分長い過去の仮定が必要。\\
+$\Rightarrow$不確かな仮定に依存せずに、深い文脈木を取りたい。
+
+\fbox{増分CTW法における文脈木の増大の例}
+
+\begin{tabular}{cl}
+\begin{picture}(200,500)
+\special{pn 16}%
+\special{ar 100 -400 100 100 0 6.29}%
+\end{picture}
+&
+\begin{minipage}[b]{13cm}
+最初は${\cal T}_0=\emptyset$から始める。\\
+$\Rightarrow x_{-\infty}^0$の仮定は不要
+\end{minipage}
+\\
+\begin{picture}(800,800)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -200}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 600 -200 100 100 0 6.29}%
+\end{picture}
+&
+\\
+\begin{picture}(1000,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 500 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 0}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 500 -200 100 100 0 6.29}%
+\end{picture}
+&
+\begin{minipage}[b]{13cm}
+徐々にノードを追加していく。\\
+=含まれる木モデルが増加
+\end{minipage}
+\\
+\begin{picture}(1200,1200)
+\special{pn 16}%
+\special{pa 200 -200}%
+\special{pa 400 -600}%
+\special{pa 450 -200}%
+\special{pa 400 -600}%
+\special{pa 600 -1000}%
+\special{pa 800 -600}%
+\special{pa 750 -200}%
+\special{pa 800 -600}%
+\special{pa 1000 -200}%
+\special{fp}%
+\special{sh 1}%lambda
+\special{ar 600 -1000 100 100 0 6.29}%
+\special{sh 1}%0
+\special{ar 400 -600 100 100 0 6.29}%
+\special{sh 1}%1
+\special{ar 800 -600 100 100 0 6.29}%
+\special{sh 0}%00
+\special{ar 200 -200 100 100 0 6.29}%
+\special{sh 0}%10
+\special{ar 450 -200 100 100 0 6.29}%
+\special{sh 0}%01
+\special{ar 750 -200 100 100 0 6.29}%
+\special{sh 0}%11
+\special{ar 1000 -200 100 100 0 6.29}%
+\end{picture}
+&
+局所的に深いような文脈木も取り得る。
+\\
+$\vdots$
+\end{tabular}
+\end{slide}
+
+\begin{note}
+次に、増分CTW法についてです。
+まず、なぜ増分CTW法を使うのかについて述べます。
+
+深さ$D$の重み付け文脈木を使うとすると、$D$個の過去のシンボルを仮定する必要があります。$D$を大きく取れば、その分長い過去の仮定が必要になります。しかしこの過去の系列は一般に知ることができないので、これを仮定することなく、深い文脈木を取りたい、それが増分CTW法を使う理由です。
+
+増分CTW法では、重み付け文脈木が大きくなっていきます。この図はその例です。最初は$\lambda$だけなので、過去の系列の仮定は不要です。そして、徐々にノードが追加されていきます。重み付け文脈木が大きくなるということは、より重み付けを行う木モデルが増えるということを意味します。また、重み付け文脈木の増大のさせ方によっては、一部が特に深いような文脈木を取ることも可能です。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{増分CTW法のアルゴリズム}
+\end{center}
+\begin{picture}(5000,800)
+\special{pn 16}%
+\put(0,700){${\cal T}_0=\phi$}%
+\put(460,400){$\lambda$}%
+\special{ar 300 -500 100 100 0 6.29}%
+\special{pa 0 0}%
+\special{pa 7000 0}%
+\special{dt 0.05}%
+\end{picture}
+
+\begin{picture}(1600,1200)
+\special{pn 16}%
+\put(500,1150){${\cal T}_{t-1}$}
+\special{pa 900 -1000}%
+\special{pa 800 -800}%
+\special{pa 300 -100}%
+\special{pa 800 -800}%
+\special{pa 1100 -100}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 800 -800 100 100 0 6.29}%
+\put(460,0){$v_t$}%
+\special{sh 0}%
+\special{ar 300 -100 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1100 -100 100 100 0 6.29}%
+\special{pa 0 200}%
+\special{pa 1600 200}%
+\special{dt 0.05}%
+\end{picture}
+\begin{minipage}[b]{13cm}
+$v_t$ : $\partial{\cal T}_{t-1}$における$x_{-\infty}^{t-1}$のsuffix\\\\
+\underline{{\bf{\dg 任意の}}条件関数$C(v_t,x_{-\infty}^{t-1})$を評価。}\\\\
+\fbox{偽}$\to$通常のCTW法の更新。
+\end{minipage}
+
+\begin{picture}(1600,1900)
+\special{pn 16}%
+\special{pa 300 -100}%
+\special{pa 700 -800}%
+\special{pa 1100 -100}%
+\special{pa 700 -800}%
+\special{pa 1100 -1500}%
+\special{pa 1400 -800}%
+\special{pa 1100 -1500}%
+\special{pa 1300 -1700}%
+\special{fp}%
+\put(500,1800){${\cal T}_t$}%
+\special{sh 1}%
+\special{ar 1100 -1500 100 100 0 6.29}%
+\put(860,700){$v_t$}%
+\special{sh 1}%
+\special{ar 700 -800 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1400 -800 100 100 0 6.29}%
+\put(460,0){$u_t$}%
+\special{sh 0}%
+\special{ar 300 -100 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1100 -100 100 100 0 6.29}%
+\end{picture}
+\begin{minipage}[b]{15cm}
+\fbox{真}$\to$\\
+${\cal T}_t:={\cal T}_{t-1}\cup v_t$\\
+$u_t$ : $\partial{\cal T}_t$における$x_{-\infty}^{t-1}$のsuffix\\
+$p_e(u_t)$と$p_w(u_t)$を$\frac{1}{2}\cdot p_e(v_t)$、\\
+$n_{u_t}^{x_t}:=1$と初期化。\\
+$v_t$からは通常のCTW法の更新。
+\end{minipage}
+
+\shadowbox{
+\begin{minipage}{17cm}
+ポイント : 任意の条件関数$C(v_t,x_{-\infty}^{t-1})$を設定可能\\
+従来の増分CTW法ではシンボルを入力する毎に、
+\indent \hspace{0.5cm}必ずノードを追加しなければならなかった。\\
+$\Rightarrow$ 文脈木の増大をコントロール可能に。
+\end{minipage}
+}
+\end{slide}
+
+\begin{note}
+増分CTW法のアルゴリズムのポイントだけを示します。
+
+この$v_t$が$x_t$の文脈であるとします。この$v_t$に新たな子ノードを追加するかどうかを、任意の条件関数$C$を評価して決めます。この関数が真を返せば、このように子ノードが追加されます。ポイントはこの関数が「任意に設定できる」という点で、従来の増分CTW法では、シンボルを一つ入力する毎に必ずノードを追加しなければなりませんでした。これによって、文脈木の増大をコントロールできるようになりました。
+
+このアルゴリズムが成立する背景は、論文の方で述べています。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{実験的評価}
+\end{center}
+\vspace{-0.5cm}
+\begin{picture}(5000,500)
+\special{pn 16}%
+\put(0,400){$\cdots 100\cdots 0x_t$}%
+\special{pa 600 -300}%
+\special{pa 850 -250}%
+\special{pa 950 -240}%
+\special{pa 1100 -240}%
+\special{pa 1200 -250}%
+\special{pa 1450 -300}%
+\special{sp}%
+\put(900,50){$m$}%
+\end{picture}\\
+\fbox{情報源}\\
+$x_t$の直前に$0$が$m$個続いたと言う条件下で、\\
+$x_t$が1となる確率が$\displaystyle\frac{1}{0.65m+2}$となるような情報源
+
+\vspace{-0.8cm}
+\fbox{符号化器}\\
+\verb/D=/   : 基本的なCTW法の重み付け文脈木の深さ\\
+\verb/Incr:/ : 増分CTW法 $C(s,x_{-\infty}^{t-1})=n_s\ge\eta$の$\eta$
+
+\vspace{-0.8cm}
+\underline{冗長度(Redundancy)}\\
+\indent \hspace{0.5cm}理想符号長$-\log p(x_{1}^t)$と符号化による符号長との差\\
+\vspace{-0.8cm}
+\begin{center}
+\epsfile{file=rg1.eps,scale=1.1}
+\end{center}
+\vspace{-0.8cm}
+$\eta=1$ : 従来の増分CTW法に相当\\
+$\eta=1$より$\eta=2$の方がコストがかからない$\to$コスト減
+
+\end{slide}
+
+\begin{note}
+次に、実験的な評価です。
+
+情報源として、$x_t$の直前に0が$m$個続いたという条件下で、$x_t$が1となる確率が$\frac{1}{0.65m+2}$となるような情報源を使いました。これは、0が続けば続くほど、更に続きやすくなります。
+
+このRedundancy、冗長度は、理想符号長と符号化による符号長との差です。この\verb/D=/とあるのは基本的なCTW法の重み付け文脈木の深さを表し、\verb/Incr:/とあるのは、条件をカウントが$\eta$以上としたときの$\eta$を表します。$\eta=1$というのは従来の増分CTW法に相当し、ここでは$\eta$を1と2としています。
+
+実験結果を見ると、基本的なCTW法より増分CTW法の方が良い性能を示していますが、$\eta$が1の場合と2の場合では目立った差はついていません。$\eta$が2の時の方が計算量・領域量が少なくて済むので、条件の設定によってコストの削減に成功したということができます。
+\end{note}
+
+\begin{slide}{}
+\begin{center}
+\shadowbox{まとめ}
+\end{center}
+増分CTW法に関して、文脈木の増大の任意のコントロールを可能にした。\\\\
+それによって、必要な計算量・領域量を削減することもできた。\\\\
+条件関数の取り方は、検討の余地がある。
+\end{slide}

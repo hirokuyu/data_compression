@@ -1,0 +1,138 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% resume.sty(旧Ｒ学科輪講発表format)	Rel 1.1			%
+%              modified by Hiroaki Sakaguchi <06 Jun 95>        %
+%              modified by Hiroaki Sakaguchi <30 Oct 94>        %
+% 		written by Kohji Inoue.<29 Jan 93>		%
+% 	Rel 1.0	written by Shigeo Moriyama. <12 Oct 89>		%
+%	This file must call					%
+%			'jarticle.sty'.				%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{Document Style 'resume'  18, Oct, 1989.}
+\input{jarticle.sty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	セクショニングを
+%		１．　イントロダクション
+%		 (^ が加わる)
+%	に変える。
+%	もし、\sectioning が行われたら
+%		１　　イントロダクション
+%	に戻す。
+%
+\renewcommand\thepart{\Roman{part}} \def\thesection {\arabic{section}.}
+\renewcommand\thesubsection {\thesection\arabic{subsection}.}
+\renewcommand\thesubsubsection {\thesubsection\arabic{subsubsection}.}
+\renewcommand\theparagraph {\thesubsubsection\arabic{paragraph}.}
+\renewcommand\thesubparagraph {\theparagraph\arabic{subparagraph}.}
+\def\sectioning{
+ \renewcommand\thepart{\Roman{part}} \def\thesection {\arabic{section}}
+ \renewcommand\thesubsection {\thesection.\arabic{subsection}}
+ \renewcommand\thesubsubsection {\thesubsection .\arabic{subsubsection}}
+ \renewcommand\theparagraph {\thesubsubsection.\arabic{paragraph}}
+ \renewcommand\thesubparagraph {\theparagraph.\arabic{subparagraph}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	タイトルを作成する。
+%	日付の位置は
+%		\dateposition{\flushright}
+%	によって右詰めとなる(デフォルトはセンタリング)。
+%
+\newlength{\@titlespace}	% タイトルの大きさを保持
+\def\titlespace#1{\setlength{\@titlespace}{#1}}	% デフォルトの変更
+\def\@dateposition{\center}
+\def\dateposition#1{\renewcommand{\@dateposition}{#1}}
+\def\eventname#1{\renewcommand{\@eventname}{#1}}
+\def\origin#1{\def\@origin{#1}}
+\def\mydata#1{\def\@mydata{#1}}
+\def\rinkou{
+ \evensidemargin -50pt
+ \oddsidemargin 5pt 
+ \textheight 789pt
+ \topmargin -2.5cm
+ \setlength{\@titlespace}{3.5cm}	% デフォルト
+ \def\@eventname{輪講発表資料}
+ \renewcommand\@maketitle{\newpage
+  \null
+  \vbox to\@titlespace{
+  \@dateposition{\@date \ \@eventname} % \vskip .5em
+  \hrule \vfill
+  \begin{center}
+  {\Large \@title \par} \vskip .5em 
+  \begin{tabular}{rc}
+   著者： & \@author \cr
+   出典： & \@origin \cr
+   発表者： & \@mydata \cr
+  \end{tabular}
+  \end{center}
+  \vfill\hrule}
+  \vskip 1em }}
+%%%%%%%%%%%%%%%%
+\def\kyoudou#1{\def\@kyoudou{#1}}
+\def\teacher#1{\def\@teacher{#1}}
+\def\course#1{\def\@course{#1}}
+\def\studentnumber#1{\def\@studentnumber{#1}}
+%\def\studentpage#1{\def\@studentpage{#1}}
+
+\def\soturon{
+ \evensidemargin -1.45cm 
+ \oddsidemargin -0.45cm
+ \textheight 26cm
+ \topmargin -2cm
+ \pagestyle{plain}
+ \setlength{\@titlespace}{5cm}	% デフォルト
+%\setlength{\@titlespace}{4cm}
+ \def\@eventname{卒論発表資料}
+ \let\thepageoriginal=\thepage
+% \def\thepage{\@studentpage ~- \thepageoriginal}
+
+ \renewcommand\@maketitle{\newpage
+  \null
+  \vbox to\@titlespace{
+  \hrule\vfill
+  \@dateposition{\large \@date \ \@eventname} \vskip 0.5em
+  \begin{center}
+  {\huge \@title \par} \vskip 0.5em 
+  {\Large \@studentnumber ~~~ \@author \par} \vskip 0.5em
+  {\large
+  \begin{tabular}{rlr}
+   \@course ~~~~~~~~ & 指導教官~~ & \@teacher \cr
+  \end{tabular}
+  } \\
+%  {\large 共同研究者 ~~~ \@kyoudou \par} \vskip 0.5em
+  \end{center}
+  \vfill\hrule}
+  \vskip 1em }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	２段組の各パラメータ値の設定。
+%
+%\twocolumn
+\@twosidetrue
+\@twocolumntrue
+\sloppy
+\flushbottom
+\parindent 1em
+\leftmargini 2em
+\leftmarginv .5em
+\leftmarginvi .5em
+\marginparwidth 10cm 
+\marginparsep 10pt 
+\textwidth 18cm
+\linewidth 18cm
+\leftmargin 1cm
+\rightmargin 3cm
+\headheight 0pt
+\hbadness=1000
+\tolerance=5000 %(Must be less than 10000=sloppy in Japanese)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	その他　細かい部分の変更。
+%
+\renewcommand\abstract{\section*{概要}} %
+\def\nopagenumbers{\renewcommand{\thepage}{}}
+%\newcommand\gusuban{\setcounter{page}{2}}
+
+
+
+
+
+
+
+

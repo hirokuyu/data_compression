@@ -1,0 +1,17 @@
+\chapter{}\label{chap:pwproof}
+
+\begin{Proof}\rm~\\
+定理\ref{th:pw}を証明する。
+\begin{enumerate}
+ \item \label{item:pw1} $s\in\partial{\cal T}$のとき、(\ref{eq:pwrecursive})においても(\ref{eq:pwsumform})においても、$p_w(s)=g_2(s)$となり成立。
+ \item \label{item:pw2}$s\in{\cal T}$において、$\{as\}_{a\in A}$において成立していると仮定すると、(\ref{eq:pwrecursive})は、
+\begin{eqnarray}
+ p_w(s) &=& g_2(s)+g_1(s)\prod_{a\in A}\left(\sum_{T\subset{\cal T}_{as}}\prod_{u\in T}g_1(uas)\cdot\prod_{u\in\partial T}g_2(uas)\right) \nonumber\\
+ &=& g_2(s)+g_1(s)\left(\sum_{T\subset{\cal T}_s;T\neq\{\lambda\}}\prod_{u\in T;u\neq\lambda}g_1(us)\cdot\prod_{u\in\partial T}g_2(us)\right) \nonumber\\
+ &=& \sum_{T=\{\lambda\}}\prod_{u\in T}g_1(us)\cdot\prod_{u\in\partial T}g_2(us)+\left(\sum_{T\subset{\cal T}_s}\prod_{u\in T}g_1(us)\cdot\prod_{u\in\partial T}g_2(us)\right) \nonumber\\
+ &=& \sum_{T\subset{\cal T}_s}\left(\prod_{u\in T}g_1(u)\cdot\prod_{u\in\partial T}g_2(u)\right)
+\end{eqnarray}
+となり成立。
+\item \ref{item:pw1}、\ref{item:pw2}より、定理は成立。
+\end{enumerate}
+\end{Proof}

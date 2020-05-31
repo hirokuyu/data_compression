@@ -1,0 +1,200 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jlplain 95.9.23)  15 FEB 2000 15:04
+**sotu_u
+(sotu_u.tex
+** JLaTeX ver.1.3......Isozaki
+(/usr/local/lib/TEX-NTT/jinputs/jreport.sty
+Document Style `jreport'. Released 4 November 1988
+(/usr/local/lib/TEX-NTT/jinputs/jrep12.sty)
+\descriptionmargin=\dimen100
+\c@part=\count82
+\c@chapter=\count83
+\c@section=\count84
+\c@subsection=\count85
+\c@subsubsection=\count86
+\c@paragraph=\count87
+\c@subparagraph=\count88
+\c@figure=\count89
+\c@table=\count90
+
+(/usr/local/lib/TEX-NTT/jinputs/jtitlepage.sty)
+Conversion jlarge --> large etc.
+) (mycaption.sty
+\c@myfigure=\count91
+\c@mytable=\count92
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count93
+\@argb=\count94
+\@argc=\count95
+\@ctmpa=\count96
+\@ctmpb=\count97
+\@ctmpc=\count98
+\@ctmpd=\count99
+\@ctmpe=\count100
+\@darg=\dimen101
+\@bblen=\dimen102
+\ps@stream=\read1
+) (Sotu.sty) (/usr/local/lib/TEX-NTT/inputs/fancybox.sty
+Style option: `fancybox' v0.91 <92/11/25> (tvz)
+\@tempfbox=\box26
+\@tempdimc=\dimen103
+\@tempdimd=\dimen104
+\shadowsize=\dimen105
+\the@fancyput=\toks11
+\this@fancyput=\toks12
+\Verbatim@Outfile=\write3
+\Verbatim@Infile=\read2
+) (/usr/local/lib/TEX-NTT/inputs/mathsymb.sty)
+\c@Definition=\count101
+\c@Theorem=\count102
+\c@Proof=\count103
+\c@Example=\count104
+\c@Lemma=\count105
+\c@Algo=\count106
+ (sotu_u.aux (hyousi.aux)
+(c1.aux) (c2.aux) (c3.aux) (c4.aux) (c5.aux) (c6.aux) (c7.aux) (bib.aux)
+(syaji.aux) (apw.aux)) (hyousi.tex [0
+
+
+])
+Overfull \hbox (47.09512pt too wide) detected at line 25
+[] []
+
+\hbox(25.42384+0.0)x455.24408, glue set - 1.0
+.\hbox(19.91684+0.0)x42.67914
+..\hbox(0.0+0.0)x42.67914, shifted -19.91684
+...\sueclogo A
+.\glue 6.62396 plus 3.31198 minus 2.20798
+.\vbox(25.42384+0.0)x455.24408
+..\hbox(9.99998+0.0)x455.24408, glue set 43.4059fil
+...\hbox(0.0+0.0)x0.0
+...\rule(*+*)x0.0
+...\penalty 10000
+...\glue 28.45274
+...\glue 0.0
+...etc.
+..\glue 5.69054
+..\glue 0.0
+..\penalty 300
+..\glue(\lineskip) 0.0
+..etc.
+
+(sotu_u.toc [1
+
+
+])
+\tf@toc=\write4
+ [2] (c1.tex
+第 {1} 章
+) [3
+
+
+] (c2.tex
+第 {2} 章
+[4
+
+
+
+]) [5] (c3.tex
+第 {3} 章
+[6
+
+
+
+] [7] [8]) [9] (c4.tex
+第 {4} 章
+[10
+
+
+
+] [11] [12] [13]) [14] (c5.tex
+第 {5} 章
+[15
+
+
+
+] [16] [17] [18]
+Overfull \hbox (39.92918pt too wide) in paragraph at lines 266--268
+\twlmi ^^Q$ を \twlrm 0 よ り 大 き い 整 数 と す る と、 バ イ ナ リ の 時、 
+あ る 木 情 報 源 $(\twlmi T; \twlrm ^^B\twlmi ; x[]\twlrm )$ に 対 し て、 $\t
+wlmi C\twlrm (\twlmi s; x[]\twlrm ) =
+
+\hbox(9.51027+3.79997)x455.24408
+.\twlmi ^^Q
+.\kern0.43056
+.\mathoff
+.\glue(\@@jmathkanjiskip) 2.77034
+.\twelvedmjhira を
+.etc.
+
+[19]) [20] (c6.tex
+第 {6} 章
+
+Overfull \hbox (48.0pt too wide) in paragraph at lines 16--64
+[][] 
+
+\hbox(82.36662+76.36662)x455.24408
+.\hbox(0.0+0.0)x0.0
+.\hbox(82.36662+76.36662)x503.24408
+..\mathon
+..\vbox(82.36662+76.36662)x503.24408
+...\rule(0.4+0.0)x503.24408
+...\hbox(11.19995+4.80005)x503.24408 []
+...\rule(0.4+0.0)x503.24408
+...\hbox(11.19995+130.33331)x503.24408 []
+...\rule(0.4+0.0)x503.24408
+..\mathoff
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+[21
+
+
+
+]
+epsf:[g0.eps]
+BoundingBox: (50bp,50bp)--(410bp,302bp) =>(324bp,227bp) [22]
+epsf:[g1.eps]
+BoundingBox: (50bp,50bp)--(410bp,302bp) =>(324bp,227bp)) [23] (c7.tex
+第 {7} 章
+) [24
+
+
+
+] (bib.tex) [25
+
+
+
+] (syaji.tex) [26
+
+
+
+] (apw.tex
+付録 A
+) [27
+
+
+
+]
+付録 B
+(ermach.tex) (bioh.tex [28
+
+
+
+]) (biofh.tex [29]) (biofc.tex [30]) (fexh.tex)
+(fexc.tex [31] [32]) (kth.tex [33]) (ctwbch.tex [34]) (ctwbcc.tex [35] [36]
+[37] [38]) (ctwbcih.tex) (ctwbcic.tex [39] [40]) (ctwc.tex [41] [42])
+(myrh.tex) (myrc.tex) (btsh.tex) (btsc.tex [43] [44]) (expc.tex [45] [46])
+[47] (sotu_u.aux (hyousi.aux) (c1.aux) (c2.aux) (c3.aux) (c4.aux) (c5.aux)
+(c6.aux) (c7.aux) (bib.aux) (syaji.aux) (apw.aux)) ) 
+Here is how much of TeX's memory you used:
+ 774 strings out of 10525
+ 6572 string characters out of 75156
+ 65671 words of memory out of 262141
+ 3284 multiletter control sequences out of 9500
+ 22576 words of font info for 161 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 18i,11n,20p,1114b,493s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on sotu_u.dvi (48 pages, 163044 bytes).

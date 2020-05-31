@@ -1,0 +1,113 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jsplain 95.9.23)  8 NOV 1999 11:03
+**midohp_u
+(midohp_u.tex
+** JSLiTeX ver.1.2......Isozaki
+(/usr/local/lib/TEX-NTT/inputs/slides.sty
+Document Style 'slides' -- released 04 Nov 91
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count83
+\@argb=\count84
+\@argc=\count85
+\@ctmpa=\count86
+\@ctmpb=\count87
+\@ctmpc=\count88
+\@ctmpd=\count89
+\@ctmpe=\count90
+\@darg=\dimen100
+\@bblen=\dimen101
+\ps@stream=\read1
+) (/usr/local/lib/TEX-NTT/inputs/mathsymb.sty)
+(/usr/local/lib/TEX-NTT/inputs/fancybox.sty
+Style option: `fancybox' v0.91 <92/11/25> (tvz)
+\@tempfbox=\box29
+\@tempdimc=\dimen102
+\@tempdimd=\dimen103
+\shadowsize=\dimen104
+\the@fancyput=\toks11
+\this@fancyput=\toks12
+\Verbatim@Outfile=\write3
+\Verbatim@Infile=\read2
+)
+No file midohp_u.aux.
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--45
+
+
+\hbox(0.0+0.0)x512.1496
+.\glue(\rightskip) 0.0
+
+[0
+
+] (midohp.tex [1] (midohpar.tex) [2] (midohpct.tex)
+Overfull \hbox (1.84344pt too wide) in paragraph at lines 73--75
+[]  
+
+\hbox(0.0+0.0)x512.1496, glue set - 1.0
+.\hbox(0.0+0.0)x509.38416
+..\hbox(-436.61499+0.0)x509.38416, glue set 509.38416fil
+...\glue 0.0
+...\hbox(0.0+203.75366)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+[3] [4] (midohpce.tex)
+Overfull \hbox (11.06122pt too wide) in paragraph at lines 53--136
+[][]    
+
+\hbox(0.0+0.0)x512.1496, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\hbox(0.0+0.0)x509.38416
+..\hbox(-436.61499+0.0)x509.38416, glue set 509.38416fil
+...\glue 0.0
+...\hbox(7.55038+254.78323)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.etc.
+
+[5] (midohpia.tex)
+Overfull \hbox (1.84344pt too wide) in paragraph at lines 122--148
+[][]  
+
+\hbox(0.0+0.0)x512.1496, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\hbox(0.0+0.0)x509.38416
+..\hbox(-436.61499+0.0)x509.38416, glue set 509.38416fil
+...\glue 0.0
+...\hbox(0.0+419.96924)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.etc.
+
+LaTeX Warning: \normalsize in math mode. on input line 153.
+
+Overfull \hbox (11.21638pt too wide) detected at line 161
+\twentyi p[]\twentyrm (\twentyi s\twentyrm ) := [] []
+
+\hbox(42.41199+32.04198)x512.1496
+.\twentyi p
+.\hbox(7.43999+0.0)x13.33603, shifted 3.11098
+..\seventeeni w
+.\twentyrm (
+.\twentyi s
+.\twentyrm )
+.etc.
+
+[6]) ) 
+Here is how much of TeX's memory you used:
+ 333 strings out of 11025
+ 3390 string characters out of 77754
+ 41414 words of memory out of 262141
+ 2892 multiletter control sequences out of 9500
+ 20872 words of font info for 110 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 19i,16n,19p,170b,659s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on midohp_u.dvi (7 pages, 14832 bytes).

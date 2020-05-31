@@ -1,0 +1,206 @@
+\abstract
+
+CTW法の実装において、計算精度が有限であることによる問題が生じた。その問題の内容と解決について述べる。
+%\section{オブジェクト指向とC++の基本}
+%
+%初めに言っておけば、CとC++に本質的な違いはない。CとC++の違いは、細々した改良と、幾らかの新しい概念が導入されたことであり、実際のプログラムコードの骨格は似たようなものになる。
+%
+%\subsection{クラスオブジェクト}
+%
+%オブジェクト指向に対する概念は、Function(=機能、関数)指向と呼ぶことができるだろう。例えば、Cのプログラムは、関数単位で設計していく。
+%
+%それに対し、C++ではクラス単位で設計していく。クラスとは、ユーザー定義型であり、Cの構造体を拡張して、メンバとして変数だけでなく関数も持てるようにしたものであ。クラスは型であり、それで宣言された変数はオブジェクトと呼ばれる。
+
+%メンバ関数は、実際はオブジェクト自身へのポインタ(thisポインタという)を暗黙のうちに受け取る普通の関数である。
+
+%以上のことに関して、CとC++の例を挙げる。
+%\begin{verbatim}
+%/*C++の場合*/
+%class vector{
+%private: /*外部からアクセス不可*/
+%  int x,y;
+%public: /*外部からアクセス可能*/
+%  vector( int ix, int iy ){ x=ix; y=iy; } /*コンストラクタ*/
+% double norm(){ return sqrt(x*x+y*y);
+%};
+%
+%int main(){
+%  vector v(1,1);
+%  return v.norm();
+%}
+%
+%/*Cの場合*/
+%struct vector{
+%  int x,y;
+%};
+%void construct_vector( struct vector *this, int ix, int iy )
+%{
+%  this->x = ix; this->y = iy;
+%}
+%double vector_norm( struct vector *this )
+%{
+%  return sqrt(this->x*this->y);
+%}
+%
+%int main(){
+%  structor vector v;
+%  construct_vector(&v,1,1);
+%  return vector_norm(&v);
+%}
+%\end{verbatim}
+
+\section{算術符号化}
+
+算術符号化は、区間$[0,1)$を、系列の予測確率に従って分割していく符号化法である。すなわち、予測確率は
+\begin{eqnarray*}
+  p(\lambda)&=&1 \\
+  p(x_{1}^t)&=&\sum_{a\in A}p(x_{1}^ta)
+\end{eqnarray*}
+を満たし、これを基に累積確率
+\begin{eqnarray}
+  F(x_{1}^t)=\sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\end{eqnarray}
+を求め、$F(x_{1}^t)+\frac{1}{2}p(x_{1}^t)$を符号として用いる。
+
+しかし、このままでは系列$x_{1}^t$が長くなればなるほど値が小さくなり、すぐにアンダーフローを起こしてしまう。有限精度での実装を行うための、Wittenらのアルゴリズムは次のようなものである。
+
+まず、$t$までに出力したビット数$L$、累積確率を$F(x_{1}^t)$、シフトを$B$とし、それぞれ$L:=0$、$F(\lambda):=0$、$B:=0$と初期化する。シフト\&スケーリングされた符号の範囲は${\mathcal F}=[2^{L}\{F(x_{1}^t)-B\},2^L\{F(x_{1}^t)-B+p(x_{1}^t)\})$となり、初期値は$[0,1)$である。$t:=1,2,\ldots$に対し、次の操作を行う。
+\begin{enumerate}
+ \item $F(x_{1}^t):=F(x_{1}^{t-1})+\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)$と更新する。
+ \item 範囲$\mathcal F$に対し、
+  \begin{enumerate}
+   \item ${\mathcal F}\in[0,0.5)$なら、0を出力。\\$L:=L+1$。
+   \item ${\mathcal F}\in[0.5,1)$なら、1を出力。\\$L:=L+1,B:=B+2^L$。
+   \item ${\mathcal F}\in[0.25,0.75)$なら、予約ビット数$r:=r+1$とする。\\$L:=L+1,B:=B+2^{L-1}$。
+  \end{enumerate}
+  という操作を、当てはまる条件がなくなるまで繰り返す。
+\end{enumerate}
+
+実装の際は、$B$や$L$という変数は使わず、随時範囲を書き換えていく。2-(c)は二進数で$.0111\ldots_B$や$.1000\ldots_B$という数値に対応し、例えば$r=3$の状態で0が出力されると、$0111$が出力され、$r:=0$にクリアされる。これらのことにより常にある一定以上の範囲の大きさ$(>0.25)$が保たれる。
+
+\section{実数の実装精度}
+
+CTW法においては実数の演算が必要になる。この実数には、小数部16ビット、指数部32ビットの浮動小数点実数クラス\verb/float_ex/を作成して使用した。小数部が16ビットであるのは、乗除算の実装が容易なためである。
+
+整数による算術符号化の際の精度$K$は、2ビットから31ビットの間で指定できる。範囲の最大値は$2^{(ビット数)}$となり、これは概念上1に対応する。
+
+\section{CTW法の実装における精度}
+
+\subsection{doubleの限界}
+
+最初は、\verb/float_ex/を使わず、\verb/double/で済ませていた。
+
+Krichevsky-Trofimov推定量は、文字$a$のカウントが1増えると$\frac{n_{s}^a+\frac{1}{2}}{n_s+\frac{m}{2}}$倍になる。この推定量は$\prod_{a\in A}(\theta_{s}^a)^{n_{s}^a}$を推定する値であるから、指数関数に近い速さで小さくなる。これだと、\verb/double/ではアンダーフローの可能性があると考え、文脈木の全ノードを、$L$が1増える毎に$2^{\frac{1}{2^d}}$倍した。ここで、$d$は、ノードの文脈木における深さを表す。これは算術符号の節において、$p(x_{1}^t)$を求める代わりに$2^Lp(x_{1}^t)$を求めていることに相当する。
+
+これで動かすと、入力系列が短いとき、あるいは木の深さを0にしたときは動いたが、そうでないときは途中でおかしくなってしまった。原因を調べると、親ノードと子ノード、あるいは子ノード間のカウントの差が原因でオーバーフローあるいはアンダーフローしていると分かった。前述のようにKT推定量は指数関数に近い速さで小さくなる。ということは、KT推定量の比は、カウントの差に対して指数関数に近い速さで広がっていく。これが原因で、指数部が11ビットしかない\verb/double/においてオーバーフローあるいはアンダーフローが起きていた。そこで、\verb/float_ex/を作成した。
+
+\subsection{範囲の分割}
+
+全ノードに乗算を行うのは効率が悪いので、ただ$p_w(\lambda)$に$2^L$をかけるようにした。
+
+こうしているうちに、切り捨て誤差等による精度不足の問題が見つかった。図\ref{fig:lackprec}のような重なりが生じてしまう問題である。本来は$\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)$を求めるべきなのだろう。これはバイナリの場合、$x_t=0$を仮定して仮の重み付け確率$\tilde p_w(\lambda)$を求めることに相当する。しかし$x_t=1$なら$p(x_{1}^t)$を求めて範囲を上から狭めた方が、$\tilde P_w(\lambda)$を求めずに木の更新と同時に$p(x_{1}^t)$を求めることができるので、符号化の際の文脈木に関する計算量が半分ですむ。このため、上から$p(x_{1}^{t-1}1)$を割り当てている。
+
+\begin{figure}[htbp]
+\input{ctwplp.tex}
+\vspace*{4cm}
+\caption{精度不足のイメージ}
+\label{fig:lackprec}
+\end{figure}
+
+ここでまず、$2^{L_{t-1}}p_w(\lambda)$という形でいきなり$p(x_{1}^t)$を使うのではなく、符号の範囲$2^{L_{t-1}}p(x_{1}^{t-1})$に比$p(x_{1}^t)/p(x_{1}^{t-1})$をかけることにした。比を取ることで累積誤差が抑えられる分、ある程度ましにはなったのだが、やはり$p(x_{1}^{t-1}0)$と$p(x_{1}^{t-1}1)$の和が$p(x_{1}^{t-1})$を超えてしまうことがあるという問題は残り、結局、二度手間は仕方ないものとして、$x_t=1$の時の符号の範囲を$[F(x_{1}^{t-1})+p(x_{1}^{t-1}0),F(x_{1}^{t-1})+p(x_{1}^{t-1}0)+(p(x_{1}^{t-1})-p(x_{1}^{t-1}0)))$という形で求めることにした。
+
+\subsection{実装例}
+
+最後に、実際の \verb/encode/ ルーチンを示す。この中で、 \verb/compute_threshold/ において$p(x_{1}^{t-1}0)$を求めている。その次のアンダーフローに関する部分は、$\forall a\in A$に対して、$p(x_{1}^{t-1}a)\ge 2^{-(L_{t-1}+K)}$でなければならないためである。 \verb/prevPw/ は、$p(x_{1}^{t-1})$に対応する。 \verb/p_past/ は$t,t-1,\ldots$に対応する入力データを保持するリストの先頭ノードであり、$x_t=\verb/p_past->c/$である。 \verb/Pc0/ は$2^{L_{t-1}+K}p(x_{1}^{t-1}0)$である。narrow code range のところで、 \verb/p_past->c/ が1のときも \verb/Pc0/ で新しい範囲を求めている。
+
+\baselineskip 10pt
+\begin{verbatim}
+#define If(X) if(X)(X)
+/**********  encode input sequence  *********/
+
+int ctw_coder ::
+  encode(
+    bit_input *p_bi,
+    bit_output *p_bo
+  )
+{
+  float_ex prevPw=1;
+  unsigned long t=0,  // index of source data
+    L=0;         // length of compressed data
+  unsigned int Low, High, Range,
+              // range of code is [Low,High+1)
+    Pc0;   // coding probability if input is 0
+
+  init();
+
+  Low = 0;
+  High = top;
+
+  while( (p_past->c=p_bi->input_bit()) >= 0 ){
+    t++;
+
+    Range = High - Low + 1;
+
+    /** CTW part **/
+
+    /* find coding probability */
+
+    Pc0 = (int)
+      ( compute_threshold( p_root, p_past )
+        * (double) Range
+        / prevPw
+      );          // for finite precision
+
+    /* underflow */
+
+    if( Pc0 < 1 ) Pc0 = 1;
+    else if( Pc0 > Range-1 ) Pc0 = Range-1;
+
+    /* narrow code range */
+
+    if( p_past->c == 0 ) High = Low + Pc0 - 1;
+    else Low += Pc0;
+
+    /* update context tree */
+    
+    update_tree( p_root, p_past->c, p_past );
+
+    /** arithmetic coding part **/
+
+    /* scaling */
+    while(1){
+
+      if( High < half ){
+        If(p_bo)-> output_bit(0); L++;
+      } else if( Low >= half ){
+        Low -= half;
+        High -= half;
+        If(p_bo)-> output_bit(1); L++;
+      } else if( first_qtr <= Low
+                 && High < third_qtr ){
+        Low -= first_qtr;
+        High -= first_qtr;
+        If(p_bo)-> incr_reverse_bits(); L++;
+      } else break;
+
+      Low = Low * 2;
+      High = High * 2 + 1;
+
+    }
+
+    prevPw = p_root-> Pw;
+    update_past();
+
+  }
+
+  /* decide final range */
+  p_bi-> finish();
+  If(p_bo)-> incr_reverse_bits(); L++;
+  If(p_bo)-> output_bit( Low>=first_qtr ); L++;
+  If(p_bo)-> set_size(t);
+  If(p_bo)-> finish();
+
+  return L;
+}
+
+\end{verbatim}

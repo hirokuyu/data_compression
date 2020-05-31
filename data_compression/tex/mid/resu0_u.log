@@ -1,0 +1,234 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jlplain 95.9.23)  8 NOV 1999 11:18
+**resu0_u
+(resu0_u.tex
+** JLaTeX ver.1.3......Isozaki
+(/usr/local/lib/TEX-NTT/jinputs/resume.sty
+Document Style 'resume' 18, Oct, 1989.
+(/usr/local/lib/TEX-NTT/jinputs/jarticle.sty
+Document Style 'jarticle'. Released 4 Nov 1988
+(/usr/local/lib/TEX-NTT/jinputs/jart10.sty)
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\c@figure=\count88
+\c@table=\count89
+
+Conversion jlarge --> large etc.
+)
+\@titlespace=\skip41
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count90
+\@argb=\count91
+\@argc=\count92
+\@ctmpa=\count93
+\@ctmpb=\count94
+\@ctmpc=\count95
+\@ctmpd=\count96
+\@ctmpe=\count97
+\@darg=\dimen100
+\@bblen=\dimen101
+\ps@stream=\read1
+) (/usr/local/lib/TEX-NTT/inputs/mathsymb.sty)
+\c@Definition=\count98
+\c@Theorem=\count99
+ (resu0_u.aux) [1
+
+
+] (resu0.tex
+Underfull \hbox (badness 2111) in paragraph at lines 2--3
+と い う 手 法 で あ る。 こ こ で は、 ま ず 算 術 符 号 に つ い て 述
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.76729
+.\tendmjhira と
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira い
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira う
+.etc.
+
+
+Underfull \hbox (badness 2057) in paragraph at lines 18--19
+[]算 術 符 号 は、 値 $\tenmi F\tenrm (\tenmi x[]\tenrm ) + []\tenmi p\tenrm (\
+tenmi x[]\tenrm ) \tensy 2 \tenrm [0\tenmi ; \tenrm 1)$ の、 二 進
+
+\hbox(8.44843+3.44841)x244.0748, glue set 2.74326
+.\hbox(0.0+0.0)x10.00002
+.\tendmje 算
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmje 術
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.etc.
+
+
+Underfull \hbox (badness 2111) in paragraph at lines 18--19
+数 に よ る 小 数 表 現 で あ る。 符 号 と し て 必 要 な ビッ ト 数 は
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.76729
+.\tendmjf 数
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira に
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira よ
+.etc.
+
+
+Underfull \hbox (badness 1377) in paragraph at lines 22--23
+[]系 列 $\tenmi x[]$ に 対 し $x[]; x[]; [] ; x[]; ^^U$ を そ れ ぞ れ $x[]$ の
+ ポ ス
+
+\hbox(9.43745+3.62076)x244.0748, glue set 2.39946
+.\hbox(0.0+0.0)x10.00002
+.\tendmjc 系
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjl 列
+.\glue(\@@jmathkanjiskip) 2.28854
+.etc.
+
+
+Overfull \hbox (13.8737pt too wide) in paragraph at lines 28--30
+と な る。 た だ し、 $\tenmi s[]$ は $@T$ に 含 ま れ る $x[]$ の ポ ス ト フ
+ィッ
+
+\hbox(8.78888+3.32217)x244.0748
+.\tendmjhira と
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira な
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira る
+.etc.
+
+
+Overfull \hbox (21.27393pt too wide) in paragraph at lines 34--35
+葉 $\tenmi @T$ に お い て、 \tenrm (3[]) の よ う に $\tenmi p\tenrm (\tenmi x
+[]\tensy j\tenmi ^^R[]; T\tenrm ) = [][](\tenmi ^^R[]\tenrm )[]$
+
+\hbox(8.79948+4.36115)x244.0748
+.\tendmjk 葉
+.\glue(\@@jmathkanjiskip) 2.28854
+.\mathon
+.\tenmi @
+.\kern0.55554
+.etc.
+
+
+Underfull \hbox (badness 2237) in paragraph at lines 34--35
+分 布 $\tenmi w[]\tenrm (\tenmi ^^R[]\tensy j\tenmi T\tenrm )$ と し て Dirich-
+let 分 布 を 仮 定 し、 そ れ と
+
+\hbox(7.70879+2.5)x244.0748, glue set 2.81854
+.\tendmjj 分
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjj 布
+.\glue(\@@jmathkanjiskip) 2.28854
+.\mathon
+.etc.
+
+
+Overfull \hbox (0.53609pt too wide) in paragraph at lines 34--35
+\tenmi p\tenrm (\tenmi x[]\tensy j\tenmi ^^R[]; T\tenrm )$ と の 混 合 を 取 る
+ こ と で、 Krichevsky-Trofimov
+
+\hbox(7.93448+2.5)x244.0748, glue set - 1.0
+.\tenmi p
+.\tenrm (
+.\tenmi x
+.\vbox(10.41658+0.0)x4.48613, shifted 2.4821
+..\hbox(4.30556+0.0)x3.52084
+...\sevmi t
+..\kern1.59991
+..\hbox(4.51111+0.0)x4.48613
+...\sevrm 1
+.\tensy j
+.etc.
+
+
+Underfull \hbox (badness 1371) in paragraph at lines 37--39
+と な る。 \tenrm KT 推 定 量 は、 初 期 値 が 1 で あ り、 $\tenmi x[]$ に お 
+い
+
+\hbox(8.78888+2.6666)x244.0748, glue set 2.39613
+.\tendmjhira と
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira な
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira る
+.etc.
+
+[2
+
+]
+Underfull \hbox (badness 4981) in paragraph at lines 87--88
+[]例 え ば， あ る ノー ド $\tenmi s$ が 文 脈 木 $T[]$ に 追 加 さ れ た と す
+
+
+\hbox(7.70879+2.49998)x244.0748, glue set 3.68193
+.\hbox(0.0+0.0)x10.00002
+.\tendmjl 例
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira え
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.etc.
+
+
+Overfull \hbox (21.07298pt too wide) detected at line 99
+[][][]\tenmi p[]\tenrm (\tenmi s\tenrm ) := []
+
+\hbox(23.50021+18.50021)x244.0748
+.\hbox(0.0+0.0)x0.0
+.\hbox(0.0+0.0)x0.0
+.\write1{\newlabel{eq:pwincr}{{9}{\thepage }}}
+.\tenmi p
+.\hbox(3.01389+0.0)x6.4734, shifted 1.49998
+..\sevmi w
+.etc.
+
+
+Overfull \hbox (6.21736pt too wide) in paragraph at lines 107--108
+[] []\tenrm Ian H. Wit-ten, Rad-ford M.Neal, and John G. Cleary,
+
+\hbox(7.5+2.5)x218.51918, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\glue 0.0
+.\hbox(7.5+2.5)x0.0
+..\glue 0.0
+..\glue -20.55562
+..\glue -5.0
+..\hbox(7.5+2.5)x20.55562, glue set 10.00003fil
+...\glue 0.0 plus 1.0fil
+...\tenrm [
+...\tenrm 1
+...\tenrm ]
+..\glue 5.0
+.\penalty 0
+.\tenrm I
+.etc.
+
+
+Overfull \hbox (2.11247pt too wide) in paragraph at lines 109--110
+\tenrm ties,'' \tenit IEEE Trans. In-form. The-ory, \tenrm vol. IT-41, May
+
+\hbox(6.94444+1.94444)x218.51918, glue set - 1.0
+.\tenrm t
+.\tenrm i
+.\tenrm e
+.\tenrm s
+.\tenrm ,
+.etc.
+
+) [3] [4
+
+] (resu0_u.aux) ) 
+Here is how much of TeX's memory you used:
+ 316 strings out of 10525
+ 3036 string characters out of 75156
+ 47158 words of memory out of 262141
+ 3066 multiletter control sequences out of 9500
+ 21766 words of font info for 125 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 15i,9n,16p,494b,432s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on resu0_u.dvi (4 pages, 17900 bytes).

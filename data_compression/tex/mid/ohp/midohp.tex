@@ -1,0 +1,163 @@
+\newcommand{\triangleeq}{{\stackrel{\triangle}{=}}}
+
+\begin{slide}{}
+
+\underline{\tiny 平成11年度 電子情報学科 中間発表会資料}
+
+\vspace{2cm}
+\begin{center}
+{\Large 文脈木重み付け法と\\
+増分文脈アルゴリズム}
+
+\vspace{2cm}
+{\normalsize 情報システム学講座~~川端研究室}\\
+{\large 清~~水~~弘~~和}
+
+\vfill
+\begin{minipage}[cbt]{0.6\textwidth}
+\begin{quote}
+\underline{\underline{\large 内~~容}}
+\normalsize
+\begin{enumerate}
+ \item 算術符号
+ \item 文脈木の定義
+ \item 文脈木重み付け法
+ \item 増分文脈アルゴリズム
+\end{enumerate}
+\end{quote}
+\end{minipage}
+\end{center}
+\vspace{2cm}
+\end{slide}
+
+\begin{slide}
+\normalsize
+
+\begin{center}
+\framebox{算術符号}
+\end{center}
+
+\framebox{$A=\{0,1\}$の時の算術符号化の様子}
+\vspace{-1.5cm}
+
+\hspace{2cm}\input{midohpar.tex}
+\vspace{10.5cm}
+
+\framebox{累積確率}
+\[
+  F(x_{1}^n) = \sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\]
+
+\framebox{符号長}
+\[
+  L(x_{1}^n) \le -\log_2 p(x_{1}^n) + 2
+\]
+\vspace{0.5cm}
+\end{slide}
+
+\begin{slide}
+\normalsize
+
+\begin{center}
+\framebox{\Large 文脈木}
+\end{center}
+
+\framebox{ポストフィックス}
+\begin{quote}
+\underline{\underline{例}}
+
+$x_{-\infty}^n=\cdots 01101$~~のポストフィックス\\
+$\Rightarrow\cdots,01101,1101,101,01,1,\lambda$
+\end{quote}
+
+\framebox{文脈木}\\
+\input{midohpct.tex}
+
+\vspace{7cm}
+\underline{\underline{例}}
+
+$x_{-\infty}^3=\cdots 00|101$の時
+\begin{eqnarray*}
+p(x_{1}^3|x_{-\infty}^0,\theta,T)&=&\theta_{00}^1\cdot \theta_{1}^0 \cdot \theta_{10}^1\\
+&=&\prod_{s\in \partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}
+\end{eqnarray*}
+\end{slide}
+
+\begin{slide}
+\normalsize
+
+\begin{center}
+ \framebox{\Large 文脈木重み付け法}
+\end{center}
+
+\framebox{$A={0,1}$の時のKT推定量}
+\begin{eqnarray*}
+  p_e(n_{s}^0,n_{s}^1)\triangleeq \!\int_{0}^1\!\frac{1}{\pi\sqrt{(1-\theta)\theta}}(1-\theta)^{n_{s}^0}\theta^{n_{s}^1}d\theta \ \ \\\\
+\Rightarrow (\theta_{s}^0)^{n_{s}^0}(\theta_{s}^1)^{n_{s}^1}
+\end{eqnarray*}
+
+\framebox{KT推定量の逐次計算}
+\begin{eqnarray*}
+  p_e(0,0)&=&1\\
+  p_e(n_{s}^0+1,n_{s}^1)&=&\frac{n_{s}^0+1/2}{n_{s}^0+n_{s}^1+1}p_e(n_{s}^0,n_{s}^1) \\\\
+  p_e(n_{s}^0,n_{s}^1+1)&=&\frac{n_{s}^1+1/2}{n_{s}^0+n_{s}^1+1}p_e(n_{s}^0,n_{s}^1) \\
+\end{eqnarray*}
+
+\framebox{$T$の事前分布}
+\begin{eqnarray*}
+  w_1(T)=\prod_{s\in \partial T}\gamma(s)\prod_{s\in T}\bar\gamma(s) \\\\
+  0\le\gamma(s),\bar\gamma(s)\le 1\ {\mathrm{and}\ } \gamma(s)+\bar\gamma(s)=1
+\end{eqnarray*}
+\end{slide}
+
+\begin{slide}
+\normalsize
+\framebox{文脈木重み付け法の与える推定確率}
+\[
+ p(x_{1}^t)=\sum_{T\subset A^*}w_1(T)\prod_{s\in\partial T}p_e(n_{s}^0,n_{s}^1)
+\]
+
+\framebox{文脈木上での再帰計算}
+\[
+  p_w(s):=
+   \left\{
+    \begin{array}{ll}
+     \gamma(s)p_e(s)+\bar\gamma(s)p_w(0s)p_w(1s) & {\mathrm{if}\ } s\in T^\prime \\
+     p_e(s) & {\mathrm{if}\ } s\in\partial T^\prime
+    \end{array}
+   \right.
+\]
+
+\underline{\underline{例}}
+$~~~x_{-\infty}^3=\cdots 00|101$、$T^\prime=\{\lambda,1\}$、\\$s\in T^\prime$において$\gamma(s)=\bar\gamma(s)=\frac{1}{2}$のとき
+
+\input{midohpce.tex}
+\vspace{8cm}
+\end{slide}
+
+\begin{slide}
+\normalsize
+\begin{center}
+ \framebox{\Large 増分文脈アルゴリズム}
+\end{center}
+
+$x_{-\infty}^3=\cdots |101$のとき
+\vspace{-1cm}
+
+\input{midohpia.tex}
+
+\vspace{15cm}
+\small
+\[
+  p_w(s):=
+\normalsize
+   \left\{
+    \begin{array}{ll}
+     \gamma(s)p_e(s)+\bar\gamma(s)\cdot \frac{1}{2}p_w(0s)p_w(1s) & {\mathrm{if}\ }s\in T_{t-1} \\
+     p_e(s) & {\mathrm{if}\ } s=v_t \\
+     1 & {\mathrm{if}\ } s\not\in T_t
+    \end{array}
+   \right.
+\]
+
+\end{slide}

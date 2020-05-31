@@ -1,0 +1,496 @@
+\baselineskip 11pt              % 改行幅の設定(デフォルトは12pt? )。
+\nopagenumbers                  % ページナンバを出力しないときに指定する。
+\soturon
+\teacher{川端勉助教授}
+\course{情報システム学講座}
+\eventname{卒論発表資料} 
+\date{2000年 2月 21日}   
+\title{\Large 増分文脈木重み付け法の新しい設計とその評価} %タイトルを書く．
+\studentnumber{9511089}         %学籍番号
+\author{清水 弘和}             %名前
+
+\unitlength 0.001in
+
+%\setlength{\leftmargin}{5pt}
+\setlength{\leftmargini}{15pt}
+\setlength{\leftmarginii}{8pt}
+\setlength{\leftmarginiii}{0pt}
+
+\begin{document}
+\maketitle
+
+\vspace{-0.2cm}
+\section{はじめに}
+\vspace{-0.2cm}
+
+\noindent
+データ圧縮法である文脈木重み付け法(CTW法)の、一つの変形である増分CTW法について、より柔軟な拡張を可能にする新しい設計を考え、また実験的な評価も行った。
+
+\vspace{-0.2cm}
+\section{基礎定義}
+\vspace{-0.2cm}
+\noindent
+ここでは、情報源アルファベットとしてバイナリアルファベット$A\!=\!\{0,1\}$を用いる。すなわち、情報源は時刻$t$にシンボル$x_t\!\in$$A$を出力すると仮定する。情報源系列を$x_{i}^j\!=$$x_ix_{i+1}$$\ldots x_j$と表し、$x_{i}^j,x_{i+1}^j,$$\ldots ,x_j,\lambda$をそのsuffixであると言う。ここで$\lambda$は空の系列である。順序$\prec$は、$x\!=$$0$、$y\!=$$1$のときのみ$x\!\prec\! y$となり、$x_{1}^n$と$y_{1}^m$に関してはその辞書式順序に従う。ある系列の集合は、その要素のsuffixが全てその集合に含まれる時、suffix treeであると言われる。例えば、図\ref{fig:suffixtree}の$T$のようなものである。ここで、外部葉集合$\partial T$は、$T$の葉の全ての子の集合を表している。外部葉$s\in\partial T$にパラメータ$\theta_{s}^0$、$\theta_{s}^1$を与えたものを木情報源と呼ぶ。このとき$s\in\partial T$は文脈と呼ばれ、$\theta_{s}^a$は、「文脈$s$の後に情報源が$a$を生成する確率」を表す。例えば、$\theta_{00}^1$は「00の後に1を生成する確率」を表す。
+%し、また明らかに$\theta_{00}^0=1-\theta_{00}^1$である。
+
+\begin{figure}[htb]
+\begin{minipage}{2cm}\hspace{2cm}\end{minipage}
+\begin{minipage}{5cm}
+\begin{picture}(3200,800)
+\special{pn 8}%
+\special{pa 100 -50}%00
+\special{pa 400 -400}%0
+\special{pa 800 -750}%lambda
+\special{pa 1200 -400}%1
+\special{pa 1500 -50}%11
+\special{pa 1200 -400}%1
+\special{pa 1000 -50}%01
+\special{fp}%
+\special{pa 600 -50}%10
+\special{pa 400 -400}%0
+\special{fp}%
+\put(880,700){$\lambda$}%
+\special{sh 1}%
+\special{ar 800 -750 50 50 0 6.29}%
+\put(480,350){0}%
+\special{sh 1}%
+\special{ar 400 -400 50 50 0 6.29}%
+\put(1280,350){1}%
+\special{sh 1}%
+\special{ar 1200 -400 50 50 0 6.29}%
+\put(180,0){00}%
+\special{sh 0}%
+\special{ar 100 -50 50 50 0 6.29}%
+\put(680,0){10}%
+\special{sh 0}%
+\special{ar 600 -50 50 50 0 6.29}%
+\put(1580,0){11}%
+\special{sh 0}%
+\special{ar 1500 -50 50 50 0 6.29}%
+\put(1080,0){01}%
+\special{sh 0}%
+\special{ar 1000 -50 50 50 0 6.29}%
+\put(1480,700){$\in T$}%
+\special{sh 1}%
+\special{ar 1400 -750 50 50 0 6.29}%
+\put(1480,550){$\in\partial T$}%
+\special{sh 0}%
+\special{ar 1400 -600 50 50 0 6.29}%
+\end{picture}
+\end{minipage}
+\caption{深さ2のsuffix tree $T\cup\partial T$}
+\label{fig:suffixtree}
+\end{figure}
+
+\vspace{-0.3cm}
+\section{算術符号}
+\vspace{-0.2cm}
+\noindent
+系列$x_{1}^n$に対して符号化確率$p(x_{1}^n)$が与えられたとする。この時、累積確率($y_{1}^n\prec x_{1}^n$を満たす$y_{1}^n$についての$p(y_{1}^n)$の和)は、
+%\begin{equation}\label{eq:cum1}
+%  F(x_{1}^n):=\sum_{y_{1}^n\in A^n:y_{1}^n\prec x_{1}^n}p(y_{1}^n)
+%\end{equation}
+%は、$n$を固定した場合、$x_{1}^n$に対して一意に定まる。これは、
+\begin{equation}\label{eq:cum2}
+  F(x_{1}^n):=\sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\end{equation}
+と、逐次的に求めることができる。
+
+算術符号は、値$F(x_{1}^n)+\frac{1}{2}p(x_{1}^n)\in [0,1)$を、符号として用いる。符号として必要なビット数は、計算精度を無限とすると、$-\log p(x_{1}^n)+2[{\rm bits}]$以下となる。
+
+CTW法は、符号化確率を与える。
+
+\vspace{-0.3cm}
+\section{文脈木重み付け法}
+\vspace{-0.2cm}
+\noindent
+文脈木重み付け法による符号化では、重み付け文脈木を用いる。重み付け文脈木はsuffix treeであり、外部葉も含めた各ノード$s$は、変数として、カウント$(n_{s}^0,n_{s}^1)$、推定確率$p_e(s)$、重み付け確率$p_w(s)$を持つ。
+
+$(n_{s}^0,n_{s}^1)$は、それぞれ、入力系列$x_{1}^t$において文脈$s$の後に0、1が表れた数を表す。
+
+$p_e(s)$はKrichevsky-Trofimov(KT)推定量であり、
+\begin{equation}
+p_{KT}(n_{s}^0,n_{s}^1)=\frac{\frac{1}{2}\cdot\frac{3}{2}\cdot\ldots\cdot(n_{s}^0-\frac{1}{2})\cdot\frac{1}{2}\cdot\frac{3}{2}\cdot\ldots\cdot(n_{s}^1-\frac{1}{2})}{1\cdot 2\cdot\ldots\cdot n_s}
+\end{equation}
+と定義される。ここで、$n_s=n_{s}^0+n_{s}^1$である。このKT推定量は、$p_{KT}(0,0)=1$であり、
+\vspace{-0.2cm}
+\begin{equation}\label{eq:ktupdate}
+\left\{
+ \begin{array}{l}
+   p_{KT}(n_{s}^0+1,n_{s}^1)=\frac{n_{s}^0+\frac{1}{2}}{n_s+1}p_{KT}(n_{s}^0,n_{s}^1) \\
+   p_{KT}(n_{s}^0,n_{s}^1+1)=\frac{n_{s}^1+\frac{1}{2}}{n_s+1}p_{KT}(n_{s}^0,n_{s}^1)
+ \end{array}
+\right.
+\vspace{-0.2cm}
+\end{equation}
+と逐次的に更新できる。
+
+$p_w(s)$は、
+\vspace{-0.2cm}
+\begin{equation}
+ p_w(s)=\left\{
+  \begin{array}{ll}
+   \frac{1}{2}p_e(s)+\frac{1}{2}p_w(0s)p_w(1s) & s\in{\cal T} \\
+   p_e(s) & s\in\partial{\cal T}
+  \end{array}
+ \right.
+\vspace{-0.2cm}
+\end{equation}
+と、重み付け文脈木${\cal T}$に関して再帰的に定義される。そして、ルートノードにおける重み付け確率$p_w(\lambda)$が符号化確率となる。
+
+%符号化アルゴリズムは次のようになる。
+
+%\noindent \fbox{\bf アルゴリズム} $t=1,2,\ldots,n$に対して次の処理を行う。
+%$x_{-\infty}^{t-1}$の$\partial{\cal T}$に含まれる唯一のsuffixを$u_t$とする。$u_t$から、$u_t$の全てのsuffixであるノードに対してボトムアップに、
+%\begin{enumerate}
+% \item $\displaystyle p_e(s):=\frac{n_{s}^{x_t}+\frac{1}{2}}{n_s+1}$
+% \item $p_w(s):=\left\{
+%  \begin{array}{ll}
+%   \frac{1}{2}p_e(s)+\frac{1}{2}p_w(0s)p_w(1s) & s\in{\cal T} \\
+%   p_e(s) & s\in\partial{\cal T}
+%  \end{array}
+% \right.$
+% \item $n_{s}^{x_t}:=n_{s}^{x_t}+1$
+%\end{enumerate}
+%と更新して行く。そして$p_w(\lambda)$を符号化確率として算術符号化を行う。
+
+%符号化器は$x_{-\infty}^0$を知ることができない。そのため、$x_{-\infty}^0$は適当に仮定する必要がある。また、${\cal T}$が固定されており、${\cal T}$よりも深い情報源に対しては性能が低下する。次節では、これらの制限を取り払う変形を与える。
+
+\vspace{-0.3cm}
+\section{増分文脈木重み付け法}
+\vspace{-0.2cm}
+\noindent
+まずは符号化アルゴリズムを示す。
+
+\noindent \fbox{\bf アルゴリズム} $C(s,x_{-\infty}^{t-1})$を、$s$を${\cal T}_t$に追加するなら真、しないなら偽を返す{\bf 任意の}条件関数とする。${\cal T}_0:=\{\phi\}$とする。つまり、重み付け文脈木は空の状態から始める。$t=1,2,\ldots,n$に対して、次の処理を行う。
+\begin{enumerate}
+ \item $x_{1}^{t-1}$の$\partial{\cal T}_{t-1}$における唯一のsuffix $v_t$において、
+  \begin{enumerate}
+   \item $v_t$が生成されていない場合、$v_t$を生成し、$p_e(v_t)\!:=\!p_w(v_t)\!:=\!\frac{1}{2}$、$n_{s}^{x_t}\!:=\!1$と初期化。$u_t\!:=\!v_t$とする。
+   \item $v_t$が生成されている場合、
+    \begin{enumerate}
+     \item $C(v_t,x_{-\infty}^{t-1})$が真ならば、${\cal T}_t:={\cal T}_{t-1}\cup\{v_t\}$とし、$\partial{\cal T}_t$における$x_{-\infty}^{t-1}$の唯一のsuffix $u_t$を生成し、$p_e(u_t)$と$p_w(u_t)$を$\frac{1}{2}\cdot p_e(v_t)$、$n_{u_t}^{x_t}:=1$と初期化。
+     \item $C(v_t,x_{-\infty}^{t-1})$が偽ならば、$u_t:=v_t$とし、$p_w(u_t):=p_e(u_t):=p_e(u_t)\frac{n_{u_t}^{x_t}+1/2}{n_{u_t}+1}$、$n_{u_t}^{x_t}:=n_{u_t}^{x_t}+1$と更新。
+    \end{enumerate}
+  \end{enumerate}
+ \item $u_t$以外の全ての$u_t$のsuffixであるノード$s$に対し、ボトムアップに、$p_e(s):=p_e(s)\frac{n_{s}^{x_t}+1/2}{n_s+1}$、$p_w(s):=\frac{1}{2}p_e(s)+\frac{1}{2}p_w(0s)p_w(1s)$、$n_{s}^{x_t}:=n_{s}^{x_t}+1$と更新。
+ \item $p_w(\lambda)$を符号化確率として算術符号化を行う。\hfill$\triangle$
+\end{enumerate}
+
+%図\ref{fig:ctreeincrexpl}は、時刻$t$に新しいノード$u_t$が追加される様子を表している。%
+%
+%\begin{figure}[htb]
+%\begin{minipage}{0.3cm}~\end{minipage}
+%\begin{minipage}{7cm}
+%\begin{picture}(3200,700)
+%\special{pn 8}%
+%\special{pa 100 -680}%left
+%\special{pa 50 -600}%
+%\special{fp}%
+%\special{sh 0}%
+%\special{ar 50 -600 50 50 0 6.29}%
+%\put(160,630){$(2,0)$}%
+%\put(160,490){$p_e(v_t)\!=\!\frac{3}{8}$}%
+%\special{ar 150 -50 50 50 0 6.29}%
+%\put(220,0){$\in\!\!\partial{\cal T}_{t-1}$}%
+%\special{pa 1000 100}%center
+%\special{pa 1000 -700}%
+%\special{da 0.05}%
+%\special{pa 1600 -680}%right
+%\special{pa 1550 -600}%
+%\special{fp}%
+%\special{sh 1}%
+%\special{ar 1550 -600 50 50 0 6.29}%
+%\put(1660,730){$(2,1)$}%
+%\put(1660,590){$p_e(v_t)\!=\!\frac{3}{8}\!\cdot\!\frac{1/2}{2+0+1}$}%
+%\special{pa 1550 -600}%
+%\special{pa 1350 -300}%
+%\special{dt 0.03}%
+%\special{pa 1550 -600}%
+%\special{pa 1750 -300}%
+%\special{fp}%
+%\special{sh 0}%
+%\special{ar 1350 -300 50 50 0 6.29}%
+%\special{sh 0}%
+%\special{ar 1750 -300 50 50 0 6.29}%
+%\put(1860,330){$(0,1)$}%
+%\put(1860,190){$p_e(u_t)\!=\!\frac{1}{2}\!\cdot\!\frac{3}{8}$}%
+%\special{ar 1500 -50 50 50 0 6.29}%
+%\put(1570,0){$\in\!\!\partial{\cal T}_t$}%
+%\special{ar 1680 -600 1000 680 0.6 3.0}%
+%\special{pa 680 -420}%
+%\special{pa 1070 0}%
+%\special{pa 1800 160}%
+%\special{pa 2250 70}%
+%\special{pa 2508 -115}%
+%\special{sp}% 
+%\special{pa 2380 -90}%
+%\special{pa 2508 -117}%
+%\special{pa 2450 0}%
+%\special{fp}%
+%\end{picture}
+%\end{minipage}
+%\caption{文脈木の増大の例}
+%\label{fig:ctreeincrexpl}
+%\vspace{-0.3cm}
+%\end{figure}
+
+図\ref{fig:ctreeincr}aは、$C(s,x_{-\infty}^{t-1})\!=\!n_s\!\ge\! 2$として、$x_{1}^3\!=\!011$に対して増分CTW法を適用した時の、文脈木の増大の様子を示している。図中、括弧で囲まれた数字は$(n_{s}^0,n_{s}^1)$を表しており、$\bigcirc$は、$\partial{\cal T}_t$に含まれているが、カウントがまだないので未生成であるノードを表している。$t\!=\!3$の時点で、$\lambda$のカウントは3、その子ノードのカウントの和は1。前節で述べた基本的なCTW法では、これらの値が一致していなければ、重み付け確率$p_w$は確率分布として成立しない。
+%これらは本来一致していなければならない。
+%この不整合が生じている状態で基本形のCTW法を適用しても、得られる$p_w(\lambda)$は確率分布として成立しない。
+$p_w$が確率分布となるためには、重み付け文脈木${\cal T}$が時刻に依らず一定である必要がある。
+%しかし上のアルゴリズムでは${\cal T}$が増大している。
+しかしそれでも上のアルゴリズムが成立することを示すために、まず、仮想子ノードを導入することで${\cal T}$が一定と見なせる事を示し、次に、このアルゴリズムに従えば仮想子ノードを実際には保持する必要がない事を述べる。
+
+
+%これを解決するために、
+図\ref{fig:vircnodea}のように、あるノード$s$が、$0s$と$1s$以外に仮想子ノード$\varepsilon s$を持っていると仮定する。$\varepsilon s$は、$s$でカウントされるが$0s$でも$1s$でもカウントされないカウント値を保持する。このとき、$s$における重み付け確率は、
+\vspace{-0.2cm}
+\begin{equation}\label{eq:epspw}
+p_w(s)=\frac{1}{2}p_e(s)+\frac{1}{2}p_e(\varepsilon s)p_w(0s)p_w(1s)
+\vspace{-0.2cm}
+\end{equation}
+とすべきである。
+
+次に、図\ref{fig:vircnodeb}を考える。図\ref{fig:vircnodeb}(a)のように、ある葉ノード$s$が$p_e(s)=\alpha$を持っているとき、$p_w(s)=\alpha$である。また、図\ref{fig:vircnodeb}(b)のように、$s$と$\varepsilon s$が$p_e(s)\!=\!p_e(\varepsilon s)\!=\!\alpha$、$0s$と$1s$が$p_e(0s)\!=\!p_e(1s)\!=\!1$を持っているときには、$p_w(s)\!=\!\alpha$となる。$s$における重み付け確率が等しいので、図\ref{fig:vircnodeb}(a)と(b)の$s$をルートとする部分木は等価であると考えることができて、置き換えが可能である。
+
+\begin{figure}[htb]
+\begin{minipage}{2.8cm}
+\begin{picture}(1000,500)
+\special{pn 8}%
+%\put(10,500){\fbox{a}}%
+\special{pa 100 0}%
+\special{pa 400 -400}%
+\special{pa 700 0}%
+\special{fp}%
+\special{pa 400 0}%
+\special{pa 400 -400}%
+\special{fp}%
+\put(460,350){$s$}%
+\special{sh 1}%
+\special{ar 400 -400 25 25 0 6.29}%
+\put(160,-50){$0s$}%
+\special{sh 1}%
+\special{ar 100 0 25 25 0 6.29}%
+\put(460,-50){$\varepsilon s$}%
+\special{sh 1}%
+\special{ar 400 0 25 25 0 6.29}%
+\put(760,-50){$1s$}%
+\special{sh 1}%
+\special{ar 700 0 25 25 0 6.29}%
+\end{picture}
+\caption{仮想子ノード}
+\label{fig:vircnodea}
+\end{minipage}
+\begin{minipage}{5cm}
+\begin{picture}(2000,500)
+%\put(810,500){\fbox{b}}%
+\put(-100,550){\small(a)}%
+\put(0,410){$p_e(s)\!=\!\alpha$}%
+\special{sh 1}%
+\special{ar 230 -350 25 25 0 6.29}%
+\put(550,200){$\Longrightarrow$}%→
+\put(630,550){\small(b)}%
+\special{pa 850 0}%
+\special{pa 1350 -350}%
+\special{pa 1850 0}%
+\special{fp}%
+\special{pa 1350 0}%
+\special{pa 1350 -350}%
+\special{fp}%
+\put(1120,410){$p_e(s)\!=\!\alpha$}%
+\special{sh 1}%
+\special{ar 1350 -350 25 25 0 6.29}%
+\put(400, -130){$p_e(0s)\!=\!1$}%
+\special{sh 1}%
+\special{ar 850 0 25 25 0 6.29}%
+\put(1070, -130){$p_e(\varepsilon s)\!=\!\alpha$}%
+\special{sh 1}%
+\special{ar 1350 0 25 25 0 6.29}%
+\put(1750, -130){$p_e(1s)\!=\!1$}%
+\special{sh 1}%
+\special{ar 1850 0 25 25 0 6.29}%
+\end{picture}
+\caption{ノード$s$の置き換え}
+\label{fig:vircnodeb}
+\end{minipage}
+\end{figure}
+\vspace{-0.3cm}
+
+この置き換えを図\ref{fig:ctreeincr}aのノード$\lambda$に対して適用したのが図\ref{fig:ctreeincr}bである。図\ref{fig:ctreeincr}bに(\ref{eq:epspw})を適用すれば、$p_w(\lambda)$は確率分布として成立する。$\lambda$の子孫に対しても同様の置き換えを続ければ、無限に深い重み付け文脈木を考えることが可能であり、${\cal T}$を「全てのノード$s$が$\varepsilon s$を持つ深さ無限の重み付け文脈木」とすれば、${\cal T}$が一定であると見なせる。
+
+%以上のことから、図\ref{fig:ctreeincr}のaの文脈木の増大を、bのように考える。この図では、ノード$\varepsilon(\!=\!\varepsilon\lambda)$は、$t\!=\!3$で新しいノードが追加されるまでは$\lambda$と同じカウントを保持している。そのため、カウントの不一致が解消されている。アルゴリズムでは、1-(b)-iで、$p_e(u_t)$を$\frac{1}{2}\!\cdot\! p_e(v_t)$で初期化しているが、この$p_e(v_t)$は$p_e(\varepsilon v_t)$に対応する。
+%図では、$t\!=\!2$まで$p_e(\lambda)=p_e(\varepsilon)$となっている。
+%$p_e(\varepsilon v_t)$を$p_e(u_t)$の初期化に使っているのは、(\ref{eq:epspw})のように、$p_w(v_t)$を求める時に必ず掛けられ、また$p_e$は、(\ref{eq:ktupdate})のように乗算で更新されるためである。これにより、仮想子ノードをメモリ上に保持しなくても済むようになる。
+
+$p_e(\varepsilon s)$は、$0s$あるいは$1s$が一つでもカウントを持てば、それ以降値は変わらず、また(\ref{eq:epspw})のように、$p_w(s)$を求める際に必ず$p_w(0s)$と$p_w(1s)$との積を取られる。また、$p_e$は(\ref{eq:ktupdate})のように乗算によってのみ更新される。このことから、仮に$1s$より先に$0s$が生成されたとすると、$p_e(0s)$に$p_e(\varepsilon s)$を予め掛けておいても、$p_w(s)$の値は$\varepsilon s$を別に確保した場合と等しくなる。更に$0s$に子孫が追加されて行っても、$0s$をルートとする部分木におけるある一本のパス上の$p_e$が全て$p_e(\varepsilon s)$倍されるので、結果として$p_w(0s)$が$p_e(\varepsilon s)$倍される。アルゴリズム1-(b)-iで$p_e(u_t)$を$\frac{1}{2}\cdot p_e(v_t)$で初期化しているのはこれに対応している。図\ref{fig:ctreeincr}bのように、新しいノードが追加されるまでは$p_e(s)$と$p_e(\varepsilon s)$が一致しているので、$p_e(v_t)$を使っている。
+
+以上のことから、上のアルゴリズムにおいて$p_w(\lambda)$は確率分布を与える。
+
+\vspace{-0.2cm}
+\begin{figure}[htb]
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\begin{picture}(30,250)
+\put(-50,150){a.}%
+\end{picture}
+&
+\begin{picture}(650,370)
+\special{pn 8}%
+\put(385,250){\small$\lambda$}
+\special{ar 325 -300 50 50 0 6.29}%
+\end{picture}
+&
+\begin{picture}(650,370)
+\special{pn 8}%
+\put(180,250){\small(1,0)}%
+\put(450,160){\footnotesize$v_1,\!u_1$}%
+\end{picture}
+&
+\begin{picture}(650,370)
+\special{pn 8}%
+\put(180,250){\small(1,1)}%
+\put(450,160){\footnotesize$v_2,\!u_2$}%
+\end{picture}
+&
+\begin{picture}(650,370)
+\special{pn 8}%
+\special{pa 70 -80}%
+\special{pa 325 -210}%
+\special{pa 580 -80}%
+\special{fp}%
+\put(190,250){\small(1,2)}%
+\put(480,230){\footnotesize$v_3$}%
+\special{ar 20 -20 50 50 0 6.29}%
+%\put(110,-30){0}%
+\put(480,-30){\small(0,1)}%
+\put(600,80){\footnotesize$u_3$}%
+\end{picture}
+%&
+%\begin{picture}(600,500)
+%\special{pn 8}%
+%\special{pa 70 -180}%
+%\special{pa 250 -310}%
+%\special{pa 430 -180}%
+%\special{fp}%
+%\put(110,350){\small(1,2)}%
+%\special{ar 50 -120 50 50 0 6.29}%
+%\put(110,70){0}%
+%\put(300,70){(0,2)}%
+%\end{picture}
+\\
+\hline
+&  & $x_1=0$ & $x_2=1$ & $x_3=1$
+\\
+\hline
+\begin{picture}(30,370)
+\put(-50,150){b.}%
+\end{picture}
+&
+\begin{picture}(650,410)
+\special{pn 8}%
+\special{pa 70 -100}%
+\special{pa 325 -230}%
+\special{pa 580 -100}%
+\special{fp}%
+\special{pa 325 -230}%
+\special{pa 325 -100}%
+\special{fp}%
+\put(190,270){\small(0,0)}%
+\put(-80,-10){\small(0,0)}%
+\put(200,-10){\small(0,0)}%
+\put(470,-10){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(650,410)
+\special{pn 8}%
+\special{pa 70 -100}%
+\special{pa 325 -230}%
+\special{pa 580 -100}%
+\special{fp}%
+\special{pa 325 -230}%
+\special{pa 325 -100}%
+\special{fp}%
+\put(190,270){\small(1,0)}%
+\put(-80,-10){\small(0,0)}%
+\put(200,-10){\small(1,0)}%
+\put(470,-10){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(650,410)
+\special{pn 8}%
+\special{pa 70 -100}%
+\special{pa 325 -230}%
+\special{pa 580 -100}%
+\special{fp}%
+\special{pa 325 -230}%
+\special{pa 325 -100}%
+\special{fp}%
+\put(190,270){\small(1,1)}%
+\put(-80,-10){\small(0,0)}%
+\put(200,-10){\small(1,1)}%
+\put(470,-10){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(650,410)
+\special{pn 8}%
+\special{pa 70 -100}%
+\special{pa 325 -230}%
+\special{pa 580 -100}%
+\special{fp}%
+\special{pa 325 -230}%
+\special{pa 325 -100}%
+\special{fp}%
+\put(190,270){\small(1,2)}%
+\put(-80,-10){\small(0,0)}%
+\put(200,-10){\small(1,1)}%
+\put(470,-10){\small(0,1)}%
+\end{picture}\\
+\hline
+\end{tabular}
+\vspace{-0.5cm}
+\caption{文脈木の増大}
+\label{fig:ctreeincr}
+\end{figure}
+
+\vspace{-0.4cm}
+\section{実験}
+\vspace{-0.2cm}
+\noindent
+%ある深さ8の木情報源に対して、深さ7、8、16のCTW法、$C(s,x_{-\infty}^0)=n_s\ge 1$(\verb|Incr:1|)、$C(s,x_{-\infty}^0)=n_s\ge 2$(\verb|Incr:2|)の増分CTW法を適用した時の冗長度を表したのが図\ref{fig:exptree}である。ここで、冗長度とは、情報源の生成確率が$p(x_{1}^n)$である時、 $-\log p(x_{1}^n)$と符号化による符号長との差を表す。グラフは横軸が入力シンボル数、縦軸が冗長度[bits]である。
+
+%\begin{figure}[htb]
+%\epsfile{file=rg0.eps,scale=0.5}
+%\caption{木情報源に対する冗長度}
+%\label{fig:exptree}
+%\end{figure}
+
+\noindent 増分CTW法の圧縮性能面における優位性を表す例として、$x_t$の直前に0が$m$個続いた時、$x_t$が1となる確率が$f(m)\!=\!\frac{1}{0.65m+2}$となるような情報源に対する冗長度をあらわしたのが、図\ref{fig:exprun}である。ここで、冗長度(Redundancy)とは、情報源系列の生成確率が$p(x_{1}^n)$である時、理想符号長$-\log p(x_{1}^n)$と、符号化による符号長との差を表す。\verb|D=|とあるのは、CTW法の重み付け文脈木の深さを表し、\verb|Incr:|とあるのは、増分CTW法における条件を、$C(s,x_{-\infty}^{t-1})\!=\!n_s\!\ge\!\eta$とした時の$\eta$を表す。
+%CTW法において、重み付け文脈木のノード数は$2^{D+1}-1$となる。上の条件を使った増分CTW法においては、重み付け文脈木のノード数は最終的に$\frac{n}{\eta}$となる。100000bits処理した時点で、$D=8$の時511、$D=12$の時8191、$D=16$の時131071、$\eta=1$の時100000、$\eta=2$の時50000である。$\eta=2$の時でも$D=16$の時より冗長度は小さくなっている。
+このような深さが有限でないような情報源に対する増分CTW法の性能面における優位性がよく分かる。
+
+\vspace{-0.2cm}
+\begin{figure}[htb]
+\begin{minipage}{0.5cm}
+~
+\end{minipage}
+\begin{minipage}{7cm}
+\epsfile{file=rg1.eps,scale=0.6}
+\end{minipage}
+\vspace{-0.3cm}
+\caption{$f(m)=\frac{1}{0.65m+2}$に対する冗長度}
+\label{fig:exprun}
+\end{figure}
+
+\vspace{-0.8cm}
+\section{結論}
+\vspace{-0.2cm}
+\noindent 仮想子ノードが任意のカウントを持ち得るようにしたことで、CTW法の柔軟な拡張が可能になった。性能と計算量・領域量とのトレード・オフを決める条件関数についての検討が今後の課題となる。
+
+\vspace{-0.4cm}
+\begin{thebibliography}{20}
+\vspace{-0.2cm}
+\bibitem{Wl:BasicCTW} F.M.J. Willems, Y.M.Shtarkov and Tj.J. Tjalkens, ``The Context Weighting Method: Basic Properties,'' {\em IEEE Trans. Inform. Theory,} vol. IT-41, May 1995.
+\bibitem{KT:Incr} Tsutomu Kawabata and Frans M.J. Willems, ``A Context Tree Weighting Algorithm with an Incremental Context Set,'' {\em SITA95}, pp365-368 October 24-27, 1995.
+\end{thebibliography}
+\end{document}

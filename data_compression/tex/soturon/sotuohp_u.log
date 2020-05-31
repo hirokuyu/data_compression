@@ -1,0 +1,819 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jsplain 95.9.23)  20 FEB 2000 16:20
+**sotuohp_u
+(sotuohp_u.tex
+** JSLiTeX ver.1.2......Isozaki
+(/usr/local/lib/TEX-NTT/inputs/slides.sty
+Document Style 'slides' -- released 04 Nov 91
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count83
+\@argb=\count84
+\@argc=\count85
+\@ctmpa=\count86
+\@ctmpb=\count87
+\@ctmpc=\count88
+\@ctmpd=\count89
+\@ctmpe=\count90
+\@darg=\dimen100
+\@bblen=\dimen101
+\ps@stream=\read1
+) (/usr/local/lib/TEX-NTT/inputs/mathsymb.sty)
+(/usr/local/lib/TEX-NTT/inputs/fancybox.sty
+Style option: `fancybox' v0.91 <92/11/25> (tvz)
+\@tempfbox=\box29
+\@tempdimc=\dimen102
+\@tempdimd=\dimen103
+\shadowsize=\dimen104
+\the@fancyput=\toks11
+\this@fancyput=\toks12
+\Verbatim@Outfile=\write3
+\Verbatim@Infile=\read2
+)
+No file sotuohp_u.aux.
+(sotuohp.tex [1
+
+]
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 41--42
+[]テー マ は 『増 分 文 脈 木 重 み 付 け 法 の 新 し い 設 計 と そ の 評 価』
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjkata テ
+.\twentydmjsy ー
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata マ
+.etc.
+
+
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 43--44
+[]ま ず 文 脈 木 重 み 付 け 法、 略 し て \twentyrm CTW 法 は デー タ 圧 縮 法
+ の 一
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira ま
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira ず
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 45--46
+[]そ の 増 分 \twentyrm CTW 法 に つ い て、 設 計 上 の 新 し い ア イ ディ ア
+ を 与
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira そ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+[1.0.1] [2]
+Overfull \hbox (2.2207pt too wide) in paragraph at lines 216--217
+[]算 術 符 号 は、 \twentyrm 0 と 1 の 間 の 小 数 を 符 号 と し て 用 い ま 
+す。 こ の
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmje 算
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmje 術
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (2.22745pt too wide) in paragraph at lines 216--217
+列 の 長 さ が \twentyrm 1 な ら 0、 符 号 の 値 が $\twentyi c[]$ で 情 報 源 
+系 列 の 長 さ が \twentyrm 2
+
+\hbox(15.98804+3.99223)x512.1496
+.\twentydmjl 列
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjh 長
+.etc.
+
+[2.0.1]
+Underfull \hbox (badness 10000) in paragraph at lines 323--323
+[]$\twentyi p[]\twentyrm (\twentyi n[]; n[]\twentyrm )$ は、 Krichevski-Trofimo
+v 推 定 量 (KT 推
+
+\hbox(18.66235+5.185)x483.69684, glue set 15.01337
+.\hbox(0.0+0.0)x0.0
+.\mathon
+.\twentyi p
+.\hbox(11.80798+0.0)x28.91002, shifted 4.66423
+..\seventeeni K
+..\kern1.236
+..\seventeeni T
+..\kern2.40001
+.\twentyrm (
+.etc.
+
+
+Overfull \hbox (0.57391pt too wide) in paragraph at lines 318--324
+[] 
+
+\hbox(100.01152+0.0)x512.1496
+.\vbox(100.01152+0.0)x512.72351
+..\hbox(53.19077+46.82076)x512.72351
+...\hbox(53.19077+42.82076)x508.72351 []
+...\kern -0.3
+...\hbox(53.19077+42.82076)x4.3, shifted 4.0 []
+..\glue -4.3
+..\glue(\lineskip) 0.0
+..\vbox(4.3+0.0)x508.72351, shifted 4.0
+...\rule(4.3+0.0)x508.72351
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+[3]
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 329--330
+[]木 情 報 源 は、 例 え ば こ の よ う な 木 モ デ ル を 持っ て い ま す。 親
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjk 木
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjf 情
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (3.07191pt too wide) in paragraph at lines 329--330
+ノー ド は 子 ノー ド の 語 尾 に なっ て い ま す。 $\twentyi ^^U$ は 空 の 系
+ 列 を 表
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjkata ノ
+.\twentydmjsy ー
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata ド
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 329--330
+し て い ま す。 こ の 白 丸 の ノー ド は 外 部 葉 と 呼 ば れ、 各 外 部 葉
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira し
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira て
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira い
+.etc.
+
+
+Overfull \hbox (1.28593pt too wide) in paragraph at lines 329--330
+ノー ド は パ ラ メー タ $\twentyi ^^R$ を 持っ て い ま す。 こ の パ ラ メー 
+タ は、
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjkata ノ
+.\twentydmjsy ー
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata ド
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (8.39568pt too wide) in paragraph at lines 333--334
+は 木 モ デ ル で $\twentyi ^^R$ は パ ラ メー タ の 集 合、 $x[]$ は、 $x[]$ 
+な ど の 文
+
+\hbox(18.66235+6.75835)x512.1496
+.\twentydmjhira は
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjk 木
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata モ
+.etc.
+
+
+Overfull \hbox (1.15517pt too wide) in paragraph at lines 333--334
+脈 を 決 定 す る た め に 必 要 に な り ま す。 $\twentyi n[]$、 $n[]$ は 文 
+脈 $s$ の 後
+
+\hbox(18.66235+5.12727)x512.1496
+.\twentydmjk 脈
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira を
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjc 決
+.etc.
+
+
+Overfull \hbox (9.21756pt too wide) in paragraph at lines 335--336
+に 対 し て、 こ の よ う な 推 定 確 率 を 与 え ま す。 こ の $\twentyi p[]$ 
+は \twentyrm KT
+
+\hbox(15.98804+4.66423)x512.1496
+.\twentydmjhira に
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjg 対
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira し
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 337--338
+[]つ ま り こ れ は、 こ の よ う な あ る 一 つ の 木 モ デ ル に 関 す る 圧 
+縮
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira つ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira ま
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+[3.0.1]
+Underfull \hbox (badness 10000) in paragraph at lines 345--346
+
+
+\hbox(0.0+0.0)x512.1496
+.\glue(\rightskip) 0.0
+
+
+Overfull \hbox (3.8039pt too wide) in paragraph at lines 348--652
+ [] 
+
+\hbox(468.00742+7.0)x512.1496
+.\glue(\leftskip) 0.0 plus 1.0fil
+.\hbox(468.00742+7.0)x515.95349
+..\mathon
+..\vbox(468.00742+7.0)x515.95349
+...\rule(0.6+0.0)x515.95349
+...\hbox(17.0+7.0)x515.95349 []
+...\rule(0.6+0.0)x515.95349
+...\glue 3.0
+...\rule(0.6+0.0)x515.95349
+...etc.
+..\mathoff
+.\penalty 10000
+.\glue(\parfillskip) 0.0
+.\glue(\rightskip) 0.0 plus 1.0fil
+
+[4]
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 742--743
+[]次 に \twentyrm CTW 法 に つ い て 述 べ ま す。 た だ し、 こ こ で 述 べ る
+ の は
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmje 次
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira に
+.\glue(\@@jasciikanjiskip) 4.74644
+.etc.
+
+
+Overfull \hbox (18.51529pt too wide) in paragraph at lines 744--745
+[]\twentyrm CTW 法 で は 重 み 付 け 文 脈 木 を 用 い ま す。 重 み 付 け 文 
+脈 木 は、
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentyrm C
+.\twentyrm T
+.\twentyrm W
+.\glue(\@@jasciikanjiskip) 4.74644
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 744--745
+木 モ デ ル の 集 合 と 考 え る こ と が で き て、 左 の こ れ ら の 重 み 付
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjk 木
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata モ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjkata デ
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 744--745
+け 文 脈 木 は、 そ れ ぞ れ 右 に あ る よ う な 木 モ デ ル を 含 み ま す。
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira け
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 文
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjk 脈
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 744--745
+重 み 付 け 文 脈 木 が 大 き け れ ば 大 き い ほ ど、 多 く の モ デ ル を 含
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmje 重
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira み
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 付
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 744--745
+み ま す。 そ し て、 そ れ ぞ れ の 木 モ デ ル に 対 し て 推 定 確 率 を 求
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira み
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira ま
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira す
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 746--747
+[]例 え ば、 こ の 重 み 付 け 文 脈 木 に 関 し て は、 こ の よ う に な り 
+ま
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjl 例
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira え
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 746--747
+の 上 と 下 を そ れ ぞ れ 掛 け 合 わ せ て そ の 和 を 取 る と、 \twentyrm C
+TW 法
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjf 上
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira と
+.etc.
+
+[4.0.1] [5]
+Overfull \hbox (8.08548pt too wide) in paragraph at lines 861--863
+[]次 に、 増 分 \twentyrm CTW 法 に つ い て で す。 ま ず、 な ぜ 増 分 CTW 法
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmje 次
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira に
+.\twentydmjsy 、
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 864--865
+の 分 長 い 過 去 の 仮 定 が 必 要 に な り ま す。 し か し こ の 過 去 の 系
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 分
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjh 長
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 864--865
+列 は 一 般 に 知 る こ と が で き な い の で、 こ れ を 仮 定 す る こ と な
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjl 列
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira は
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmja 一
+.etc.
+
+
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 864--865
+く、 深 い 文 脈 木 を 取 り た い、 そ れ が 増 分 \twentyrm CTW 法 を 使 う 
+理 由
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira く
+.\twentydmjsy 、
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjf 深
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (23.26173pt too wide) in paragraph at lines 866--867
+[]増 分 \twentyrm CTW 法 で は、 重 み 付 け 文 脈 木 が 大 き く なっ て い き
+ ま す。
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjg 増
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 分
+.\glue(\@@jasciikanjiskip) 4.74644
+.etc.
+
+
+Overfull \hbox (3.07191pt too wide) in paragraph at lines 866--867
+こ の 図 は そ の 例 で す。 最 初 は $\twentyi ^^U$ だ け な の で、 過 去 の 
+系 列 の 仮
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira こ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjf 図
+.etc.
+
+
+Overfull \hbox (19.45221pt too wide) in paragraph at lines 866--867
+定 は 不 要 で す。 そ し て、 徐々 に ノー ド が 追 加 さ れ て い き ま す。
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjh 定
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira は
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 不
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 866--867
+重 み 付 け 文 脈 木 が 大 き く な る と い う こ と は、 よ り 重 み 付 け を
+
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmje 重
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira み
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 付
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 866--867
+行 う 木 モ デ ル が 増 え る と い う こ と を 意 味 し ま す。 ま た、 重 み
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjd 行
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira う
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjk 木
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 866--867
+付 け 文 脈 木 の 増 大 の さ せ 方 に よっ て は、 一 部 が 特 に 深 い よ う
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjj 付
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira け
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 文
+.etc.
+
+[5.0.1]
+Underfull \hbox (badness 10000) in paragraph at lines 904--907
+
+
+\hbox(0.0+0.0)x369.88582
+.\penalty -10000
+.\glue(\rightskip) 0.0
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 904--907
+
+
+\hbox(0.0+0.0)x369.88582
+.\penalty -10000
+.\glue(\rightskip) 0.0
+
+
+Overfull \hbox (35.68129pt too wide) in paragraph at lines 933--942
+[][] [] 
+
+\hbox(175.07286+0.0)x512.1496, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\hbox(138.26141+0.0)x116.43066
+..\hbox(138.26141+0.0)x116.43066, glue set 116.43066fil
+...\glue 0.0
+...\hbox(145.1568+3.48482)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\glue 6.91333 plus 3.45667 minus 2.30444
+.\vbox(175.07286+0.0)x426.79134
+..\hbox(21.58804+8.59775)x426.79134, glue set 375.86551fil
+...\hbox(0.0+0.0)x0.0
+...\hbox(21.58804+8.59775)x30.18579 []
+...\mathon
+...\twentysy !
+...\mathoff
+...etc.
+..\penalty 150
+..\glue(\baselineskip) 7.22995
+..\hbox(14.1723+5.43224)x426.79134, glue set 295.38725fil
+...\twentysy T
+...\hbox(10.62857+0.0)x6.74002, shifted 3.48482 []
+...\glue(\thickmuskip) 5.76111 plus 5.76111
+...\twentyrm :
+...\twentyrm =
+...etc.
+..\glue(\baselineskip) 4.84802
+..etc.
+.\penalty 10000
+.etc.
+
+
+Overfull \hbox (0.57391pt too wide) in paragraph at lines 950--951
+[][] 
+
+\hbox(127.9175+0.0)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\vbox(127.9175+0.0)x512.72351
+..\hbox(67.14375+60.77374)x512.72351
+...\hbox(67.14375+56.77374)x508.72351 []
+...\kern -0.3
+...\hbox(67.14375+56.77374)x4.3, shifted 4.0 []
+..\glue -4.3
+..\glue(\lineskip) 0.0
+..\vbox(4.3+0.0)x508.72351, shifted 4.0
+...\rule(4.3+0.0)x508.72351
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+[6]
+Overfull \hbox (5.18185pt too wide) in paragraph at lines 956--957
+[]こ の $\twentyi v[]$ が $x[]$ の 文 脈 で あ る と し ま す。 こ の $v[]$ に 
+新 た な 子 ノー
+
+\hbox(15.98804+3.48482)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira こ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jmathkanjiskip) 4.74644
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 956--957
+め ま す。 こ の 関 数 が 真 を 返 せ ば、 こ の よ う に 子 ノー ド が 追 加
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira め
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira ま
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira す
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 956--957
+さ れ ま す。 ポ イ ン ト は こ の 関 数 が 「任 意 に 設 定 で き る」 と い
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira さ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira れ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira ま
+.etc.
+
+
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 956--957
+う 点 で、 従 来 の 増 分 \twentyrm CTW 法 で は、 シ ン ボ ル を 一 つ 入 力 
+す る
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira う
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjh 点
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira で
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 956--957
+毎 に 必 ず ノー ド を 追 加 し な け れ ば な り ま せ ん で し た。 こ れ に
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjk 毎
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira に
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 必
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 956--957
+よっ て、 文 脈 木 の 増 大 を コ ン ト ロー ル で き る よ う に な り ま し
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira よ
+.\twentydmjhira っ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira て
+.\twentydmjsy 、
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 958--959
+[]こ の ア ル ゴ リ ズ ム が 成 立 す る 背 景 は、 論 文 の 方 で 述 べ て い 
+ま
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira こ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+[6.0.1]
+epsf:[rg1.eps]
+BoundingBox: (50bp,50bp)--(410bp,302bp) =>(397bp,278bp) [7]
+Overfull \hbox (19.16129pt too wide) in paragraph at lines 1003--1004
+[]情 報 源 と し て、 $\twentyi x[]$ の 直 前 に \twentyrm 0 が $\twentyi m$ 個
+ 続 い た と い う 条 件 下 で、
+
+\hbox(15.98804+3.48482)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjf 情
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 報
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (1.34357pt too wide) in paragraph at lines 1003--1004
+し た。 こ れ は、 \twentyrm 0 が 続 け ば 続 く ほ ど、 更 に 続 き や す く 
+な り ま
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira し
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira た
+.\twentydmjsy 。
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (3.92816pt too wide) in paragraph at lines 1005--1006
+[]こ の \twentyrm Re-dun-dancy、 冗 長 度 は、 理 想 符 号 長 と 符 号 化 に よ
+ る 符
+
+\hbox(15.98804+4.03278)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmjhira こ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira の
+.\glue(\@@jasciikanjiskip) 4.74644
+.etc.
+
+
+Overfull \hbox (2.69753pt too wide) in paragraph at lines 1005--1006
+み 付 け 文 脈 木 の 深 さ を 表 し、[]\twentytt Incr: と あ る の は、 条 件 
+を カ ウ
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira み
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 付
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira け
+.etc.
+
+
+Overfull \hbox (7.57951pt too wide) in paragraph at lines 1005--1006
+は 従 来 の 増 分 \twentyrm CTW 法 に 相 当 し、 こ こ で は $\twentyi ^^Q$ を 
+\twentyrm 1 と 2 と し て
+
+\hbox(15.98804+4.03278)x512.1496
+.\twentydmjhira は
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmje 従
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjk 来
+.etc.
+
+
+Overfull \hbox (8.08548pt too wide) in paragraph at lines 1007--1008
+[]実 験 結 果 を 見 る と、 基 本 的 な \twentyrm CTW 法 よ り 増 分 CTW 法 の 
+方
+
+\hbox(15.98804+2.99774)x512.1496
+.\hbox(0.0+0.0)x0.0
+.\twentydmje 実
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjd 験
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (3.76999pt too wide) in paragraph at lines 1007--1008
+が 良 い 性 能 を 示 し て い ま す が、 $\twentyi ^^Q$ が \twentyrm 1 の 場 合
+ と 2 の 場 合 で は
+
+\hbox(15.98804+4.03278)x512.1496
+.\twentydmjhira が
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjl 良
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira い
+.etc.
+
+
+Overfull \hbox (2.89285pt too wide) in paragraph at lines 1007--1008
+目 立っ た 差 は つ い て い ま せ ん。 $\twentyi ^^Q$ が \twentyrm 2 の 時 の 
+方 が 計 算 量・ 領
+
+\hbox(15.98804+4.03278)x512.1496
+.\twentydmjk 目
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjl 立
+.\twentydmjhira っ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.etc.
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 1007--1008
+域 量 が 少 な く て 済 む の で、 条 件 の 設 定 に よっ て コ ス ト の 削 減
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmja 域
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjl 量
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira が
+.etc.
+
+[7.0.1]
+Overfull \hbox (4.27596pt too wide) in paragraph at lines 1014--1017
+増 分 \twentyrm CTW 法 に 関 し て、 文 脈 木 の 増 大 の 任 意 の コ ン ト ロ
+ー ル
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjg 増
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjj 分
+.\glue(\@@jasciikanjiskip) 4.74644
+.\twentyrm C
+.etc.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1014--1017
+
+
+\hbox(0.0+0.0)x512.1496
+.\penalty -10000
+.\glue(\rightskip) 0.0
+
+
+Overfull \hbox (0.46643pt too wide) in paragraph at lines 1014--1017
+そ れ に よっ て、 必 要 な 計 算 量・ 領 域 量 を 削 減 す る こ と も で き
+
+\hbox(15.98804+2.99774)x512.1496
+.\twentydmjhira そ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira れ
+.\glue(\@@jintercharskip) 0.0 plus 0.5185
+.\twentydmjhira に
+.etc.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1014--1017
+
+
+\hbox(0.0+0.0)x512.1496
+.\penalty -10000
+.\glue(\rightskip) 0.0
+
+[8]) ) 
+Here is how much of TeX's memory you used:
+ 320 strings out of 11025
+ 3290 string characters out of 77754
+ 45387 words of memory out of 262141
+ 2889 multiletter control sequences out of 9500
+ 20969 words of font info for 105 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 15i,13n,17p,422b,473s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on sotuohp_u.dvi (15 pages, 28984 bytes).

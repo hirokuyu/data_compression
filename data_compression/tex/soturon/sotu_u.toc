@@ -1,0 +1,45 @@
+\contentsline {chapter}{\numberline {1}はじめに}{3}
+\contentsline {chapter}{\numberline {2}基礎定義}{4}
+\contentsline {section}{\numberline {2.1}suffix tree}{4}
+\contentsline {section}{\numberline {2.2}木情報源}{4}
+\contentsline {chapter}{\numberline {3}算術符号}{6}
+\contentsline {section}{\numberline {3.1}符号化アルゴリズム}{6}
+\contentsline {section}{\numberline {3.2}冗長度}{9}
+\contentsline {chapter}{\numberline {4}文脈木重み付け法}{10}
+\contentsline {section}{\numberline {4.1}確率推定}{10}
+\contentsline {subsection}{\numberline {4.1.1}KT推定量}{10}
+\contentsline {subsection}{\numberline {4.1.2}推定確率}{11}
+\contentsline {section}{\numberline {4.2}文脈木重み付け法}{12}
+\contentsline {subsection}{\numberline {4.2.1}重み付け文脈木}{12}
+\contentsline {section}{\numberline {4.3}冗長度上界}{13}
+\contentsline {chapter}{\numberline {5}増分文脈木重み付け法}{15}
+\contentsline {section}{\numberline {5.1}アルゴリズム}{15}
+\contentsline {section}{\numberline {5.2}仮想葉ノード}{17}
+\contentsline {section}{\numberline {5.3}実装}{18}
+\contentsline {section}{\numberline {5.4}冗長度上界}{19}
+\contentsline {chapter}{\numberline {6}実験}{21}
+\contentsline {section}{\numberline {6.1}乱数}{21}
+\contentsline {section}{\numberline {6.2}プログラム}{21}
+\contentsline {section}{\numberline {6.3}実験}{22}
+\contentsline {subsection}{\numberline {6.3.1}木情報源に対する冗長度}{22}
+\contentsline {subsection}{\numberline {6.3.2}0連続確率情報源に対する冗長度}{23}
+\contentsline {chapter}{\numberline {7}結び}{24}
+\contentsline {chapter}{\numberline {A}}{27}
+\contentsline {chapter}{\numberline {B}プログラムリスト}{28}
+\contentsline {section}{\numberline {B.1}errormac.h}{28}
+\contentsline {section}{\numberline {B.2}bitio.h}{28}
+\contentsline {section}{\numberline {B.3}bitio\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}file.h}{29}
+\contentsline {section}{\numberline {B.4}bitio\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}file.cpp}{30}
+\contentsline {section}{\numberline {B.5}float\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}ex.h}{31}
+\contentsline {section}{\numberline {B.6}float\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}ex.cpp}{32}
+\contentsline {section}{\numberline {B.7}KrTr\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}esti.h}{33}
+\contentsline {section}{\numberline {B.8}ctw\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}bcoder.h}{34}
+\contentsline {section}{\numberline {B.9}ctw\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}bcoder.cpp}{35}
+\contentsline {section}{\numberline {B.10}ctw\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}bcoder\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}incr.h}{39}
+\contentsline {section}{\numberline {B.11}ctw\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}bcoder\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}incr.cpp}{39}
+\contentsline {section}{\numberline {B.12}ctw.cpp}{41}
+\contentsline {section}{\numberline {B.13}my\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}rand.h}{43}
+\contentsline {section}{\numberline {B.14}my\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}rand.cpp}{43}
+\contentsline {section}{\numberline {B.15}btree\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}source.h}{43}
+\contentsline {section}{\numberline {B.16}btree\unhbox \voidb@x \kern .06em \vbox {\hrule width.3em}source.cpp}{43}
+\contentsline {section}{\numberline {B.17}exp.cpp}{45}

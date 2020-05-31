@@ -1,0 +1,147 @@
+\chapter{実験}\label{chap:exp}
+
+\section{乱数}
+
+シミュレーションにおける情報源系列の生成には擬似乱数が必要になる。今回は、線形合同数列
+\begin{equation}
+ X_{n+1}={\rm 2DAAB5_H}X_n+{\rm 6496205_H}\bmod 2^{31}
+\end{equation}
+を用いた。これは周期$2^{31}$を持つ。
+
+\section{プログラム}
+
+実験プログラムはC++を用いて作成した。プログラムリストは付録\ref{chap:prog}に示している。表\ref{tab:combination}はこれらのファイルの組み合わせ方を表している。ctwコマンドは、符号化・復号化の可能なコマンドであり、実験プログラムexpは、シミュレーションのみを行うプログラムである。
+
+\begin{table}[htbp]
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{2}{|c|}{ctwコマンド}&\multicolumn{2}{c|}{実験プログラムexp} \\
+\hline
+\begin{minipage}[t]{4cm}
+errormac.h\\
+bitio.h\\
+bitio\_file.h\\
+float\_ex.h\\
+KrTr\_esti.h\\
+ctw\_bcoder.h\\
+ctw\_bcoder\_incr.h
+\end{minipage}
+&
+\begin{minipage}[t]{4cm}
+ctw.cpp\\
+bitio\_file.cpp\\
+ctw.cpp\\
+bitio\_file.cpp\\
+float\_ex.cpp\\
+ctw\_bcoder.cpp\\
+ctw\_bcoder\_incr.cpp
+\end{minipage}
+&
+\begin{minipage}[t]{4cm}
+errormac.h\\
+bitio.h\\
+bitio\_file.h\\
+float\_ex.h\\
+KrTr\_esti.h\\
+ctw\_bcoder.h\\
+ctw\_bcoder\_incr.h\\
+tree\_source.h\\
+my\_rand.h~
+\end{minipage}
+&
+\begin{minipage}[t]{4cm}
+exp.cpp\\
+bitio\_file.cpp\\
+float\_ex.cpp\\
+ctw\_bcoder.cpp\\
+ctw\_bcoder\_incr.cpp\\
+tree\_source.cpp\\
+my\_rand.cpp
+\end{minipage}
+\\
+\hline
+\end{tabular}
+\caption{コンパイルの組み合わせ}
+\label{tab:combination}
+\end{table}
+
+\section{実験}
+\subsection{木情報源に対する冗長度}
+
+あるランダムに決められた一組のパラメータを持つ深さ8の木情報源に対し、深さ$D=$7、8、12、16のCTW法、$C(s,x_{-\infty}^{t-1})=n_s\ge\eta$の$\eta$を1、2とした増分CTW法を適用したのが図\ref{fig:D8ts}である。5回の平均を取っている。$D=8$、$D>8$、$\eta=1$、$\eta=2$の時の冗長度上界も示している。
+
+\begin{figure}[htbp]
+\hspace{2.5cm}\epsfile{file=g0.eps,scale=0.9}
+\caption{深さ8の木情報源に対する冗長度}
+\label{fig:D8ts}
+\end{figure}
+
+$D=7$のCTW法を適用したものは、冗長度が非常に大きくなっている。これは、重み付け文脈木${\cal T}$が情報源モデルを含まないためである。$D=8$の文脈木固定CTW法を適用したものが最も冗長度が小さくなっている。これは、情報源モデルに与えられる事前分布の違い、$D=8$の時は深さ8の葉において$\gamma(s)=1$となるのに対し、$D>8$の時は$\gamma(s)=\frac{1}{2}$となることが影響していると思われる。
+増分CTW法は、CTW法よりも冗長度が大きくなっている。これは、${\cal T}_t$が情報源モデルより小さい時のカウントの損失、言い換えれば、仮想葉ノードへのカウントの流出が影響している。$\eta=2$の時は、$\eta=1$の時よりもさらにカウントの損失が大きくなるので、冗長度がより大きくなっている。
+
+%Depth
+%Incr1  41,38,37,39,39
+%Incr2  37,34,35,36,35
+
+%Nodes
+%D=8    511,511,511,511,511
+%D=12   8060,8067,8047,8062,8053
+%D=16   96544,96190,96053,96964,96129
+%Incr1  1000000
+%Incr2  500000
+%Time
+%D=8    42,43,43,43,44
+%D=12   61,62,62,62,62
+%D=16   81,82,82,82,82
+%Incr1  114,113,112,112,113
+%Incr2  105,105,105,105,106
+
+\subsection{0連続確率情報源に対する冗長度}
+
+増分CTW法は、情報源の深さが有限でなくまた大きな偏りがあるような情報源に対して優位になる。それを見るために、次のような情報源を定義し、実験を行った。
+
+\begin{Definition}[0連続確率情報源]\rm
+$x_t$の前に0が$m$個続いたという条件下で、$x_t$が1となる確率が関数$f(m)$によって決定されるようなバイナリ情報源を0連続確率情報源と定義する。\hfill$\triangle$
+\end{Definition}
+
+今回は、
+\begin{equation}
+f(m)=\frac{1}{am+2}
+\end{equation}
+という関数を使った。この関数を使うと、$a>0$の時、0が続けば続くほど、さらに続きやすくなる。この関数に関して、$a=0.65$として実験したのが図\ref{fig:r0.65}である。3回の平均を取っている。
+
+\begin{figure}[htbp]
+\hspace{2.5cm}\epsfile{file=g1.eps,scale=0.9}
+\caption{$f(m)=\frac{1}{0.65m+2}$に対する冗長度}
+\label{fig:r0.65}
+\end{figure}
+
+%Depth
+%Incr1  1877,2488,1815
+%Incr2  1170,1585,1515
+
+%Nodes
+%D=8    511,511,511
+%D=12   8185,8178,8179
+%D=16   81368,80426,79937
+%Incr1  100000
+%Incr2  50000
+
+%Time
+%D=8    5,4,4
+%D=12   6,6,6
+%D=16   8,8,7
+%Incr1  31,47,38
+%Incr2  26,40,33
+
+実際に使われたノード数は、$D=16$の時約8万であった。$\eta=1$のときは100000、$\eta=2$のときは50000となる。増分CTW法の冗長度は、$\eta=2$の時も$D=16$の時より小さくなっている。このような情報源に対する増分CTW法の性能面における優位性が良く分かる。$\eta$が1でも2でも冗長度にほとんど差はなかったので、$\eta=1$という条件は余分なコストがかかっていると言える。条件関数の選び方が性能とコストのバランスを決める。
+
+%ノード数は、$D=16$の時約13万、増分文脈アルゴリズムでは$\eta=1$の時約10万、$\eta=2$の時約5万となる。10万ビット処理した時点で、増分文脈アルゴリズムは$\eta=2$の時でも$D=16$より冗長度は小さくなっている。このような情報源に対する増分文脈アルゴリズムの圧縮性能に関する優位性がよく分かる。また、増分文脈アルゴリズムでは、重み付け文脈木の最大深度が処理時間の一つの目安になるが、その平均は、$\eta=1$の時は約620、$\eta=2$の時は約420であった。
+
+%次に、$a=0.65$と、より極端になるようにした情報源に対する冗長度が図\ref{fig:r0.65}である。6回の平均を取っている。$a=0.5$の時よりも、文脈木固定と増分文脈アルゴリズムの間で、さらに差が広がっている。この時の平均最大深度は、$\eta=1$の時約3900、$\eta=2$の時約2200であった。
+
+%\begin{figure}[htbp]
+%\epsfile{file=g2.eps,scale=1.2}
+%\caption{$f(m)=\frac{1}{0.65m+2}$に対する冗長度}
+%\label{fig:r0.65}
+%\end{figure}

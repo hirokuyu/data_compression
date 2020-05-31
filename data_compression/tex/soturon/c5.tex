@@ -1,0 +1,306 @@
+\chapter{増分文脈木重み付け法}
+\section{アルゴリズム}
+文脈木を固定したCTW法では過去の系列$x_{-\infty}^0$を仮定する必要があった。増分CTW法は、過去の系列を仮定することなく符号化することを可能にする。増分CTW法は、\cite{KT:Incr}で提案されたが、\cite{KT:Incr}も、類似した拡張を行なう\cite{Wl:ExtCTW}においても、文脈木は1シンボル入力する毎に必ず増大するようになっていた。ここでは、\cite{KT:Incr}で提案された増分CTW法を一般化し、文脈木の増大を任意にコントロールできるようにする。
+
+まず、アルゴリズムを示す。
+
+\begin{Algo}[増分CTW法による符号化]~\\\rm
+$C(s,x_{-\infty}^{t-1})$を、$s\in\partial {\cal T}_{t-1}$において、$s$を${\cal T}_t$に追加するなら真、しないなら偽を返す{\bf{\dg 任意}}の条件関数とする。${\cal T}_t$は$x_{1}^{t-1}$の関数としたいため、この関数は$x_t$には依存しない。
+
+${\cal T}_0:=\emptyset$とする。そして、$t=1,2,\ldots$に対して、次の処理を行う。
+\vspace{-0.3cm}
+\begin{enumerate}
+  \item {\bf{\dg (外部葉ノード$s\in\partial{\cal T}_t$に関する処理)}}\\
+   $v_t:=\beta_{{\cal T}_{t-1}}(x_{1}^{t-1})$において、
+   \begin{enumerate}
+    \item $v_t$が生成されていない場合、$v_t$を生成し、$\{n_{v_t}^a\}_{a\in A}$を$1\{x_t=a\}$、$p_e(v_t)$と$p_w(v_t)$を$\displaystyle\frac{1}{m}$で初期化。$u_t:=v_t$とする。
+    \item $v_t$が生成されている場合、
+     \begin{enumerate}
+      \item $C(v_t,x_{-\infty}^{t-1})$が真ならば、
+        ${\cal T}_t:={\cal T}_{t-1}\cup \{v_t\}$とし、$u_t:=\beta_{{\cal T}_t}(x_{1}^{t-1})$を生成し($u_t$は$v_t$の子ノード)、$\{n_{u_t}^a\}_{a\in A}$を$1\{x_t=a\}$と初期化し、$p_e(u_t)$と$p_w(u_t)$を共に$\displaystyle\frac{1}{m}\cdot p_e(v_t)$で初期化。
+      \item $C(v_t,x_{-\infty}^{t-1})$が偽ならば、$u_t:=v_t$とし、$\displaystyle p_w(u_t):=p_e(u_t):=p_e(u_t)\frac{n_{u_t}^{x_t}+1/2}{n_{u_t}+m/2}$と更新。$n_{u_t}^{x_t}$に1加える。
+     \end{enumerate}
+   \end{enumerate}
+  \item {\bf{\dg (内部ノード$s\in{\cal T}_t$に関する処理)}}\\
+   $u_t$の全ての固有suffix $s$に対し($u_t$を含まない)、bottom upに次の3つの処理を行う。
+   \begin{enumerate}
+    \item $p_e(s)$を$\displaystyle p_e(s):=p_e(s)\frac{n_{s}^{x_t}+1/2}{n_s+m/2}$と更新。
+    \item $p_w(s)$を$p_w(s):=\gamma(s)p_e(s)+\bar\gamma(s)\prod_{a\in A}p_w(as)$と更新。$as$が生成されていなければ、$p_w(as)=1$とする。
+    \item $n_{s}^{x_t}$に1加える。
+   \end{enumerate}
+  \item 符号化確率$p(x_{1}^t)$として$p_w(\lambda)$を使う。\hfill$\triangle$
+\end{enumerate}
+\end{Algo}
+
+\begin{Example}\rm
+$x_{1}^4=0111$に対して、$C(s,x_{1}^{t-1})=n_s\ge 1$として上のアルゴリズムを適用したのが図\ref{fig:ctxtincrn1}である。図中の括弧で囲まれた数字は、$(n_{s}^0,n_{s}^1)$を表している。カウントを持っていないノードはメモリ上に保持されないので、ノード数は時刻$t$と一致する。
+\end{Example}
+
+\begin{figure}[htb]
+\begin{tabular}{ccccc}
+\begin{picture}(250,700)
+\special{ar 100 -600 50 50 0 6.29}%
+\put(160,550){$\lambda$}%
+\end{picture}
+&
+\begin{picture}(700,700)
+\special{pn 8}%
+\put(200,550){(1,0)}%
+\end{picture}
+&
+\begin{picture}(1100,700)
+\special{pn 8}%
+\special{pa 400 -380}%
+\special{pa 600 -520}%
+\special{pa 800 -380}%
+\special{fp}%
+\put(460,550){(1,1)}%
+\put(260,250){(0,1)}%
+\special{sh 0}%
+\special{ar 800 -300 50 50 0 6.29}%
+\put(860,250){1}%
+\end{picture}
+&
+\begin{picture}(1100,700)
+\special{pn 8}%
+\special{pa 350 -380}%
+\special{pa 600 -520}%
+\special{pa 850 -380}%
+\special{fp}%
+\put(460,550){(1,2)}%
+\put(210,250){(0,1)}%
+\put(710,250){(0,1)}%
+\end{picture}
+&
+\begin{picture}(1400,700)
+\special{pn 8}%
+\special{pa 350 -380}%
+\special{pa 600 -520}%
+\special{pa 850 -380}%
+\special{fp}%
+\special{pa 700 -80}%
+\special{pa 850 -220}%
+\special{pa 1100 -80}%
+\special{fp}%
+\put(460,550){(1,3)}%
+\put(210,250){(0,1)}%
+\put(710,250){(0,2)}%
+\put(960,-50){(0,1)}%
+\special{sh 0}%
+\special{ar 700 0 50 50 0 6.29}%
+\put(760,-50){01}%
+\end{picture}
+\\
+$t=0$ & $x_1=0$ & $x_2=1$ & $x_3=1$ & $x_4=1$
+\end{tabular}
+\caption{$C(s,x_{-\infty}^{t-1})=n_s\ge 1$の時の重み付け文脈木の増大の様子}
+\label{fig:ctxtincrn1}
+\end{figure}
+
+\begin{Example}\label{ex:incrn2}\rm
+$x_{1}^4=0111$に対して、$C(s,x_{1}^{t-1})=n_s\ge 2$として上のアルゴリズムを適用したのが図\ref{fig:ctxtincrn2}である。
+\end{Example}
+
+\begin{figure}[htb]
+\begin{tabular}{ccccc}
+\begin{picture}(700,600)
+\special{ar 300 -400 50 50 0 6.29}%
+\put(360,350){$\lambda$}%
+\end{picture}
+&
+\begin{picture}(700,600)
+\special{pn 8}%
+\put(200,350){(1,0)}%
+\end{picture}
+&
+\begin{picture}(700,600)
+\special{pn 8}%
+\put(200,350){(1,1)}%
+\end{picture}
+&
+\begin{picture}(800,600)
+\special{pn 8}%
+\special{pa 150 -180}%
+\special{pa 400 -320}%
+\special{pa 650 -180}%
+\special{fp}%
+\put(260,350){(1,2)}%
+\put(510,50){(0,1)}%
+\special{sh 0}%
+\special{ar 150 -100 50 50 0 6.29}%
+\put(210,50){0}%
+\end{picture}
+&
+\begin{picture}(800,600)
+\special{pn 8}%
+\special{pa 150 -180}%
+\special{pa 400 -320}%
+\special{pa 650 -180}%
+\special{fp}%
+\put(260,350){(1,3)}%
+\put(510,50){(0,2)}%
+\special{sh 0}%
+\special{ar 150 -100 50 50 0 6.29}%
+\put(210,50){0}%
+\end{picture}
+\\
+$t=0$ & $x_1=0$ & $x_2=1$ & $x_3=1$ & $x_4=1$
+\end{tabular}
+\caption{$C(s,x_{-\infty}^{t-1})=n_s\ge 2$の時の重み付け文脈木の増大の様子}
+\label{fig:ctxtincrn2}
+\end{figure}
+
+%上のアルゴリズムでは、$t-1$と$t$では文脈木の形が変わっている。しかし重み付け確率が(\ref{eq:sumPc})を満たすためには、$t-1$と$t$で$\cal T$が同一である必要があった。この問題を解決しなければならない。
+
+上の例で分かるように、$t-1$と$t$で重み付け文脈木の形が変わることがあり、それによって、例えば例\ref{ex:incrn2}では、$t=3$以降の${\cal T}_t$において$x_1$と$x_2$が葉ノード$0$でも葉ノード$1$でもカウントされず、このようなカウントを持つ重み付け文脈木に前章で述べた基本的なCTW法を適用しても、$p_w(\lambda)$は(\ref{eq:sumPc})のような確率分布にはならない。しかしそれでも、基本的なCTW法を基に上のアルゴリズムを解釈でき、$p_w(\lambda)$が確率分布となることを示すために、まず、仮想葉ノードを導入することで重み付け文脈木${\cal T}$が不変であると考えることができることを示し、次に、このアルゴリズムに従えば仮想葉ノードを保持する必要がないことを述べる。
+
+\section{仮想葉ノード}
+
+まず、図\ref{fig:virnode}のように、あるノード$s$が、仮想葉ノード$\varepsilon s$を持っていると仮定する。\cite{Wl:ExtCTW}に倣い、$\varepsilon$という文字を割り当てている。$\varepsilon s$は、{\bf{\dg 「$s$でカウントされるが$0s$でも$1s$でもカウントされないカウント値」}}を保持するものとする。\cite{Wl:ExtCTW}では$\varepsilon$に対応するノードはカウントを1しか持つことができなかったが(\cite{KT:Incr}においても同様)、ここでは任意のカウントを持ち得るものとする。これにより、CTW法のより柔軟な変形が可能になる。
+
+\begin{figure}[htb]
+\large
+\hspace{6.5cm}
+\begin{picture}(1100,800)
+\special{pn 8}%
+\special{pa 0 -100}%
+\special{pa 500 -700}%
+\special{pa 1000 -100}%
+\special{fp}%
+\special{pa 500 -700}%
+\special{pa 500 -100}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 500 -700 25 25 0 6.29}%
+\put(560,650){$s$}%
+\special{sh 1}%
+\special{ar 0 -100 25 25 0 6.29}%
+\put(-50,-80){$0s$}%
+\special{sh 1}%
+\special{ar 1000 -100 25 25 0 6.29}%
+\put(950,-80){$1s$}%
+\special{sh 1}%
+\special{ar 500 -100 25 25 0 6.29}%
+\put(450,-80){$\varepsilon s$}%
+\end{picture}
+\caption{仮想葉ノード}
+\label{fig:virnode}
+\end{figure}
+
+次に、図\ref{fig:replaceleaf}を考える。ある葉ノード$s$が図の左のように$\tilde p_e(s)=\alpha$を持っている時、$\tilde p_w(s)=\alpha$である。ここで、チルダは仮想葉ノードを考えた時の仮想的な変数を表す。図の右のように、もし$s$と$\varepsilon s$が$\tilde p_e(s)=\tilde p_e(\varepsilon s)=\alpha$、$0s$と$1s$が$\tilde p_e(0s)=\tilde p_e(1s)=1$を持っていれば、$\tilde p_w(s)=\alpha$となる。重み付け確率が一致するので、置き換えが可能である。この置き換えは、「$s$は最初から子ノードを図\ref{fig:replaceleaf}の右のように持っていて、$s$にカウントされると同時に$\varepsilon s$にもカウントされていた」と考えることができる。
+
+\begin{figure}[htb]
+\begin{picture}(4000,700)
+\special{pn 8}%
+\special{sh 1}%
+\special{ar 400 -500 25 25 0 6.29}%
+\put(100,600){$\tilde p_e(s)=\alpha$}%
+\put(1000,300){$\to$}%
+\special{pa 1800 -150}%
+\special{pa 2700 -500}%
+\special{pa 3600 -150}%
+\special{fp}%
+\special{pa 2700 -500}%
+\special{pa 2700 -150}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 2700 -500 25 25 0 6.29}%
+\put(2400,600){$\tilde p_e(s)=\alpha$}%
+\special{sh 1}%
+\special{ar 1800 -150 25 25 0 6.29}%
+\put(1500,-30){$\tilde p_e(0s)=1$}%
+\special{sh 1}%
+\special{ar 2700 -150 25 25 0 6.29}%
+\put(2400,-130){$\tilde p_e(\varepsilon s)=\alpha$}%
+\special{sh 1}%
+\special{ar 3600 -150 25 25 0 6.29}%
+\put(3300,-30){$\tilde p_e(1s)=1$}%
+\end{picture}
+\caption{ある外部葉ノードの置き換え}
+\label{fig:replaceleaf}
+\end{figure}
+
+この置き換えを繰り返せば、無限に深い重み付け文脈木を考えることが可能であり、${\cal T}$を「全てのノード$s$が葉$\varepsilon s$を持つ深さ無限の重み付け文脈木」とすれば、${\cal T}$が不変であると見なせる。この時、ある$T\in{\cal T}$に関する推定確率は、
+\begin{equation}
+p(x_{1}^t|T,x_{-\infty}^0)=\prod_{s\in T}\tilde p_e(\varepsilon s)\cdot\prod_{s\in\partial T}\tilde p_e(s)
+\end{equation}
+と表せる。この仮想葉ノードは全ての$s\in T$が持っているので、木の分布には影響を与えず、重み付け確率は
+\begin{equation}
+ \tilde p_w(\lambda)\trieq\sum_{T\subset A^*}w_1(T)\left(\prod_{s\in T}\tilde p_e(\varepsilon s)\cdot\prod_{s\in\partial T}\tilde p_e(s)\right)
+\end{equation}
+と定義できる。
+
+これは定理\ref{th:pw}において、$g_1(s)=\bar\gamma(s)p_e(\varepsilon s)$、$g_2(s)=\gamma(s)p_e(s)$とおいた場合に相当するので、
+\begin{equation}\label{eq:virpw}
+\tilde p_w(s)=\gamma(s)p_e(s)+\bar\gamma(s)p_e(\varepsilon s)\prod_{a\in A}p_w(as)
+\end{equation}
+となる。
+
+以上の事を踏まえて、増分CTW法の意味を考える。増分CTW法は、「新たにノードを追加する」というよりも、「$t-1$の時点で、実は$v_t$は図\ref{fig:replaceleaf}の右のように子ノードを持っていた」と見なす。そうすることで、不変の重み付け文脈木を考えることができ、$p_w(\lambda)$は確率分布となる。
+
+\section{実装}
+
+%解釈のために仮想葉ノードを考えたが、実装の際は仮想葉ノードを保持する必要はなく、ただ$p_e$の初期化の際に、親ノードの$p_e$を掛ければよい。図\ref{fig:replaceleaf}なら、$p_e(0s)$あるいは$p_e(1s)$(先に追加されたノードの方)が、KT推定量を$\alpha$倍したものになる。さらに子ノードが追加される時も、最初に追加される子ノードの$p_e$が$\alpha$倍されるので、結果として$p_w(0s)$あるいは$p_w(1s)$が$\alpha$倍されることになる。この様子は、例\ref{ex:holdpe}で見る。尚、この方法が使えるのは、$p_e$が{\bf{\dg 乗算によってのみ更新される場合}}に限られる。KT推定量を使うのであれば、(\ref{eq:ktupdate})のように乗算のみで更新されるので、問題はない。
+
+仮想葉ノードを実際に保持しなくても、仮想葉ノードを使う場合と同様の結果が得られることを示す。$p_e(s)=\alpha_s\tilde p_e(s)$とする。すなわち、$\alpha_s$を、$p_e(s)$が実際に保持しているカウントに対するKT推定量$\tilde p_e(s)$の何倍であるかを表す数と仮定する。アルゴリズムの1-(b)-iにおいて、$p_e(u_t)$を$\frac{1}{m}\cdot p_e(v_t)$で初期化している。$\varepsilon s$の兄弟ノード$\{as\}_{a\in A}$が一つもカウントを持っていないとき、$\tilde p_e(s)=\tilde p_e(\varepsilon s)$であるので、$p_e(v_t)=\alpha_{v_t}\tilde p_e(\varepsilon v_t)$となり、$\alpha_{u_t}=\alpha_{v_t}\tilde p_e(\varepsilon v_t)$となる。$\varepsilon v_t$は$u_t$が生成されるまでのカウントを保持するので、$u_t$が生成されて以降は、$\tilde p_e(\varepsilon v_t)$は値が変わらず、また$p_e$は{\bf{\dg 乗算のみ}}によって更新されるので(他の推定量を用いる時には注意する必要がある)、$\alpha_{u_t}$は定数となる。アルゴリズム1-(a)のように、$u_t$以外の$\{av_t\}$は全て1となるので、$\prod_{a\in A}\alpha_{av_t}=\alpha_{v_t}\tilde p_e(\varepsilon v_t)$となる。より一般的には、$\prod_{a\in A}\alpha_{as}=\alpha_{s}\tilde p_e(\varepsilon v_t)$となる。
+
+以上の条件下で、$p_w(s)=\alpha_s\tilde p_w(s)$であることを証明する。
+\begin{enumerate}
+ \item ある未生成のノードにおいては、$p_e(s)=\tilde p_e(s)=1$、$\alpha_s=1$であり、$p_w(s)=\tilde p_w(s)=1$となり、成立。
+ \item $\{as\}_{a\in A}$において$p_w(as)=\alpha_{as}\tilde p_w(as)$が成り立っているとすると、$s$において、
+\begin{eqnarray}
+ p_w(s) &=& \gamma(s)p_e(s)+\bar\gamma(s)\prod_{a\in A}p_w(as) \nonumber\\
+ &=& \gamma(s)\alpha_s\tilde p_e(s)+\bar\gamma(s)\prod_{a\in A}\alpha_{as}\tilde p_w(as) \nonumber\\
+ &=& \gamma(s)\alpha_s\tilde p_e(s)+\bar\gamma(s)\alpha_s\tilde p_e(\varepsilon s)\prod_{a\in A}\tilde p_w(as) \nonumber\\
+ &=& \alpha_s\tilde p_w(s)
+\end{eqnarray}
+となり成立。
+ \item よって一般に、$p_w(s)=\alpha_s\tilde p_w(s)$となる。
+\end{enumerate}
+%$\tilde p_e(\varepsilon s)$は、ある$a\in A$に対する$as$が一つでもカウントを持てば、それ以降値は変わらず、また(\ref{eq:virpw})のように必ず$\prod_{a\in A}p_w(as)$との積を取られる。
+
+以上のことから、先のアルゴリズムは仮想葉ノードを保持した場合と同様の結果を与える。
+
+\section{冗長度上界}
+
+\begin{Theorem}[$C(s,x_{-\infty}^0)=n_s\ge \eta$に関する冗長度上界]\rm~\\
+$\eta$を0より大きい整数とすると、バイナリの時、ある木情報源$(T,\Theta,x_{-\infty}^0)$に対して、$C(s,x_{-\infty}^{t-1})=n_s\ge\eta$として増分CTW法を適用した時の冗長度は、
+\begin{equation}
+ \rho(x_{1}^t|T,\Theta,x_{-\infty}^0)<2|\partial T|-1+\eta(|\partial T|-1)+|\partial T|\beta\Bigl(\frac{t}{|\partial T|}\Bigr)+tV(K)+2
+\end{equation}
+という上界が与えられる。ただし、$\displaystyle\gamma(s)=\frac{1}{2}$としている。\hfill$\triangle$
+\end{Theorem}
+
+\begin{Proof}\rm
+あるノード$s$において、本来あるべきカウント(仮想葉ノードを考えなければ持っていたはずのカウント)と実際に保持されているカウントとの差を$k_{s}^a$とする。$t$個のシンボルを入力した後では、$\sum_{s\in\partial T,a\in A}(n_{s}^a+k_{s}^a)=t$となる。$p_{KT}(\eta)$で、カウントの和が$\eta$であるKT推定量を表すとする。
+
+まず、冗長度は
+\begin{eqnarray}
+\rho(x_{1}^t|T,\Theta,x_{-\infty}^0)&=&\log\frac{\prod_{s\in T}p_e(\varepsilon s)\prod_{s\in\partial T}p_e(s)}{p(x_{1}^t|x_{-\infty}^0)}+\log\frac{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a+k_{s}^a}}{\prod_{s\in T}p_e(\varepsilon s)\prod_{s\in\partial T}p_e(s)} \nonumber\\
+ &&+(L(x_{1}^t|x_{-\infty}^0)-\log\frac{1}{p(x_{1}^t|x_{-\infty}^0)})
+\end{eqnarray}
+となる。
+
+$k_{s}^a$について考える。$\sum_{s\in\partial T,a\in A}k_{s}^a$の最大値は、全ての内部ノード$s\in T$の仮想葉ノード$\varepsilon s$がカウント$\eta$を持っている時の仮想葉ノードのカウントの和$\eta|T|=\eta(|\partial T|-1)$となる。この時、$\eta(|\partial T|-1)$個の$\theta_{\cdot}^\cdot$の積を$|\partial T|-1$個の$p_{KT}(\eta)$の積で推定することになるので、$k_{s}^a$に関するパラメータ冗長度の上界は、
+\begin{eqnarray}
+ \log\frac{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{k_{s}^a}}{(p_{KT}(\eta))^{|\partial T|-1}}&\le&(|\partial T|-1)\beta(\eta) \nonumber\\
+ &\le&\eta(|\partial T|-1)\beta(\frac{\eta}{\eta}) \nonumber\\
+ &=&\eta(|\partial T|-1)
+\end{eqnarray}
+となる。
+
+$n_{s}^a$に関するパラメータ冗長度の上界は、
+\begin{eqnarray}
+\log\frac{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}}{\prod_{s\in\partial T}p_{KT}(\{n_{s}^a\}_{a\in A})}&\le& |\partial T|\beta\Bigl(\sum_{s\in\partial T}\frac{n_s}{|\partial T|}\Bigr) \nonumber\\
+&\le& |\partial T|\beta\Bigl(\frac{t}{|\partial T|}\Bigr)
+\end{eqnarray}
+となる。
+
+モデル冗長度に関しては、
+\begin{equation}
+ p(x_{1}^t)\ge w_1(T)\prod_{s\in T}p_e(\varepsilon s)\prod_{s\in\partial T}p_{KT}(\{n_{s}^a\}_{a\in A})
+\end{equation}
+となるので、上界は$\Gamma_{A^*}(T)=|T\cup\partial T|=2|\partial T|-1$となる。
+
+以上から、定理が得られる。\hfill$\triangle$
+\end{Proof}

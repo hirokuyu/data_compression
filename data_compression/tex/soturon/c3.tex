@@ -1,0 +1,564 @@
+\chapter{算術符号}\label{chap:arith}
+
+\section{符号化アルゴリズム}
+
+系列$x_{1}^n=x_1x_2\ldots x_n\in A^n$に対して、確率質量関数である
+何らか符号化確率$p(x_{1}^n)$が与えられたとする。この時、累積確率($y_{1}^n\prec x_{1}^n$である$y_{1}^n$に関する$p(y_{1}^n)$の和)
+\begin{equation}\label{eq:cum1}
+  F(x_{1}^n)\trieq\sum_{y_{1}^n\in A^n:y_{1}^n\prec x_{1}^n}p(y_{1}^n)
+\end{equation}
+は、$n$を固定した場合、$x_{1}^n$に対して一意に定まる。これは、
+\begin{equation}\label{eq:cum2}
+  F(x_{1}^n)\trieq\sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\end{equation}
+という形で、逐次的に求めることもできる。
+
+算術符号は、値$F(x_{1}^n)+\frac{1}{2}p(x_{1}^n)\in [0,1)$を、符号として用いる。符号として必要なビット数は、計算精度を無限とすると、$-\log p(x_{1}^n)+2[{\rm bits}]$以下となる。
+
+算術符号化が正確かつ無駄なく行われるためには、全ての取り得る$x_{1}^t$に対して、
+\begin{equation}
+ p(x_{1}^t)>0
+\end{equation}
+であり、かつ
+\begin{equation}\label{eq:sumpc}
+ p(x_{1}^{t-1})=\sum_{a\in A}p(x_{1}^{t-1}a)
+\end{equation}
+である必要がある。すなわち、確率分布として成り立っている必要がある。
+
+\begin{Example}[算術符号化の様子]~\\\rm
+算術符号化の様子の例を図\ref{fig:arithcoding}に示す。例えば、符号の値が$c_0$の時、$n=1$なら入力系列は0、$n=2$なら入力系列は01と復号される。符号の値が$c_1$の時、$n=2$なら入力系列は11と復号される。\hfill$\triangle$
+\end{Example}
+
+\begin{figure}[htb]
+\begin{minipage}{1.5cm}
+~
+\end{minipage}
+\begin{minipage}{6cm}
+\begin{picture}(2500,1600)
+\special{pn 8}%
+%
+\special{pa 200 -100}%pole
+\special{pa 200 -1600}%
+\special{fp}%
+\special{pa 170 -100}%
+\special{pa 230 -100}%
+\special{fp}%
+\special{pa 170 -1600}%
+\special{pa 230 -1600}%
+\special{fp}%
+\put(80,50){0}%
+\put(80,1550){1}%
+%
+\special{pa 400 -1600}%lambda box
+\special{pa 1100 -1600}%
+\special{pa 1100 -100}%
+\special{pa 400 -100}%
+\special{pa 400 -1600}%
+\special{fp}%
+\special{pa 400 -1600}%
+\special{pa 480 -1200}%
+\special{pa 500 -1000}%
+\special{sp}%
+\special{pa 400 -100}%
+\special{pa 480 -500}%
+\special{pa 500 -700}%
+\special{sp}%
+\put(450,800){$p(\lambda)$}%
+\put(500,-50){n=0}%
+%
+\special{pa 1100 -1600}%1 box
+\special{pa 1800 -1600}%
+\special{pa 1800 -900}%
+\special{pa 1100 -900}%
+\special{pa 1100 -1600}%
+\special{fp}%
+\special{pa 1100 -1600}%
+\special{pa 1180 -1400}%
+\special{pa 1200 -1350}%
+\special{sp}%
+\special{pa 1100 -900}%
+\special{pa 1180 -1100}%
+\special{pa 1200 -1150}%
+\special{sp}%
+\put(1150,1200){$p(1)$}%
+\special{pa 1100 -900}%0 box
+\special{pa 1800 -900}%
+\special{pa 1800 -100}%
+\special{pa 1100 -100}%
+\special{pa 1100 -900}%
+\special{fp}%
+\special{pa 1100 -900}%
+\special{pa 1180 -650}%
+\special{pa 1190 -600}%
+\special{sp}%
+\special{pa 1100 -100}%
+\special{pa 1180 -350}%
+\special{pa 1190 -400}%
+\special{sp}%
+\put(1150,450){$p(0)$}%
+\put(1300,-50){n=1}%
+%
+\special{pa 2500 -1600}%11 box
+\special{pa 2500 -1300}%
+\special{pa 1800 -1300}%
+\special{pa 1800 -1600}%
+\special{pa 2700 -1600}%
+\special{fp}%
+\special{pa 1800 -1600}%
+\special{pa 1840 -1560}%
+\special{pa 1850 -1540}%
+\special{sp}%
+\special{pa 1800 -1300}%
+\special{pa 1840 -1340}%
+\special{pa 1850 -1360}%
+\special{sp}%
+\put(1820,1400){$p(11)$}%
+\special{pa 1800 -1300}%10 box
+\special{pa 2500 -1300}%
+\special{pa 2500 -900}%
+\special{pa 1800 -900}%
+\special{pa 1800 -1300}%
+\special{fp}%
+\special{pa 1800 -1300}%
+\special{pa 1850 -1220}%
+\special{pa 1855 -1200}%
+\special{sp}%
+\special{pa 1800 -900}%
+\special{pa 1850 -980}%
+\special{pa 1855 -1000}%
+\special{sp}%
+\put(1820,1050){$p(10)$}%
+\special{pa 1800 -900}%01 box
+\special{pa 2500 -900}%
+\special{pa 2500 -500}%
+\special{pa 1800 -500}%
+\special{pa 1800 -900}%
+\special{fp}%
+\special{pa 1800 -900}%
+\special{pa 1850 -820}%
+\special{pa 1855 -790}%
+\special{sp}%
+\special{pa 1800 -500}%
+\special{pa 1850 -580}%
+\special{pa 1855 -610}%
+\special{sp}%
+\put(1820,650){$p(01)$}%
+\special{pa 2500 -100}%00 box
+\special{pa 2500 -500}%
+\special{pa 1800 -500}%
+\special{pa 1800 -100}%
+\special{pa 2700 -100}%
+\special{fp}%
+\special{pa 1800 -500}%
+\special{pa 1850 -420}%
+\special{pa 1855 -390}%
+\special{sp}%
+\special{pa 1800 -100}%
+\special{pa 1850 -180}%
+\special{pa 1855 -210}%
+\special{sp}%
+\put(1820,250){$p(00)$}%
+\put(2000,-50){n=2}%
+%
+\put(2600,800){$\cdots$}%
+%
+\put(137,550){$\times$}%c0
+\put(50,550){$c_0$}%
+\special{pa 200 -590}%
+\special{pa 2600 -590}%
+\special{dt 0.05}%
+%
+\put(137,1390){$\times$}%
+\put(50,1350){$c_1$}%
+\special{pa 200 -1440}%
+\special{pa 2600 -1440}%
+\special{dt 0.05}%
+%
+\end{picture}
+\caption{算術符号化の様子}
+\label{fig:arithcoding}
+\end{minipage}
+\end{figure}
+
+今回用いた算術符号化のアルゴリズムは次のようなものである。
+\begin{Algo}[有限精度の算術符号化]\rm~\\
+
+\begin{table}[htb]
+\begin{tabular}{|l|l|r|}
+\hline
+\multicolumn{1}{|c|}{{\bf 変数}} & & \multicolumn{1}{|c|}{{\bf 初期値}}\\
+\hline
+{\bf($K$ビット固定小数点数)} & & \\
+\hline
+$Low$ & 符号範囲下限$\in[0,1)$ & $.000\ldots 0_{\rm B}$\\
+\hline
+$High$ & 符号範囲上限$\in[0,1)$ & $.111\ldots 1_{\rm B}$\\
+\hline
+$Range$ & 符号範囲($High\!-\!Low\!+\!2^{-K}$)$\in[0,1)$ & $1.000\ldots 0_{\rm B}$\\
+\hline
+$Cum$ & 累積確率$\in[0,1)$ & $.000\ldots 0_{\rm B}$\\
+\hline
+$P_c$ & 符号化確率$\in[0,1)$ & $1.000\ldots 0_{\rm B}$\\
+\hline
+$Code$ & 符号(復号時に使用)$\in[0,1)$ & $F\!$の$\!K\!$ビット切り捨て\\
+\hline
+{\bf(整数)} & & \\
+\hline
+$L$ & 符号の出力済みビット数($r$を含む) & 0 \\
+\hline
+$r$ & 反転出力予約ビット数 & 0 \\
+\hline
+{\bf($L$ビット小数)} & & \\
+\hline
+$F$ & 出力済み符号(累積確率) & .\\
+\hline
+\end{tabular}
+\caption{算術符号化に用いる変数}
+\label{tab:acvariables}
+\end{table}
+
+符号として二進数を仮定し、表\ref{tab:acvariables}のような変数を用いる。
+
+累積確率は、最終的に範囲$[F+2^{-L+r}(2^{-1}-2^{-r-1})+2^{-L}Low,F+2^{-L+r}(2^{-1}-2^{-r-1})+2^{-L}(High+2^{-K}))$に収まると考えることができる。これを表したのが図\ref{fig:acimage}の\fbox{1}である。この図では、$F=.11$、$L=2$、$r=0$となっている。縦軸の太線の部分が符号の範囲を表している。\fbox{1}の右側は$0.11_{\rm B}$から$1.00_{\rm B}$の部分を拡大したものである。
+
+\begin{figure}[htb]
+\begin{picture}(3000,1750)
+\special{pn 8}%
+\put(0,1650){\fbox{1}}%
+\special{pa 150 0}%0-1 pole
+\special{pa 150 -1500}%
+\special{fp}%
+\special{pa 125 0}%
+\special{pa 175 0}%
+\special{fp}%
+\special{pa 125 -1500}%
+\special{pa 175 -1500}%
+\special{fp}%
+\special{pa 125 -375}%
+\special{pa 175 -375}%
+\special{fp}%
+\special{pa 125 -750}%
+\special{pa 175 -750}%
+\special{fp}%
+\special{pa 125 -1125}%
+\special{pa 175 -1125}%
+\special{fp}%
+\put(30,-30){0}%
+\put(30,1420){1}%
+\put(-20,1080){$F$}%
+\special{pn 16}%range
+\special{pa 145 -1200}%
+\special{pa 145 -1425}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 250 -1500}%scaling
+\special{pa 750 -1500}%
+\special{fp}%
+\special{pa 250 -1125}%
+\special{pa 380 -1125}%
+\special{pa 480 0}%
+\special{pa 750 0}%
+\special{fp}%
+\special{pa 300 -1500}%zooming
+\special{pa 300 -1125}%
+\special{fp}%
+\special{pa 260 -1460}%
+\special{pa 300 -1500}%
+\special{pa 340 -1460}%
+\special{fp}%
+\special{pa 260 -1165}%
+\special{pa 300 -1125}%
+\special{pa 340 -1165}%
+\special{fp}%
+\put(350,1250){$2^{-L-r}$}%
+\special{pa 925 -1500}%zoomed pole
+\special{pa 925 0}%
+\special{fp}%
+\special{pa 885 -1500}%
+\special{pa 965 -1500}%
+\special{fp}%
+\special{pa 885 0}%
+\special{pa 1155 0}%
+\special{fp}%
+\special{pn 32}%
+\special{pa 920 -300}%zoomed range
+\special{pa 920 -1200}%
+\special{fp}%
+\special{pn 8}%
+\put(770,-30){$F$}%
+\special{pa 905 -300}%Low
+\special{pa 1155 -300}%
+\special{fp}%
+\special{pa 1125 0}%
+\special{pa 1125 -300}%
+\special{fp}%
+\special{pa 1085 -40}%
+\special{pa 1125 0}%
+\special{pa 1165 -40}%
+\special{fp}%
+\special{pa 1085 -260}%
+\special{pa 1125 -300}%
+\special{pa 1165 -260}%
+\special{fp}%
+\put(1150,100){$Low\times 2^{-L-r}$}%
+\special{pa 905 -1200}%High
+\special{pa 1155 -1200}%
+\special{fp}%
+\special{pa 1025 0}%
+\special{pa 1025 -1200}%
+\special{fp}%
+\special{pa 985 -40}%
+\special{pa 1025 0}%
+\special{pa 1065 -40}%
+\special{fp}%
+\special{pa 985 -1160}%
+\special{pa 1025 -1200}%
+\special{pa 1065 -1160}%
+\special{fp}%
+\put(1050,700){$High\times 2^{-L-r}$}%
+\special{pa 1155 -300}%Low extension
+\special{pa 2300 -300}%
+\special{da 0.05}%
+\special{pa 1155 -1200}%High extension
+\special{pa 2300 -1200}%
+\special{da 0.05}%
+\special{pa 2125 -1200}%Current range pole
+\special{pa 2125 -300}%
+\special{fp}%
+\special{pa 2225 -500}%Next range pole
+\special{pa 2225 -1000}%
+\special{fp}%
+\special{pa 2100 -500}%
+\special{pa 2250 -500}%
+\special{fp}%
+\special{pa 2100 -1000}%
+\special{pa 2250 -1000}%
+\special{fp}%
+\special{pn 16}%Pc
+\special{pa 2125 -500}%
+\special{pa 2125 -1000}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 2185 -540}%
+\special{pa 2225 -500}%
+\special{pa 2265 -540}%
+\special{fp}%
+\special{pa 2185 -960}%
+\special{pa 2225 -1000}%
+\special{pa 2265 -960}%
+\special{fp}%
+\put(2300,700){$P_c\times 2^{-L-r}$}%
+\special{pa 2225 -300}%Cum
+\special{pa 2225 -500}%
+\special{fp}%
+\special{pa 2185 -340}%
+\special{pa 2225 -300}%
+\special{pa 2265 -340}%
+\special{fp}%
+\special{pa 2185 -460}%
+\special{pa 2225 -500}%
+\special{pa 2265 -460}%
+\special{fp}%
+\put(2300,350){$Cum\times 2^{-L-r}$}%
+\put(3100,1650){\fbox{2}}%
+\put(3400,1650){(a)}%scaling(a)
+\special{pa 3500 0}%
+\special{pa 3500 -1500}%
+\special{fp}%
+\special{pa 3475 0}%left pole
+\special{pa 3525 0}%
+\special{fp}%
+\special{pa 3475 -375}%
+\special{pa 3525 -375}%
+\special{fp}%
+\special{pa 3475 -750}%
+\special{pa 3525 -750}%
+\special{fp}%
+\special{pa 3475 -1125}%
+\special{pa 3525 -1125}%
+\special{fp}%
+\special{pa 3475 -1500}%
+\special{pa 3525 -1500}%
+\special{fp}%
+\special{pa 3900 0}%right pole
+\special{pa 3900 -1500}%
+\special{fp}%
+\special{pa 3875 0}%
+\special{pa 3925 0}%
+\special{fp}%
+\special{pa 3875 -375}%
+\special{pa 3925 -375}%
+\special{fp}%
+\special{pa 3875 -750}%
+\special{pa 3925 -750}%
+\special{fp}%
+\special{pa 3875 -1125}%
+\special{pa 3925 -1125}%
+\special{fp}%
+\special{pa 3875 -1500}%
+\special{pa 3925 -1500}%
+\special{fp}%
+\special{pn 32}%left range
+\special{pa 3500 -100}%
+\special{pa 3500 -700}%
+\special{fp}%
+\special{pa 3900 -200}%right range
+\special{pa 3900 -1400}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 3500 0}%scaling line
+\special{pa 3900 0}%
+\special{da 0.05}%
+\special{pa 3500 -750}%
+\special{pa 3900 -1500}%
+\special{da 0.05}%
+\put(4400,1650){(b)}%scaling(b)
+\special{pa 4500 0}%
+\special{pa 4500 -1500}%
+\special{fp}%
+\special{pa 4475 0}%
+\special{pa 4525 0}%
+\special{fp}%
+\special{pa 4475 -375}%
+\special{pa 4525 -375}%
+\special{fp}%
+\special{pa 4475 -750}%
+\special{pa 4525 -750}%
+\special{fp}%
+\special{pa 4475 -1125}%
+\special{pa 4525 -1125}%
+\special{fp}%
+\special{pa 4475 -1500}%
+\special{pa 4525 -1500}%
+\special{fp}%
+\special{pa 4900 0}%
+\special{pa 4900 -1500}%
+\special{fp}%
+\special{pa 4875 0}%
+\special{pa 4925 0}%
+\special{fp}%
+\special{pa 4875 -375}%
+\special{pa 4925 -375}%
+\special{fp}%
+\special{pa 4875 -750}%
+\special{pa 4925 -750}%
+\special{fp}%
+\special{pa 4875 -1125}%
+\special{pa 4925 -1125}%
+\special{fp}%
+\special{pa 4875 -1500}%
+\special{pa 4925 -1500}%
+\special{fp}%
+\special{pn 32}%left range
+\special{pa 4500 -850}%
+\special{pa 4500 -1450}%
+\special{fp}%
+\special{pa 4900 -200}%right range
+\special{pa 4900 -1400}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 4500 -750}%scaling line
+\special{pa 4900 0}%
+\special{da 0.05}%
+\special{pa 4500 -1500}%
+\special{pa 4900 -1500}%
+\special{da 0.05}%
+\put(5400,1650){(c)}%scaling(c)
+\special{pa 5500 0}%
+\special{pa 5500 -1500}%
+\special{fp}%
+\special{pa 5475 0}%
+\special{pa 5525 0}%
+\special{fp}%
+\special{pa 5475 -375}%
+\special{pa 5525 -375}%
+\special{fp}%
+\special{pa 5475 -750}%
+\special{pa 5525 -750}%
+\special{fp}%
+\special{pa 5475 -1125}%
+\special{pa 5525 -1125}%
+\special{fp}%
+\special{pa 5475 -1500}%
+\special{pa 5525 -1500}%
+\special{fp}%
+\special{pa 5900 0}%
+\special{pa 5900 -1500}%
+\special{fp}%
+\special{pa 5875 0}%
+\special{pa 5925 0}%
+\special{fp}%
+\special{pa 5875 -375}%
+\special{pa 5925 -375}%
+\special{fp}%
+\special{pa 5875 -750}%
+\special{pa 5925 -750}%
+\special{fp}%
+\special{pa 5875 -1125}%
+\special{pa 5925 -1125}%
+\special{fp}%
+\special{pa 5875 -1500}%
+\special{pa 5925 -1500}%
+\special{fp}%
+\special{pn 32}%left range
+\special{pa 5500 -475}%
+\special{pa 5500 -1075}%
+\special{fp}%
+\special{pa 5900 -200}%right range
+\special{pa 5900 -1400}%
+\special{fp}%
+\special{pn 8}%
+\special{pa 5500 -375}%scaling line
+\special{pa 5900 0}%
+\special{da 0.05}%
+\special{pa 5500 -1125}%
+\special{pa 5900 -1500}%
+\special{da 0.05}%
+\end{picture}
+\caption{算術符号化アルゴリズムのイメージ}
+\label{fig:acimage}
+\end{figure}
+
+$p(x_{1}^t)$を符号化確率とし、$t=1,2,\ldots,n$に対し次の処理を行う。
+ \begin{enumerate}
+  \item 図\ref{fig:acimage}の\fbox{1}の右のように、$Range:=High-Low+2^{-K}$、$\displaystyle Cum:=\frac{Range}{p(x_{1}^{t-1})}\sum_{y\prec x_t}p(x_{1}^{t-1}y)$、$\displaystyle P_c:=\frac{p(x_{1}^t)}{p(x_{1}^{t-1})}Range$を求める。
+  \item $Low:=Low+Cum$、$High:=Low+P_c-2^{-K}$と更新。つまり、図\ref{fig:acimage}の\fbox{1}の$P_c$が新たな範囲となる。
+  \item 図\ref{fig:acimage}の\fbox{2}のように、次のいずれかの条件に当てはまる間、処理を繰り返す。
+   \begin{enumerate}
+    \item $High<0.5$;続く符号ビットは必ず0となる。\\
+     $L:=L+1$、$bit\_output(0)$、$Low:=Low\times 2$、$High:=Hight\times 2+2^{-K}$。
+    \item $0.5\le Low$;続く符号ビットは必ず1となる。\\
+     $L:=L+1$、$bit\_output(1)$、$Low:=(Low-0.5)\times 2$、$High:=(Hight-0.5)\times 2+2^{-K}$。
+    \item $0.25\le Low{\rm\ and\ }High<0.75$;続く符号ビットは01か10となる。\\
+     $L:=L+1$、$r:=r+1$、$Low:=(Low-0.25)\times 2$、$High:=(Hight-0.25)\times 2+2^{-K}$。
+   \end{enumerate}
+ \end{enumerate}
+最後に、$r:=r+1$とし、$Low\le 0.25$なら$bit\_output(0)$、そうでなければ$bit\_output(1)$として符号を決定する。
+
+また、$bit\_output(x)$は次のような手続きである。
+\begin{enumerate}
+ \item ビット$x$を出力。これは$F:=F+2^{-L+r}x$という操作に相当。
+ \item ビット$x$の反転を$r$ビット出力。これは$F:=F+2^{-L+r}-2^{-L}$に相当。
+ \item $r:=0$とする。
+\end{enumerate}
+\hfill$\triangle$
+\end{Algo}
+
+上の3-(c)があることで、$Range$は1において$\frac{1}{4}$以上に保たれる。また、$Cum$を求めるところでは、アンダーフローに注意する必要がある。すなわち、各シンボルに少なくとも$2^{-K}$の値が割り当てられなければならない。
+
+復号においては、$Code\in[Cum,Cum+Pc)$となるような$x_t$を求める。$Code$の更新は$Low$と同様に行われ、更に$F$の$K+L$ビット目が加えられる。
+
+\section{冗長度}
+
+情報源系列$x_{1}^t$の生成確率が$p(x_{1}^t)$であるとき、{\bf{\dg 理想符号長}}は、$-\log p(x_{1}^t)$と定義される。また、理想符号長と、情報源符号化による符号長との差を、{\bf{\dg 冗長度}}と呼ぶ。理想符号長も冗長度も、[bits]を単位とする。ここでは、上のアルゴリズムによって、有限精度で算術符号化することによる冗長度の上界を求める。
+
+上のアルゴリズムでは、$Range$は$\frac{1}{4}$以上となる。従って、算術符号化の精度が$K$ビットである時に、実際に用いる符号化確率は、シンボル毎に最悪$p(x_{1}^t)-4\times 2^{-K}p(x_{1}^{t-1})$となる。よって有限精度$K$による冗長度は、$n$シンボルを入力したとすると、
+\begin{eqnarray}
+&&\sum_{t=1}^n\{-\log(p(x_{1}^t)-4\times 2^{-K}p(x_{1}^{t-1}))+\log p(x_{1}^t)\} \nonumber\\
+&\le&\sum_{t=1}^n\{-\log p(x_{1}^t)(1-2^{-K+2}))+\log p(x_{1}^t)\} \nonumber\\
+&=&\sum_{t=1}^n\{-\log p(x_{1}^t)-\log(1-2^{-K+2})+\log p(x_{1}^t)\} \nonumber\\
+&=&-n\log(1-2^{-K+2})
+\end{eqnarray}
+という上界が与えられる。この冗長度上界を$nV(K)$と書くことにする。
+
+この$nV(K)$は、例えば、$K=16$、$n=10^6$のとき$88$、$K=31$、$n=10^6$とした時$0.0027$、となる。\ref{chap:exp}章で行う実験では、$K=31$、$n$は最大$10^6$としているので、$nV(K)$は十分無視できる。

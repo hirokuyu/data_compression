@@ -1,0 +1,144 @@
+\section{bitio\_stream.cpp}
+\begin{verbatim}
+/********************************************
+ --------------------------------------------
+bitio_stream.cpp
+
+             bit io for stream
+
+
+
+*********************************************/
+
+#include <stdlib.h>
+#include <string.h>
+#include "bitio_stream.h"
+#include "errormac.h"
+
+/********************************************/
+/*           bit_input for stream           */
+/********************************************/
+
+/***************  initialize  ***************/
+
+int bit_input_stream ::
+  init( FILE *p_is, int x )
+{
+  e0gf( is = p_is );
+  compressed = x;
+
+  if( x )
+    fread( &source_length, 4, 1, is );
+
+  return 0;
+f:
+  return -1;
+}
+
+/***************  input a bit  **************/
+
+int bit_input_stream :: input_bit()
+{
+  int t;
+
+  e0rm( is );
+
+  if( cycle_ctr == 0 ){
+    erm( (t=fgetc(is)) == EOF );
+    byte_buffer = (unsigned char) t;
+    cycle_ctr = 8;
+  }
+
+  t = (byte_buffer & 0x80) != 0;
+  byte_buffer <<= 1;
+  cycle_ctr--;
+  return t;
+}
+
+/********************************************/
+/*          bit_output for stream           */
+/********************************************/
+
+/***************  initialize  ***************/
+
+int bit_output_stream ::
+  init( FILE *p_os, int x, long sl )
+{
+  e0gf( os = p_os );
+  compressed = x;
+  source_length = sl;
+
+  cycle_ctr = 8;
+  reverse_bits = 0;
+
+  delete buffer; buffer=NULL;
+
+  if( buffering = x && sl < 0 ){
+    buffer = new strstream;
+
+    buffer-> clear();
+    buffer-> seekp(0);
+  }
+
+  if( compressed && !buffering )
+    fwrite( &source_length, 4, 1, os );
+
+  return 0;
+f:
+  return -1;
+}
+
+/************  finish outputting  ***********/
+
+void bit_output_stream :: finish()
+{
+  int c;
+
+  if( cycle_ctr != 8 )
+    if( buffering )
+      buffer->
+        put((char)(byte_buffer<<cycle_ctr));
+    else
+      fputc( byte_buffer<<cycle_ctr, os );
+
+  if( buffering ){
+    buffer-> flush();
+
+    if( compressed )
+      fwrite( &source_length, 4, 1, os );
+
+    while( (c=buffer->get()) != EOF )
+      fputc( c, os );
+  }
+  fflush(os);
+}
+
+/**************  output a bit  **************/
+
+int bit_output_stream :: output_bit( int bit )
+{
+  if( !buffer && !os ) return -1;
+
+  for( inner_output_bit(bit);
+       reverse_bits > 0;
+       inner_output_bit(!bit),reverse_bits-- );
+
+  return 0;
+}
+
+void bit_output_stream ::
+  inner_output_bit( int bit )
+{
+  byte_buffer <<= 1;
+  if( bit ) byte_buffer |= 1;
+
+  if( --cycle_ctr == 0 ){
+    if( buffering )
+      buffer-> put( byte_buffer );
+    else
+      fputc( byte_buffer, os );
+    byte_buffer = 0;
+    cycle_ctr = 8;
+  }
+}
+\end{verbatim}

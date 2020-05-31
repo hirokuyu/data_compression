@@ -1,0 +1,15 @@
+\section{my\_rand.cpp}
+\begin{verbatim}
+/* random sequence generator */
+#include "my_rand.h"
+static x=0;
+void my_srand( int i )
+{
+  x=i;
+}
+int my_rand()
+{
+  return x=(x*0x2DAAB5+0x6496205)
+           & 0x7FFFFFFF;
+}
+\end{verbatim}

@@ -1,0 +1,182 @@
+\chapter{文脈木重み付け法}
+\section{確率推定}
+\subsection{KT推定量}
+
+ある木情報源$(T,\Theta,x_{-\infty}^{0})$が系列$x_{1}^t$を生成したと仮定する。$n_{s}^a$を、$x_{1}^t$において実際に文脈$s$の後にシンボル$a\in A$が生成されたカウントとし、$n_s=\sum_{a\in A}n_{s}^a$とする。例\ref{ex:treesource}の場合なら、$n_{1}^0=2$、$n_{10}^{1}=1$、それ以外は0となる。そうすると、この木情報源が系列$x_{1}^t$を生成する確率は、
+\begin{equation}\label{eq:actprob}
+p(x_{1}^t|T,\Theta,x_{-\infty}^{0})=\prod_{s\in\partial T}\prod_{a\in A}(\theta_{s}^a)^{n_{s}^a}
+\end{equation}
+と表せる。一つの外部葉ノード$s$に関して$\prod_{a\in A}(\theta_{s}^a)^{n_{s}^a}$という生成確率が与えられる。この生成確率に対し、$\{n_{s}^a\}$から推定確率を与えるのが、Krichevsky-Trofimov推定量(KT推定量)である。
+
+\begin{Definition}[Krichevsky-Trofimov推定量]~\\\rm
+$\{n_{s}^a\}$に関するKrichevsky-Trofimov推定量は、
+\begin{equation}
+ p_{KT}(\{n_{s}^a\}_{a\in A})\trieq \frac{\prod_{a\in A}\frac{1}{2}\frac{3}{2}\cdots(n_{s}^a-\frac{1}{2})}{\frac{m}{2}\frac{m+2}{2}\cdots(n_s+\frac{m-2}{2})}
+\end{equation}
+と定義される$(m=|A|)$。\hfill$\triangle$
+\end{Definition}
+
+このKT推定量には、次のような性質がある。
+
+\begin{enumerate}
+\item $p_{KT}(\{0,\ldots,0\})=1$であり、
+\begin{equation}\label{eq:ktupdate}
+ p_{KT}(\{n_{s}^a+1\{a=x\}\}_{a\in A})=\frac{n_{s}^x+\frac{1}{2}}{n_{s}+\frac{m}{2}}p_{KT}(\{n_{s}^a\})
+\end{equation}
+である。ここで、$1\{\cdot\}$は、括弧内が真であれば$1$、偽であれば$0$を返す関数である。つまり、シンボル$x$のカウントが$1$増えれば、KT推定量は上のように更新される。
+\item バイナリのとき、$n_s\ge 1$において、
+\begin{equation}
+ p_{KT}(n_{s}^0,n_{s}^1)\ge \frac{1}{2}\cdot\frac{1}{\sqrt{n_s}}\left(\frac{n_{s}^0}{n_s}\right)^{n_{s}^0}\left(\frac{n_{s}^1}{n_s}\right)^{n_{s}^1}
+\end{equation}
+となる。
+\end{enumerate}
+
+この性質から、バイナリのときのKT推定量の冗長度上界は、$n_s\ge 1$の時、
+\begin{eqnarray}
+-\log\frac{p_{KT}(n_{s}^0,n_{s}^1)}{(\theta_{s}^0)^{n_{s}^0}(\theta_{s}^1)^{n_{s}^1}}&\le&\log\frac{(\theta_{s}^0)^{n_{s}^0}(\theta_{s}^1)^{n_{s}^1}}{\frac{1}{2}\cdot\frac{1}{\sqrt{n_s}}(\frac{n_{s}^0}{n_s})^{n_{s}^0}(\frac{n_{s}^1}{n_s})^{n_{s}^1}}\nonumber\\
+&=&\frac{1}{2}\log n_s+\log\left(2\cdot\frac{(1-\theta_{s}^1)^{n_{s}^0}(\theta_{s}^1)^{n_{s}^1}}{\left(\frac{n_{s}^0}{n_s}\right)^{n_{s}^0}\left(\frac{n_{s}^1}{n_s}\right)^{n_{s}^1}}\right) \nonumber\\
+&\le&\frac{1}{2}\log n_s+1
+\end{eqnarray}
+となる。
+
+また、(\ref{eq:ktupdate})より、
+\begin{equation}\label{eq:sumkt}
+p_{KT}(\{n_{s}^a\}_{a\in A})=\sum_{x\in A}p_{KT}(\{n_{s}^a+1\{a=x\}\}_{a\in A})
+\end{equation}
+である。
+
+\subsection{推定確率}\label{ssec:estiprob}
+
+KT推定量を用いると、(\ref{eq:actprob})に与える推定確率は、
+\begin{equation}
+  p(x_{1}^t|T,x_{-\infty}^0)=\prod_{s\in\partial T}p_{KT}(\{n_{s}^a\}_{a\in A})
+\end{equation}
+となる。これは、(\ref{eq:sumkt})から、
+\begin{equation}\label{eq:esprobsum}
+\sum_{a\in A}p(x_{1}^{t-1}a|T,x_{-\infty}^0)=p(x_{1}^{t-1}|T,x_{-\infty}^0)
+\end{equation}
+となり、(\ref{eq:sumpc})を満たす。
+
+\section{文脈木重み付け法}
+
+\subsection{重み付け文脈木}
+
+文脈木重み付け法(CTW法)では、次のように定義される{\bf{\dg 重み付け文脈木}}を使う。
+\begin{Definition}[重み付け文脈木]~\\\rm
+重み付け文脈木${\cal T}$はsuffix treeであり、外部葉ノードも含む各ノード$s$はカウンタの集合$\{n_{s}^a\}_{a\in A}$と変数$p_e(s)$、$p_w(s)$を持つ。$p_e(s)$は、基本的には${\rm KT}$推定量である。
+$p_w(s)$は{\bf{\dg 重み付け確率}}と呼ばれ、次のように${\cal T}$の各ノードに関して再帰的に定義される。
+\begin{equation}\label{eq:pw}
+p_w(s)\trieq
+ \left\{
+  \begin{array}{ll}
+   \gamma(s)p_e(s)+\bar\gamma(s)\prod_{a\in A}p_w(as)　& s\in{\cal T}\\
+   p_e(s) & s\in\partial{\cal T}
+  \end{array}
+ \right.
+\end{equation}
+ただし、$0\le\gamma(s)\le 1$、$\bar\gamma(s)=1-\gamma(s)$である。通常は$\gamma(s)=\bar\gamma(s)=\frac{1}{2}$とする。
+\hfill$\triangle$
+\end{Definition}
+
+CTW法では、重み付け確率$p_w(\lambda)$を符号化確率$p(x_{1}^t|x_{-\infty}^0)$として使う。
+
+上の式は、${\cal T}$を有限の大きさで打ち切るために、$s\in\partial{\cal T}$において$\gamma(s)=1$としていると解釈できる。また、$\gamma(s)$は、後述のように{\bf{\dg 文脈木の事前分布}}に関係する。
+
+この重み付け確率に異なる形を与えるために、次の定理を導入する。
+
+\begin{Theorem}\label{th:pw}
+\begin{equation}\label{eq:pwrecursive}
+ p_w(s)=\left\{
+  \begin{array}{ll}
+   g_2(s)+g_1(s)\prod_{a\in A}p_w(as) & s\in{\cal T} \\
+   g_2(s) & s\in\partial{\cal T}
+  \end{array}
+ \right.
+\end{equation}
+が成り立っている時に、この$p_w(s)$は
+\begin{equation}\label{eq:pwsumform}
+ p_w(s)=\sum_{T\subset{\cal T}_s}\left(\prod_{u\in T}g_1(us)\cdot\prod_{u\in\partial T}g_2(us)\right)
+\end{equation}
+を満たす。ここで、${\cal T}_s$は、${\cal T}$における$s$をルートとする部分木を表す。\hfill$\triangle$
+\end{Theorem}
+
+証明は付録\ref{chap:pwproof}で述べる。
+
+定理\ref{th:pw}において、$g_2(s)=\gamma(s)p_e(s)$、$g_1(s)=\bar\gamma(s)$とおくと、次の補題が得られる。
+
+\begin{Lemma}\rm
+ルートノード$\lambda$における重み付け確率$p_w(s)$は($\lambda$以外でも同様に定義可能)、次のように書くことができる。
+\begin{equation}
+  p_w(\lambda)=\sum_{T\subset {\cal T}}w_1(T)\prod_{s\in\partial T}p_e(s)
+\end{equation}
+ここで、$w_1(T)\trieq\prod_{s\in T}\bar\gamma(s)\cdot\prod_{s\in\partial T}\gamma(s)$は$T$の事前分布である。\hfill$\triangle$
+\end{Lemma}
+
+この補題は、重み付け確率が、${\cal T}$に含まれる{\bf{\dg 全ての文脈木}}$T$について推定確率$\prod_{s\in\partial T}p_e(s)$を求め、各$T$が$w_1(T)$で分布していると仮定して(すなわち、各$T$に関する推定確率を$w_1(T)$で重み付けして)、平均を取っているということを表している。これが文脈木重み付け法という名称の意味である。
+
+一つの文脈木について、推定確率は(\ref{eq:esprobsum})を満たす。よってそれらに重み付けをして和を取った符号化確率についても、
+\begin{eqnarray}
+ \sum_{a\in A}p(x_{1}^{t-1}a|x_{-\infty}^0)&=&\sum_{a\in A}\sum_{T\in{\cal T}}w_1(T)p(x_{1}^{t-1}a|T,x_{-\infty}^0)\nonumber\\
+ &=&\sum_{T\in{\cal T}}w_1(T)\sum_{a\in A}p(x_{1}^{t-1}a|T,x_{-\infty}^0)\nonumber\\
+ &=&\sum_{T\in{\cal T}}w_1(T)p(x_{1}^{t-1}|T,x_{-\infty}^0)\nonumber\\
+\label{eq:sumPc} &=&p(x_{1}^{t-1}|x_{-\infty}^0)
+\end{eqnarray}
+となり、(\ref{eq:sumpc})を満たす。
+
+ただし、(\ref{eq:sumPc})は、時刻$t$においても$T$が、${\cal T}$に関して$w_1(T)$で分布していると仮定している。よって、常に(\ref{eq:sumPc})が成立するには(すなわち、重み付け確率が確率分布となるためには)、${\cal T}$の形が一定である必要がある。
+
+\section{冗長度上界}
+
+\begin{Theorem}[木情報源に対する冗長度上界]~\\\rm
+バイナリの時、ある$T\in{\cal T}$とパラメータ$\Theta$を持つ木情報源に対する冗長度は、
+\begin{equation}
+ \rho(x_{1}^t|T,\Theta,x_{-\infty}^0)<\Gamma_{\cal T}(T)+|\partial T|\beta(\frac{t}{|\partial T|})+tV(K)+2
+\end{equation}
+という上界が与えられる。ここで、$\Gamma_{\cal T}(T)$は木のモデルコストを表し、
+\begin{equation}
+ \Gamma_{\cal T}(T)=-\log w_1(T)
+\end{equation}
+と定義される。$s\in {\cal T}$において$\displaystyle\gamma(s)=\frac{1}{2}$の時、
+\begin{equation}
+ \Gamma_{\cal T}(T)=|T\cup\partial T|-(s\in\partial Tかつs\in\partial{\cal T}であるsの数)
+\end{equation}
+となる。また、$\beta(\cdot)$は、
+\begin{equation}
+ \beta(z)=
+  \left\{
+  \begin{array}{ll}
+   z & {\rm if\ } 0\le z< 1 \\
+   \frac{1}{2}\log z+1 & {\rm if\ } z\ge 1
+  \end{array}
+  \right.
+\end{equation}
+と定義される。$V(K)$は、\ref{chap:arith}章で見たように、算術符号化の精度を有限にしたことによる冗長度である。
+\end{Theorem}
+\begin{Proof}\rm
+\cite{Wl:BasicCTW}に倣い、冗長度を3つの項、モデル冗長度、パラメータ冗長度、符号化冗長度に分ける。符号語長を$L(x_{1}^t|x_{-\infty}^0)$と書くと、
+\begin{eqnarray}
+\rho(x_{1}^t|T,\Theta,x_{-\infty}^0)&=&L(x_{1}^t|x_{-\infty}^0)-\log\frac{1}{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}}\nonumber\\
+&=& \log\frac{\prod_{s\in\partial T}p_e(s)}{p(x_{1}^t|x_{-\infty}^0)}+\log\frac{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}}{\prod_{s\in\partial T}p_e(s)}\nonumber\\
+&&+(L(x_{1}^t|x_{-\infty}^0)-\log\frac{1}{p(x_{1}^t|x_{-\infty}^0)})
+\end{eqnarray}
+となる。
+
+符号化冗長度は算術符号化による冗長度であり、$tV(K)+2$という上界が与えられる。
+
+パラメータ冗長度は、次のようになる。
+\begin{eqnarray}
+ \log\frac{\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}}{\prod_{s\in\partial T}p_{KT}(\{n_{s}^a\}_{a\in A})} &=& \sum_{s\in\partial T}\log\frac{\prod_{a\in A}(\theta_{s}^a)^{n_{s}^a}}{p_{KT}(\{n_{s}^a\}_{a\in A})} \nonumber\\
+ &\le& \sum_{s\in\partial T:n_s>0}\left(\frac{1}{2}\log n_s+1\right) \nonumber\\
+ &=&|\partial T|\sum_{s\in\partial T}\frac{1}{|\partial T|}\beta(n_s) \nonumber\\
+ &\le& |\partial T|\beta(\sum_{s\in\partial T}\frac{n_s}{|\partial T|})=|\partial T|\beta(\frac{t}{|\partial T|})
+\end{eqnarray}
+また、モデル冗長度に関しては、
+\begin{equation}
+p(x_{1}^t|x_{-\infty}^0)=\sum_{S\in{\cal T}}w_1(S)\prod_{s\in\partial S}p_e(s)\ge w_1(T)\prod_{s\in T}p_e(s)
+\end{equation}
+であり、$\log w_1(T)=-\Gamma_{\cal T}(T)$であるので、
+\begin{equation}
+\log\frac{\prod_{s\in\partial T}p_e(s)}{p(x_{1}^t|x_{-\infty}^0)}\le\log\frac{1}{w_1(T)}=\Gamma_{\cal T}(T)
+\end{equation}
+という上界が与えられる。以上から、定理が得られる。\hfill$\triangle$
+\end{Proof}

@@ -1,0 +1,758 @@
+\unitlength 0.001in
+\newcommand{\tabtopsp}[1]{\vbox{\vbox to#1{}\vbox to1zw{}}}
+\begin{slide}{}
+
+\begin{center}
+{\small 平成１１年度卒論発表} 
+\vspace{2cm} \\
+
+\shadowbox{
+\begin{minipage}{0.85\textwidth} 
+\begin{center}
+{\Large 増分文脈木重み付け法の\\
+新しい設計とその評価}
+\end{center}
+\end{minipage}
+}\\
+\vspace{1cm}
+ 電子情報学科\\
+情報システム学講座 川端研究室\\
+ 9511089~~清水~弘和
+\end{center}
+\vspace{0.5cm}
+\ovalbox{発表内容}\\
+\vspace{5mm}\\
+\begin{minipage}[cbt]{1\textwidth}
+\begin{itemize}
+ \baselineskip 40pt
+ \item suffix treeの定義
+ \item 算術符号
+ \item 文脈木重み付け法
+ \item 増分文脈木重み付け法
+ \item 実験的評価
+\end{itemize}
+\end{minipage}
+\end{slide}
+
+\begin{note}
+川端研の清水弘和です。
+
+データ圧縮法の一種である文脈木重み付け法、略してCTW法と言いますが、その一つの変形である増分文脈木重み付け法について、新しい設計を考え、また実験的な評価も行いました。
+
+まず、CTW法を定義するために必要な、suffix treeを定義します。次に、実際の符号化するために用いる算術符号について、簡単に述べます。そして、文脈木重み付け法を定義し、この研究の中心である増分文脈木重み付け法について述べます。最後に、増分CTW法が有利になるような状況を、実験的に見ます。
+\end{note}
+
+\begin{slide}{}
+\normalsize
+\begin{center}
+\begin{minipage}{14cm}
+\fbox{情報源系列}
+
+$x_{1}^n=x_1x_2\ldots x_n$\hspace{2cm} $x_t\in\{0,1\}$
+
+\[
+x_{1}^n\mbox{の}{\rm suffix}\left\{
+ \begin{array}{rl}
+   \lambda & (\mbox{空の系列}) \\
+   x_n \\
+   x_{n-1}x_n \\
+   \vdots~~ \\
+   x_1x_2\ldots x_n
+ \end{array}
+\right.
+\]
+\end{minipage}
+
+\begin{minipage}{14cm}
+\fbox{suffix tree $T\cup \partial T$}
+\begin{picture}(4300,3000)\normalsize
+\special{pn 16}%
+\special{pa 100 -100}%
+\special{pa 900 -1300}%
+\special{pa 1400 -100}%
+\special{pa 900 -1300}%
+\special{pa 2200 -2500}%
+\special{pa 3500 -1300}%
+\special{pa 4300 -100}%
+\special{pa 3500 -1300}%
+\special{pa 3000 -100}%
+\special{fp}%
+\put(280,0){00}%
+\special{sh 0}%
+\special{ar 100 -100 150 150 0 6.29}%
+\put(1580,0){10}%
+\special{sh 0}%
+\special{ar 1400 -100 150 150 0 6.29}%
+\put(1080,1200){0}%
+\special{sh 1}%
+\special{ar 900 -1300 150 150 0 6.29}%
+\put(2380,2400){$\lambda$}%
+\special{sh 1}%
+\special{ar 2200 -2500 150 150 0 6.29}%
+\put(3180,0){01}%
+\special{sh 0}%
+\special{ar 3000 -100 150 150 0 6.29}%
+\put(4480,0){11}%
+\special{sh 0}%
+\special{ar 4300 -100 150 150 0 6.29}%
+\put(3680,1200){1}%
+\special{sh 1}%
+\special{ar 3500 -1300 150 150 0 6.29}%
+\put(4000,2700){$\in T$}%
+\special{sh 1}%
+\special{ar 3800 -2800 150 150 0 6.29}%
+\put(4000,2300){$\in\partial T$(外部葉集合)}%
+\special{ar 3800 -2400 150 150 0 6.29}%
+\end{picture}
+\end{minipage}
+\end{center}
+\end{slide}
+
+\begin{note}
+情報源系列として、$x_{1}^n$、$n$個のシンボルからなる系列を考えます。情報源は時刻$t$にシンボル$x_t$を出力するとしています。各シンボルは0あるいは1とします。この時、空の系列$\lambda$、$x_n$、$x_{n-1}x_n$、と続いて$x_{1}^n$、つまり$x_{1}^n$の後ろから見ていった系列は全て、$x_{1}^n$のsuffixであると言われます。
+
+そして、ある系列を要素として持つ集合において、その要素のsuffixが全てその集合に含まれる時、その集合はsuffix treeであると言われます。例えば、この図の黒丸の部分、$\lambda$、0、1からなる集合$T$はsuffix trteeです。
+
+また、このsuffix tree $T$の葉の子の集合を、外部葉集合と呼びます。
+\end{note}
+
+\begin{slide}{}
+\normalsize
+
+\begin{center}
+\framebox{算術符号}
+\end{center}
+
+\framebox{算術符号化の様子}
+\vspace{-1.5cm}
+
+\hspace{2cm}
+\begin{picture}(2500,3400)
+\special{pn 16}%
+%
+\special{pa 300 -100}%pole
+\special{pa 300 -3100}%
+\special{fp}%
+\special{pa 270 -100}%
+\special{pa 330 -100}%
+\special{fp}%
+\special{pa 270 -3100}%
+\special{pa 330 -3100}%
+\special{fp}%
+\put(80,50){0}%
+\put(80,3000){1}%
+%
+\special{pa 600 -3100}%lambda box
+\special{pa 2000 -3100}%
+\special{pa 2000 -100}%
+\special{pa 600 -100}%
+\special{pa 600 -3100}%
+\special{fp}%
+\special{pa 600 -3100}%
+\special{pa 750 -2500}%
+\special{pa 800 -1800}%
+\special{sp}%
+\special{pa 600 -100}%
+\special{pa 750 -700}%
+\special{pa 800 -1400}%
+\special{sp}%
+\put(700,1500){$p(\lambda)$}%
+\put(800,-100){n=0}%
+%
+\special{pa 2000 -3100}%1 box
+\special{pa 3400 -3100}%
+\special{pa 3400 -1700}%
+\special{pa 2000 -1700}%
+\special{pa 2000 -3100}%
+\special{fp}%
+\special{pa 2000 -3100}%
+\special{pa 2150 -2700}%
+\special{pa 2180 -2550}%
+\special{sp}%
+\special{pa 2000 -1700}%
+\special{pa 2150 -2100}%
+\special{pa 2180 -2250}%
+\special{sp}%
+\put(2100,2300){$p(1)$}%
+\special{pa 2000 -1700}%0 box
+\special{pa 3400 -1700}%
+\special{pa 3400 -100}%
+\special{pa 2000 -100}%
+\special{pa 2000 -1700}%
+\special{fp}%
+\special{pa 2000 -1700}%
+\special{pa 2150 -1400}%
+\special{pa 2180 -1150}%
+\special{sp}%
+\special{pa 2000 -100}%
+\special{pa 2150 -400}%
+\special{pa 2180 -650}%
+\special{sp}%
+\put(2100,800){$p(0)$}%
+\put(2200,-100){n=1}%
+%
+\special{pa 4800 -3100}%11 box
+\special{pa 4800 -2600}%
+\special{pa 3400 -2600}%
+\special{pa 3400 -3100}%
+\special{pa 5200 -3100}%
+\special{fp}%
+\special{pa 3400 -3100}%
+\special{pa 3480 -3000}%
+\special{pa 3500 -2980}%
+\special{sp}%
+\special{pa 3400 -2600}%
+\special{pa 3480 -2700}%
+\special{pa 3500 -2720}%
+\special{sp}%
+\put(3500,2800){$p(11)$}%
+\special{pa 3400 -2600}%10 box
+\special{pa 4800 -2600}%
+\special{pa 4800 -1700}%
+\special{pa 3400 -1700}%
+\special{pa 3400 -2600}%
+\special{fp}%
+\special{pa 3400 -2600}%
+\special{pa 3480 -2400}%
+\special{pa 3500 -2250}%
+\special{sp}%
+\special{pa 3400 -1700}%
+\special{pa 3480 -1900}%
+\special{pa 3500 -2050}%
+\special{sp}%
+\put(3500,2050){$p(10)$}%
+\special{pa 3400 -1700}%01 box
+\special{pa 4800 -1700}%
+\special{pa 4800 -800}%
+\special{pa 3400 -800}%
+\special{pa 3400 -1700}%
+\special{fp}%
+\special{pa 3400 -1700}%
+\special{pa 3480 -1450}%
+\special{pa 3500 -1350}%
+\special{sp}%
+\special{pa 3400 -800}%
+\special{pa 3480 -1050}%
+\special{pa 3500 -1150}%
+\special{sp}%
+\put(3500,1150){$p(01)$}%
+\special{pa 4800 -100}%00 box
+\special{pa 4800 -800}%
+\special{pa 3400 -800}%
+\special{pa 3400 -100}%
+\special{pa 5200 -100}%
+\special{fp}%
+\special{pa 3400 -800}%
+\special{pa 3480 -600}%
+\special{pa 3500 -550}%
+\special{sp}%
+\special{pa 3400 -100}%
+\special{pa 3480 -300}%
+\special{pa 3500 -350}%
+\special{sp}%
+\put(3500,350){$p(00)$}%
+\put(3600,-100){n=2}%
+%
+\put(5000,1500){$\cdots$}%
+%
+\put(187,960){$\times$}%c0
+\put(-50,1000){$c_0$}%
+\special{pa 300 -1040}%
+\special{pa 5300 -1040}%
+\special{dt 0.05}%
+%
+\put(187,2850){$\times$}%
+\put(-50,2860){$c_1$}%
+\special{pa 300 -2940}%
+\special{pa 5300 -2940}%
+\special{dt 0.05}%
+%
+\end{picture}
+
+\framebox{累積確率}
+\[
+  F(x_{1}^n) = \sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\]
+
+\framebox{符号長}
+\[
+  L(x_{1}^n) \le -\log_2 p(x_{1}^n) + 2
+\]
+\vspace{0.5cm}
+\end{slide}
+
+\begin{note}
+次に算術符号について述べます。
+
+算術符号は、0と1の間の実数を符号として用います。符号の値は、たとえば01ならこの間のどこかになります。復号は、例えば符号の値が$c_0$で情報源系列の長さが1なら0、符号の値が$c_1$で情報源系列の長さが2なら11と決定されます。
+
+この時、この$p$は符号化確率と呼ばれ、符号化確率が$p(x_{1}^n)$の時必要な符号長は、計算精度が無限ならこのように\\
+$-\log p(x_{1}^n)+2$で上界が与えられます。
+
+CTW法はこの符号化確率を与えます。
+\end{note}
+
+\begin{slide}{}
+\normalsize
+
+\begin{center}
+\fbox{文脈木重み付け法 (CTW法)}
+\end{center}
+\fbox{重み付け文脈木${\cal T}$}\\
+~\vspace{-3cm}\\
+\begin{picture}(3800,3200)
+\special{pn 16}%
+\special{pa 100 -100}%
+\special{pa 700 -1100}%
+\special{pa 1000 -100}%
+\special{pa 700 -1100}%
+\special{pa 1700 -2100}%
+\special{pa 2700 -1100}%
+\special{pa 3300 -100}%
+\special{pa 2700 -1100}%
+\special{pa 2300 -100}%
+\special{fp}%
+\put(280,0){00}%
+\special{sh 0}%
+\special{ar 100 -100 150 150 0 6.29}%
+\put(1280,0){10}%
+\special{sh 0}%
+\special{ar 1100 -100 150 150 0 6.29}%
+\put(880,1000){0}%
+\special{sh 1}%
+\special{ar 700 -1100 150 150 0 6.29}%
+\put(1980,2000){$\lambda$}%
+\special{sh 1}%
+\special{ar 1700 -2100 150 150 0 6.29}%
+\put(2480,0){01}%
+\special{sh 0}%
+\special{ar 2300 -100 150 150 0 6.29}%
+\put(3480,0){11}%
+\special{sh 0}%
+\special{ar 3300 -100 150 150 0 6.29}%
+\put(2880,1000){1}%
+\special{sh 1}%
+\special{ar 2700 -1100 150 150 0 6.29}%
+\end{picture}
+\begin{tabular}[b]{|l|}
+\hline
+$s\in{\cal T}\cup\partial{\cal T}$の持つ変数\\
+\hline\tabtopsp{2mm}%
+$n_{s}^0,n_{s}^1$ \\
+ ~{\small 文脈$s$の後に0,1が現れた回数}\\
+$p_e(s)$ \\
+ ~{\small 推定確率}\\
+$p_w(s)$ \\
+ ~{\small 重み付け確率}\\
+\hline
+\end{tabular}
+
+\fbox{$p_e(s)$:KT推定量 $p_{KT}(n_{s}^0,n_{s}^1)$}
+\[
+\begin{array}{l}
+p_{KT}(0,0)=1\\
+\displaystyle p_{KT}(n_{s}^0+1,n_{s}^1)=\frac{n_{s}^0+1/2}{n_s+1}p_{KT}(n_{s}^0,n_{s}^1) \\\\
+\displaystyle p_{KT}(n_{s}^0,n_{s}^1+1)=\frac{n_{s}^1+1/2}{n_s+1}p_{KT}(n_{s}^0,n_{s}^1)
+\end{array}
+\]
+\fbox{$p_w(s)$:重み付け確率}
+\[
+p_w(s)=
+\left\{
+\begin{array}{ll}
+\displaystyle\frac{1}{2}p_e(s)+\frac{1}{2}p_w(0s)p_w(1s) & s\in{\cal T}\\\\
+p_e(s) & s\in\partial{\cal T}
+\end{array}
+\right.
+\]
+\end{slide}
+
+\begin{note}
+CTW法について述べます。
+
+CTW法ではこのような重み付け文脈木を用います。重み付け文脈木は、suffix treeであり、外部葉ノードも含めた各ノード$s$はこのような変数を持ちます。
+
+$n_{s}^0$、$n_{s}^1$は、情報源系列において、$s$の後に0、1が現れた回数をカウントします。例えば、$n_{01}^1$なら、$01$の次に1が現れた回数をカウントします。この$s$を文脈と呼びます。
+
+$p_e(s)$は推定確率と呼ばれ、ここではKT推定量を用います。KT推定量はカウントに対して定義され、初期値は1で、$n_{s}^0$が1増えればこのように、$n_{s}^1$が1増えればこのように乗算で更新されます。この$n_s$は$n_{s}^0$と$n_{s}^1$の和を表します。
+
+そして$p_w(s)$は重み付け確率と呼ばれ、重み付け文脈木に関してこのように再帰的に定義されます。そして、ルートノードにおける重み付け確率$p_w(\lambda)$を符号化確率として用います。
+
+%実際に文脈木の更新を行う時は、文脈となっている外部葉ノードから、上へ向かって、$p_e$を更新し、カウントを更新し、$p_w$を更新する、ということを繰り返します。
+\end{note}
+
+\begin{slide}{}
+\normalsize
+
+\begin{center}
+\fbox{増分CTW法}
+\end{center}
+\fbox{アルゴリズム}
+
+\begin{picture}(5000,800)
+\special{pn 16}%
+\put(0,700){${\cal T}_0=\phi$}%
+\put(460,400){$\lambda$}%
+\special{ar 300 -500 100 100 0 6.29}%
+\special{pa 0 0}%
+\special{pa 7000 0}%
+\special{dt 0.05}%
+\end{picture}
+
+\begin{picture}(1600,1200)
+\special{pn 16}%
+\put(500,1150){${\cal T}_{t-1}$}
+\special{pa 900 -1000}%
+\special{pa 800 -800}%
+\special{pa 300 -100}%
+\special{pa 800 -800}%
+\special{pa 1100 -100}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 800 -800 100 100 0 6.29}%
+\put(460,0){$v_t$}%
+\special{sh 0}%
+\special{ar 300 -100 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1100 -100 100 100 0 6.29}%
+\special{pa 0 200}%
+\special{pa 1600 200}%
+\special{dt 0.05}%
+\end{picture}
+\begin{minipage}[b]{13cm}
+$v_t$ : $\partial{\cal T}_{t-1}$における$x_{-\infty}^{t-1}$のsuffix\\
+任意の条件関数$C(v_t,x_{-\infty}^{t-1})$を評価。\\
+\fbox{偽}$\to$通常のCTW法の更新。
+\end{minipage}
+
+\begin{picture}(1600,1900)
+\special{pn 16}%
+\special{pa 300 -100}%
+\special{pa 700 -800}%
+\special{pa 1100 -100}%
+\special{pa 700 -800}%
+\special{pa 1100 -1500}%
+\special{pa 1400 -800}%
+\special{pa 1100 -1500}%
+\special{pa 1300 -1700}%
+\special{fp}%
+\put(500,1800){${\cal T}_t$}%
+\special{sh 1}%
+\special{ar 1100 -1500 100 100 0 6.29}%
+\put(860,700){$v_t$}%
+\special{sh 1}%
+\special{ar 700 -800 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1400 -800 100 100 0 6.29}%
+\put(460,0){$u_t$}%
+\special{sh 0}%
+\special{ar 300 -100 100 100 0 6.29}%
+\special{sh 0}%
+\special{ar 1100 -100 100 100 0 6.29}%
+\end{picture}
+\begin{minipage}[b]{15cm}
+\fbox{真}$\to$\\
+${\cal T}_t:={\cal T}_{t-1}\cup v_t$\\
+$u_t$ : $\partial{\cal T}_t$における$x_{-\infty}^{t-1}$のsuffix\\
+$p_e(u_t)$と$p_w(u_t)$を$\frac{1}{2}\cdot p_e(v_t)$、\\
+$n_{u_t}^{x_t}:=1$と初期化。\\
+$v_t$からは通常のCTW法の更新。
+\end{minipage}
+\end{slide}
+
+\begin{note}
+では、増分CTW法のアルゴリズムを、詳細は省略してポイントだけ述べます。
+
+まず、重み付け文脈木は空の状態から始まります。外部葉ノードとして$\lambda$だけがある状態です。
+
+そして時刻$t$に次のような処理をします。
+
+$v_t$を、$t-1$の時点での重み付け文脈木の外部葉集合において、$x_t$の文脈になっているようなノードであるとします。例えばこのノードであるとします。そしてこのノードに関して、任意の条件関数$C$を評価します。その結果が偽であれば、通常のCTW法と同様の更新を行っていきます。真であれば、この$v_t$をこのように内部ノード化し、新たに外部葉ノードを作成します。この新たに作った外部葉ノードの内、$x_t$の文脈になっているものを$u_t$とします。この$u_t$の$p_e$と$p_w$を$\frac{1}{2}\cdot p_e(v_t)$、カウントを1と初期化します。この$p_e$の初期値の内、$\frac{1}{2}$はカウント1に対するKT推定量です。それにさらに親ノード$v_t$の$p_e$を掛けていますが、その理由は後で述べます。$v_t$からは通常のCTW法の更新を行います。
+\end{note}
+
+\begin{slide}{}
+\underline{例.$C(s,x_{-\infty}^{t-1})=n_s\ge 2,\ x_{1}^3=011$}
+
+\hspace{-1.6cm}
+\begin{tabular}{|c|c||c|c|c|c|}
+\hline
+\begin{picture}(50,800)
+\put(-50,150){a.}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\put(960,500){\small$\lambda$}
+\special{ar 800 -600 100 100 0 6.29}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\put(520,500){\small(1,0)}%
+\put(750,320){\footnotesize$v_1,\!u_1$}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\put(520,500){\small(1,1)}%
+\put(750,320){\footnotesize$v_2,\!u_2$}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\special{pa 170 -200}%
+\special{pa 800 -420}%
+\special{pa 1430 -200}%
+\special{fp}%
+\put(520,500){\small(1,2)}%
+\put(1150,380){\footnotesize$v_3$}%
+\special{ar 100 -70 100 100 0 6.29}%
+\put(1130,0){\small(0,1)}%
+\put(820,80){\footnotesize$u_3$}%
+\end{picture}
+\\
+\hline
+&  & $x_1=0$ & $x_2=1$ & $x_3=1$
+\\
+\hline
+\begin{picture}(50,800)
+\put(-50,150){b.}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\special{pa 170 -200}%
+\special{pa 800 -420}%
+\special{pa 800 -200}%
+\special{pa 800 -420}%
+\special{pa 1430 -200}%
+\special{fp}%
+\put(520,500){\small(0,0)}%
+\put(-90,0){\small(0,0)}%
+\put(520,0){\small(0,0)}%
+\put(1130,0){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\special{pa 170 -200}%
+\special{pa 800 -420}%
+\special{pa 800 -200}%
+\special{pa 800 -420}%
+\special{pa 1430 -200}%
+\special{fp}%
+\put(520,500){\small(1,0)}%
+\put(-90,0){\small(0,0)}%
+\put(520,0){\small(1,0)}%
+\put(1130,0){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\special{pa 170 -200}%
+\special{pa 800 -420}%
+\special{pa 800 -200}%
+\special{pa 800 -420}%
+\special{pa 1430 -200}%
+\special{fp}%
+\put(520,500){\small(1,1)}%
+\put(-90,0){\small(0,0)}%
+\put(520,0){\small(1,1)}%
+\put(1130,0){\small(0,0)}%
+\end{picture}
+&
+\begin{picture}(1600,800)
+\special{pn 16}%
+\special{pa 170 -200}%
+\special{pa 800 -420}%
+\special{pa 800 -200}%
+\special{pa 800 -420}%
+\special{pa 1430 -200}%
+\special{fp}%
+\put(520,500){\small(1,2)}%
+\put(-90,0){\small(0,0)}%
+\put(520,0){\small(1,1)}%
+\put(1130,0){\small(0,1)}%
+\end{picture}\\
+\hline
+\end{tabular}
+
+\begin{picture}(2200,1500)
+\special{pn 16}%
+\put(100,1100){仮想葉ノード}%
+\special{pa 100 -100}%
+\special{pa 800 -900}%
+\special{pa 800 -100}%
+\special{pa 800 -900}%
+\special{pa 1500 -100}%
+\special{fp}%
+\put(900,800){$s$}%
+\special{sh 1}%
+\special{ar 800 -900 50 50 0 6.29}%
+\put(200,0){$0s$}%
+\special{sh 1}%
+\special{ar 100 -100 50 50 0 6.29}%
+\put(900,0){$\varepsilon s$}%
+\special{sh 1}%
+\special{ar 800 -100 50 50 0 6.29}%
+\put(1600,0){$1s$}%
+\special{sh 1}%
+\special{ar 1500 -100 50 50 0 6.29}%
+\end{picture}
+\begin{tabular}[b]{ccc}
+\begin{picture}(1000,1300)
+\special{pn 16}%
+\put(400,1050){$\alpha$}%
+\special{sh 1}%
+\special{ar 500 -900 50 50 0 6.29}%
+\end{picture}
+&
+\begin{picture}(300,1000)
+\put(0,700){$\Rightarrow$}%
+\end{picture}
+&
+\begin{picture}(1600,1300)
+\special{pn 16}%
+\special{pa 200 -300}%
+\special{pa 800 -900}%
+\special{pa 800 -300}%
+\special{pa 800 -900}%
+\special{pa 1400 -300}%
+\special{fp}%
+\put(730,1050){$\alpha$}%
+\special{sh 1}%
+\special{ar 800 -900 50 50 0 6.29}%
+\put(150,0){1}%
+\special{sh 1}%
+\special{ar 200 -300 50 50 0 6.29}%
+\put(730,0){$\alpha$}%
+\special{sh 1}%
+\special{ar 800 -300 50 50 0 6.29}%
+\put(1350,0){1}%
+\special{sh 1}%
+\special{ar 1400 -300 50 50 0 6.29}%
+\end{picture}
+\\
+$\tilde p_w(s)=\alpha$ & $\Leftrightarrow$ & $\tilde p_w(s)=\alpha$\\
+\end{tabular}
+
+\[
+\tilde p_w(s)=\frac{1}{2}\tilde p_e(s)+\frac{1}{2}\tilde p_e(\varepsilon s)\tilde p_w(0s)\tilde p_w(1s)
+\]
+
+\begin{picture}(2200,3500)
+\special{pn 16}%
+\special{pa -100 -3700}%
+\special{pa 3000 -3700}%
+\special{pa 3000 -1700}%
+\special{pa -100 -1700}%
+\special{pa -100 -3700}%
+\special{fp}%
+\put(0,3200){${\cal T}$:全てのノードが}%
+\put(300,2900){子ノードとして}%
+\put(300,2600){仮想葉ノードを持つ}%
+\put(300,2300){深さ無限の}%
+\put(300,2000){重み付け文脈木}%
+\end{picture}
+\begin{picture}(3000,3500)
+\special{pn 16}%
+\special{pa 3000 -3000}%
+\special{pa 2500 -3500}%
+\special{da 0.05}%
+\special{pa 2500 -2500}%
+\special{pa 2500 -3500}%
+\special{pa 1500 -2500}%
+\special{fp}%
+\special{pa 1500 -2500}%
+\special{pa 1000 -2000}%
+\special{da 0.05}%
+\special{pn 64}%
+\special{pa 1500 -2500}%
+\special{pa 1750 -2000}%
+\special{fp}%
+\special{pa 1750 -2000}%
+\special{pa 1850 -1800}%
+\special{pa 1200 -1000}%
+\special{da 0.05}%
+\special{pa 1200 -1000}%
+\special{pa 1700 -400}%
+\special{dt 0.2}%
+\special{pn 16}%
+\special{pa 2400 -2400}%
+\special{pa 2100 -2300}%
+\special{pa 1800 -2400}%
+\special{sp}%
+\special{pa 1850 -2410}%
+\special{pa 1800 -2400}%
+\special{pa 1830 -2350}%
+\special{fp}%
+\put(2600,3400){$\lambda$}%
+\special{sh 1}%
+\special{ar 2500 -3500 50 50 0 6.29}%
+\put(2600,2400){$\varepsilon$}%
+\special{sh 1}%
+\special{ar 2500 -2500 50 50 0 6.29}%
+\put(1600,2400){$0$}%
+\special{sh 1}%
+\special{ar 1500 -2500 50 50 0 6.29}%
+\put(2300,2000){$\times \tilde p_e(\varepsilon)$}%
+\put(2200,1200){$p_w(0)=\tilde p_w(0)\tilde p_e(\varepsilon)$}%
+\end{picture}
+\end{slide}
+
+\begin{note}
+この図aは、条件をカウントが2以上とし、入力系列が011であるときのカウントの様子を表しています。括弧の中は、$n_{s}^0$、$n_{s}^1$です。時刻3の時点で新たなノードが追加されていますが、この時点で、深さ0のノードはカウント3を持っているのに対し、深さ1のノードはカウントを1しか持っていません。
+%このようなカウントを持つ重み付け文脈木に基本的なCTW法を適用しても、
+最初の二つの入力が葉までカウントされていないので、基本的なCTW法を適用しても$p_w(\lambda)$は符号化確率として使えません。基本的なCTW法では、重み付け文脈木が一定の形をしていて、常に葉までカウントされる必要があります。
+
+それでも、先ほどのアルゴリズムが、基本的なCTW法を基に解釈できることを示すために、まず仮想葉ノードを導入し、次にアルゴリズムにおいて仮想葉ノードの導入と同様の結果が得られることを示します。
+
+まず、全てのノードがこのように、子ノードとして、$\varepsilon s$という仮想葉ノードを持つものとします。この仮想葉ノードは$s$でカウントされていて$0s$でも$1s$でもカウントされていないカウント値
+%、つまり、$s$のカウントと、$0s$と$1s$のカウントの和の差
+を保持します。この時、$s$における重み付け確率はこのように定義できます。このチルダは、仮想葉ノードを仮定した時の$p_e$、$p_w$を表します。
+次に、ある葉ノード$s$が$\alpha$という推定確率を持っているとします。ここに書いてある値は$\tilde p_e$です。この時、$s$における重み付け確率は$\alpha$となります。次に、$s$と$\varepsilon s$が$\alpha$、$0s$と$1s$が1という推定確率を持っていれば、この式から、やはり$s$における重み付け確率は$\alpha$となります。重み付け確率が一致するので、これらは置き換えが可能であると言えます。
+
+この置き換えを先ほどの例における$\lambda$に対して適用したのがこの図のbです。時刻2以前は、aとbのどちらに基本的なCTW法を適用しても、得られる結果は同じです。そしてこの時刻3の時点では、$\lambda$のカウントと$\lambda$の子ノードのカウントの和は一致しています。これと同様の置き換えを更に深いノードまで続けていけば、「全てのノードが子ノードとして仮想葉ノードを持つ深さ無限の重み付け文脈木」を考えることができ、それによって重み付け文脈木が一定の形を持っていると考えることができます。
+
+次に、この仮想葉ノードを考えた場合と同様の結果が、先ほどのアルゴリズムによって得られることを示します。アルゴリズムのこの部分で、$u_t$の$p_e$、$p_w$の初期化する時に親ノードの$p_e$を掛けました。この図のbを見て分かるように、新たなノードが追加されるまでは$\varepsilon$のカウントは$\lambda$のカウントと一致します。また、その後は$\varepsilon$のカウントは変わりません。また、$p_e$は乗算のみによって更新されるので、予めここの$p_e$に$\varepsilon$の$p_e$を掛けておきます。この図ではノード$1$より先にノード$0$にカウントされたとしています。この時、この式のこの部分がこれに置き換わったと言えます。さらにこのノードに子孫が追加されていっても、親ノードの$p_e$で初期化されることから、ある一本のパス上の$p_e$が全て$\tilde p_e(\varepsilon)$倍されることになり、結果として$p_w(0)=\tilde p_w(0)\tilde p_e(\varepsilon)$となります。他の仮想葉ノードの関しても同様のことが言え、先ほどのアルゴリズムによって仮想葉ノードの導入と同様の結果が得られ、$p_w(\lambda)$は符号化確率として使えます。
+\end{note}
+
+\begin{slide}
+\normalsize
+
+\begin{center}
+\fbox{実験}
+\end{center}
+
+\begin{picture}(5000,500)
+\special{pn 16}%
+\put(0,400){$\cdots 100\cdots 0x_t$}%
+\special{pa 600 -300}%
+\special{pa 850 -250}%
+\special{pa 950 -240}%
+\special{pa 1100 -240}%
+\special{pa 1200 -250}%
+\special{pa 1450 -300}%
+\special{sp}%
+\put(900,50){$m$}%
+\end{picture}
+
+$x_t$の直前に$0$が$m$個続いたと言う条件下で、\\
+$x_t$が1となる確率が$\displaystyle\frac{1}{0.65m+2}$
+
+\verb/D=/   : 基本的なCTW法の重み付け文脈木の深さ\\
+\verb/Incr:/ : 増分CTW法 $C(s,x_{-\infty}^{t-1})=n_s\ge\eta$の$\eta$
+
+冗長度 : $-\log p(x_{1}^t)$と符号化による符号長との差
+
+\epsfile{file=rg1.eps,scale=1.3}
+
+\end{slide}
+
+\begin{note}
+最後に、増分CTW法が性能的な優位性を示す例として、$x_t$の直前に$0$が$m$個続いたという条件下で、$x_t$が1となる確率が$\frac{1}{0.65m+2}$であるような情報源に対する実験結果を示します。$D=$とあるのは基本的なCTW法における重み付け文脈木の深さであり、このIncrとあるのは、増分CTW法において、$n_s$が$\eta$以上と言う条件を設定した時の$\eta$を示しています。
+%Redundancy,冗長度とは、$p(x_{1}^t)$を情報源がその系列を生成する確率とすると、理想符号長$-\log p(x_{1}^t)$と、符号化による符号長との差を表します。
+$\eta$を1にした場合も2にした場合も、基本的なCTW法より冗長度は小さくなっていますが、両者の間ではほとんど差はついていません。$\eta=1$の方が計算量・領域量が多く必要になるので、$\eta=1$の時は余分なコストがかかっていると言えます。このように、条件の設定が、コストと性能の関係を決定します。
+
+以上です。
+\end{note}

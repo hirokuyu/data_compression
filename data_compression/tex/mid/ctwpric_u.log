@@ -1,0 +1,78 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jlplain 95.9.23)  30 OCT 1999 14:41
+**ctwpric_u.tex
+(ctwpric_u.tex
+** JLaTeX ver.1.3......Isozaki
+(/usr/local/lib/TEX-NTT/jinputs/resume.sty
+Document Style 'resume' 18, Oct, 1989.
+(/usr/local/lib/TEX-NTT/jinputs/jarticle.sty
+Document Style 'jarticle'. Released 4 Nov 1988
+(/usr/local/lib/TEX-NTT/jinputs/jart10.sty)
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\c@figure=\count88
+\c@table=\count89
+
+Conversion jlarge --> large etc.
+)
+\@titlespace=\skip41
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count90
+\@argb=\count91
+\@argc=\count92
+\@ctmpa=\count93
+\@ctmpb=\count94
+\@ctmpc=\count95
+\@ctmpd=\count96
+\@ctmpe=\count97
+\@darg=\dimen100
+\@bblen=\dimen101
+\ps@stream=\read1
+) (/usr/local/lib/TEX-NTT/inputs/mathsymb.sty)
+\c@Definition=\count98
+\c@Theorem=\count99
+ (ctwpric_u.aux) (ctwpric.tex
+Underfull \hbox (badness 1852) in paragraph at lines 3--13
+よ る 問 題 が 生 じ た。 そ の 問 題 の 内 容 と 解 決 に つ い て 述 べ
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.64696
+.\tendmjhira よ
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira る
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjk 問
+.etc.
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 70--71
+[]整 数 に よ る 算 術 符 号 化 の 際 の 精 度 は、 \tenrm 2 ビッ ト か ら 31
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.40376
+.\hbox(0.0+0.0)x10.00002
+.\tendmjf 整
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjf 数
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.etc.
+
+(Testp.tex)) [1
+
+
+
+] [2
+
+] (ctwpric_u.aux) ) 
+Here is how much of TeX's memory you used:
+ 308 strings out of 10525
+ 2958 string characters out of 75156
+ 39368 words of memory out of 262141
+ 3054 multiletter control sequences out of 9500
+ 21766 words of font info for 124 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 15i,8n,16p,313b,432s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on ctwpric_u.dvi (2 pages, 4820 bytes).

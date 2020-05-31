@@ -1,0 +1,216 @@
+\section{btree\_source.cpp}
+\begin{verbatim}
+/********************************************
+ --------------------------------------------
+btree_source.cpp
+
+             binary tree source
+
+
+
+*********************************************/
+
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+#include <fstream.h>
+#include "btree_source.h"
+#include "my_rand.h"
+#include "errormac.h"
+
+static char ctxt[256]; //ctxt : context memory
+
+/********************************************/
+/*            node of tree source           */
+/********************************************/
+tsrc_node :: tsrc_node()
+{
+  theta=-1;
+  child[0]=child[1]=NULL;
+}
+tsrc_node :: ~tsrc_node()
+{
+  delete child[0];
+  delete child[1];
+}
+
+/**************  set parameter  *************/
+double tsrc_node ::
+  set_param( char *ctxt, double v, int d )
+{
+  if( d > 0 ){
+
+    egf( theta >= 0 );
+      // inner node shouldn't have parameter
+
+    if( ! child[ ctxt[-1] ] )
+      child[ ctxt[-1] ] = new tsrc_node;
+
+    return
+      child[ ctxt[-1] ]->
+           set_param( ctxt-1, v, d-1 );
+
+  } else return theta = v;
+f:
+  return -1;
+}
+
+/**********  check fair or illegal  *********/
+int tsrc_node :: is_illegal()
+{
+  /* every node has both childs for 0 and 1,
+     or has no child */
+  egf( !child[0]^!child[1] );
+  if( child[0] )
+    egf( child[0]-> is_illegal() );
+  if( child[1] )
+    egf( child[1]-> is_illegal() );
+
+  return 0;
+f:
+  return 1;
+}
+
+/***** get the parameter for the context ****/
+double tsrc_node :: get_param( char *ctxt )
+{
+  /* only for outer leaves */
+  if( child[0] ){
+    return child[ctxt[-1]]-> get_param(ctxt-1);
+  } else return theta;
+}
+
+/***********  output parameter  *************/
+int tsrc_node ::
+  output_param( char *ctxt, ostream &os )
+{
+  if( theta < 0 ){ //inner node
+    ctxt[-1]='0';
+    child[0]->output_param(ctxt-1,os);
+    ctxt[-1]='1';
+    child[1]->output_param(ctxt-1,os);
+  } else //outer leave
+    os << ctxt << "\t" << theta << endl;
+
+  return 0;
+}
+
+/********************************************/
+/*               tree source                */
+/********************************************/
+tree_source :: tree_source()
+{
+  Depth = 0;
+}
+
+/***********  load parameter file  **********/
+int tree_source ::
+  load_param_file( const char *pfile )
+{
+  fstream paramfile; //parameter file
+  double theta;
+  int d=0;
+  char c;
+
+  paramfile.open(pfile,ios::in|ios::nocreate);
+  if( !paramfile.is_open() ){
+    cerr << "Cannot open " << pfile << ".\n";
+    goto f;
+  }
+
+  while( ( c = paramfile.get() ) != EOF ){
+
+    /* context */
+    if( c=='%' ){ //comment
+      paramfile.getline(vbuf,1024);
+      continue;
+    } else if( isspace(c) );
+    else if( c!='0' && c!='1' ) goto s;
+    else {
+      ctxt[d++]= c=='1';
+      continue;
+    }
+
+    /* parameter value */
+    paramfile >> theta;
+    emgs( theta );
+
+    emgs( set_param(&(ctxt[d]),theta,d) );
+
+    if( d > Depth ) Depth = d;
+    d = 0;
+
+  }
+
+  paramfile.close();
+  return 0;
+s:
+  paramfile.close();
+  return -1;
+f:
+  return 1;
+}
+
+/********  build random tree source  ********/
+int tree_source :: build_random_tree( int D )
+{
+  double theta;
+
+  Depth = D;
+  /* start with context ...000 */
+  for( int d=0; d < Depth; d++ ) ctxt[d]=0;
+
+  d=0;
+  do {
+    /* set parameter */
+    theta = (double) my_rand()/MY_RAND_MAX;
+    set_param(&(ctxt[Depth]),theta,Depth);
+
+    /* increase context */
+    for( d=0; d < Depth; d++ )
+      if( ctxt[d] ) ctxt[d]=0; //carry
+      else {
+        ctxt[d]=1;
+        break;
+      }
+  } while( d < Depth );
+  return 0;
+}
+
+/**********  output parameter file  *********/
+int tree_source ::
+  output_param_file( const char *pfile )
+{
+  fstream opfile;
+
+  opfile.open(pfile,ios::out);
+  if( !opfile.is_open() ){
+    cerr << "Cannot open " << pfile << ".\n";
+    goto f;
+  }
+
+  ctxt[Depth]=0;
+  egf(output_param(&(ctxt[Depth]),opfile));
+
+  opfile.close();
+  return 0;
+f:
+  return 1;
+}
+
+/****************  get a bit  ***************/
+int tree_source ::
+  get_a_bit( char *ctxt, double *clength )
+{
+  double theta;
+
+  theta = get_param( (&ctxt[Depth]) );
+  ctxt[Depth]=my_rand()<MY_RAND_MAX*theta;
+  if( clength )
+    if( ctxt[Depth] )
+      *clength = -log(theta)/log(2);
+    else
+      *clength = -log(1-theta)/log(2);
+  return ctxt[Depth];
+}
+\end{verbatim}

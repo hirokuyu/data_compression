@@ -1,0 +1,112 @@
+\abstract
+文脈木重み付け法(CTW法)は、情報源として木情報源を仮定し、それを推定することでデータ圧縮を実現しようという手法である。ここでは、まず算術符号について述べ、その後CTW法と、その一つの変形である増分文脈アルゴリズムについて述べる。
+
+\section{算術符号}
+
+$A:=\{a_1,a_2,\ldots,a_m\}$をアルファベットとし、その要素を文字と呼ぶ。バイナリなら$A=\{0,1\}$である。$l$文字からなる系列の集合を$A^l$で表し、$A^*:=\cup_{l=0}^\infty A^l$で全ての有限系列の集合を表す。$A^*$の要素を系列と呼び、$\lambda$で空の系列を表す。有限系列を$x_{i}^j:=x_ix_{i+1}\ldots x_{j}$と書き、$i>j$のとき$x_{i}^j=\lambda$である。文字の順序$\prec$を、$A$において、$i<j$の時$a_i\prec a_j$であると定義する。また、$x,y\in A^*$に関する順序は辞書式順序に従う。
+
+系列$x_{1}^n:=x_1x_2\ldots x_n\in A^n$に対して確率質量関数$p(x_{1}^n)>0$が与えられたとする。この時、累積確率
+\begin{equation}\label{eq:cum1}
+  F(x_{1}^n):=\sum_{y_{1}^n\in A^n:y_{1}^n\prec x_{1}^n}p(y_{1}^n)
+\end{equation}
+は、$n$を固定した場合、$x_{1}^n$に対して一意に定まる。これは、
+\begin{equation}\label{eq:cum2}
+  F(x_{1}^n):=\sum_{t=1}^n\sum_{a\in A:a\prec x_t}p(x_{1}^{t-1}a)
+\end{equation}
+と、逐次的に求めることもできる。
+
+算術符号は、値$F(x_{1}^n)+\frac{1}{2}p(x_{1}^n)\in [0,1)$の、二進数による小数表現である。符号として必要なビット数は$-\log p(x_{1}^n)+2$以下となる。
+
+\section{文脈木}
+
+系列$x_{i}^j$に対し$x_{i}^j,x_{i-1}^j,\cdots,x_j,\lambda$をそれぞれ$x_{i}^j$のポストフィックスといい、それから$x_{i}^j$自身を除いたものを固有ポストフィックスと呼ぶ。$T\subset A^*$において、$s\in T$の全てのポストフィックスが$T$に含まれる時、$T$をポストフィックス木と呼ぶ。$T$の全ての葉の子の集合を、外部葉集合$\partial T$と定義する。$T=\emptyset$のとき、$\partial T=\{\lambda\}$である。
+
+$\Omega:=\{\theta:=\{\theta_s\}_{s\in A^*}\}$をパラメータの集合とする。$\theta_s:=\{\theta_{s}^a\}_{a\in A}$であり、$\theta_{s}^a$は、系列$s$(文脈と呼ぶ)に続いて$a\in A$が表れる確率である。シンボル$a$の生成確率が、あるポストフィックス木$T$に対し、\(s\in\partial T\)における$\theta_{s}^a$で決定されるような情報源を、木情報源と定義する。この時$T$を文脈木と呼ぶ。文脈木$T\subset A^*$、$\theta$、過去の系列$x_{-\infty}^0$が与えられた時、系列$x_{1}^n$を生じる確率は
+\begin{eqnarray}\label{eq:actprob}
+  p(x_{1}^n|\theta,T,x_{-\infty}^0)&=&\prod_{t=1}^n \theta_{s_{t-1}}^{x_t}\nonumber\\
+ &=& \prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}
+\end{eqnarray}
+となる。ただし、$s_{t-1}$は$\partial T$に含まれる$x_{-\infty}^{t-1}$のポストフィックスを表し、カウント$n_{s}^a$は$x_{-\infty}^n$において文脈$s$の後に実際に$a$が現れた数である。この確率を知ることができれば木情報源の圧縮が可能になる。しかし一般にこれらのパラメータは未知であるので、何らかの方法でこの確率を推定する必要がある。ただ、$x_{-\infty}^0$は通常適当に仮定される(例えば全て0、等)。
+
+
+\section{文脈木重み付け法}
+
+まず、モデルとしてある文脈木$T$を仮定する。その外部葉$\partial T$において、(\ref{eq:actprob})のように$p(x_{1}^t|\theta_T,T)=\prod_{s\in\partial T,a\in A}(\theta_{s}^a)^{n_{s}^a}$という確率が与えられる。しかし$\theta_T$は未知なので、事前分布$w_2(\theta_T|T)$として Dirichlet 分布を仮定し、それと $p(x_{1}^t|\theta_T,T)$ との混合を取ることで、Krichevsky-Trofimov 推定量(KT推定量)$p_e(\{n_{s}^a\}_{a\in A})$が得られる。従って、
+\begin{equation}\label{eq:w2mix}
+  p(x_{1}^t|T)=\prod_{s\in\partial T}p_e(\{n_{s}^a\}_{a\in A})
+\end{equation}
+となる。KT推定量は、初期値が1であり、$x_{1}^{t-1}$においてカウント$n_{s}^a$が決定されている時、
+\begin{equation}
+p_e(\{n_{s}^a+1\{x_t=a\}\}_{a\in A})=\frac{n_{s}^{x_t}+1/2}{n_s+m/2}p_e(\{n_{s}^a\}_{a\in A})
+\end{equation}
+と逐次的に計算できる。ここで、$n_s:=\sum_{b\in A}n_{s}^a$であり、$1\{\cdot\}$は括弧内が真であれば1、偽であれば0であるような関数であり、また$m=|A|$である。確率推定量であるので、当然の事ながら$p_e(\{n_{s}^a\}_{a\in A})=\sum_{b\in A}p_e(\{n_{s}^a+1\{a=b\}\}_{a\in A})$となっている。
+
+次に、$T$の事前分布として、
+\begin{equation}
+  w_1(T):=\prod_{s\in\partial T}\gamma(s)\prod_{s\in T}\bar\gamma(s)
+\end{equation}
+を仮定する。ここで、$\gamma(s)$と$\bar\gamma(s)$は$0\le\gamma(s),\bar\gamma(s)\le 1$であり、$\gamma(s)+\bar\gamma(s)=1$を満たす任意の関数である。通常は$\gamma(s)=\bar\gamma(s)=\frac{1}{2}$を仮定し、この時$w_1(T)=2^{-|T\cup\partial T|}$となる。これと(\ref{eq:w2mix})との混合を取ると、
+\begin{equation}\label{eq:w1mix}
+  p(x_{1}^t)=\sum_{T\subset A^*}w_1(T)\prod_{s\in\partial T}p_e(\{n_{s}^a\}_{a\in A})
+\end{equation}
+となり、これがCTW法によって得られる系列$x_{1}^t$に対する推定確率である。
+
+(\ref{eq:w1mix})は、
+\begin{equation}\label{eq:pw}
+  p_w(s):=
+   \left\{
+    \begin{array}{ll}
+     \gamma(s)p_e(s)+\bar\gamma(s)\prod_{b\in A}p_w(bs) & {\mathrm{if}\ } s\in T^\prime \\
+     p_e(s) & {\mathrm{if}\ } s\in\partial T^\prime
+    \end{array}
+   \right.
+\end{equation}
+と定義される重み付け確率$p_w(s)$によって、文脈木のポストフィックスを辿ってボトムアップかつ再帰的に計算できる。ここで、実装の際は木の大きさを有限で打ち切るために、ある$T^\prime$を仮定し、$T\subseteq T^\prime$のみ考えて、$s\in\partial T^\prime$において$\gamma(s)=1$としている。こうしてルートノード$\lambda$における重み付け確率が系列$x_{1}^t$に対する推定確率を与える。すなわち$p(x_{1}^t)=p_w(\lambda)$である。
+
+この$p(x_{1}^t)$を使って算術符号化することで、データ圧縮が実現される。
+
+\section{増分文脈アルゴリズム}
+
+前節の方法では過去の系列$x_{-\infty}^0$を適当に仮定し、文脈として利用した。しかし、増分文脈アルゴリズムでは、それを使うことなく、文脈木の更新を行うことができる。
+
+\subsection{文脈木の操作}
+
+文脈木は最初空の状態から始まる。すなわち$T_0:=\emptyset$、$\partial T_0:=\{\lambda\}$である。そして、$t:=1,2,\ldots$に対して次の操作を行う。
+\begin{enumerate}
+ \item $x_{1}^{t-1}$のポストフィックスであるような$v_t\in\partial T_{t-1}$を選び、それを文脈木のノードとして追加する。すなわち、$T_t:=T_{t-1}\cup\{v_t\}$とする。$p_e(v_t)$、$p_w(v_t)$を共に$1/m$で初期化し、カウンタ$\{n_{v_t}^a\}_{a\in A}$を$1\{x_t=a\}_{a\in A}$で初期化する。
+ \item $v_t$の全ての固有ポストフィックス$s$において、$p_e(s)$と$p_w(s)$を更新し、カウンタ$n_{s}^{x_t}$を増やす。
+ \item $p(x_{1}^t)$として$p_w(\lambda)$を使う。
+\end{enumerate}
+
+シンボルを一つ入力する毎に文脈木のノードが一つ増えるから、明らかに$|T_t|=t$である。
+
+上記操作において、$p_e(s)$の更新は前節のものと同様であるが、問題は$p_w(s)$の更新である。
+
+\subsection{重み付け確率の更新}
+
+例えば，あるノード\(s\)が文脈木\(T_{t_1}\)に追加されたとする。この時点で$n_s=1$である。次に、$s$の子ノード$bs$が文脈木$T_{t_2}$に追加されたとする。この時点で$n_s=2$、$n_{bs}=1$となる。$n_s\neq\sum_{b\in A}n_{bs}$という不整合が生じている。
+
+これを解決するために、実際の子ノードとは別に、一つの仮想子ノードを仮定し、その仮想子ノードが足りないカウント1を持っていると考える。カウントが1である時のKT推定量は$1/m$であるから、(\ref{eq:pw})は、
+\begin{equation}\label{eq:pwincr}
+  p_w(s):=
+   \left\{
+    \begin{array}{ll}
+     \gamma(s)p_e(s)+\bar\gamma(s)m^{-1}\prod_{b\in A}p_w(bs) & {\mathrm if\ }s\in T_{t-1} \\
+     p_e(s) & {\mathrm if\ } s=v_t \\
+     1 & {\mathrm if\ } s\not\in T_t
+    \end{array}
+   \right.
+\end{equation}
+となる。
+
+\section{おわりに}
+
+CTW法とその一つの変形である増分文脈アルゴリズムの、計算アルゴリズムとその導出について述べた。今後、確率情報源に対するシミュレーションなどを行なう必要がある。
+
+\begin{thebibliography}{999}
+\bibitem{Wt:Arith} Ian H. Witten, Radford M.Neal, and John G. Cleary, ``Arithmetic Coding for Data Compression,'' {\em Communications of the ACM}, Volume 30, Number 6, pp520-540, June 1987.
+\bibitem{KT:BayesCTW} Tsutomu Kawabata, ``Bayes Codes and Context Tree Weighting Method,'' {\em Technical Report IEICE Technical Meeting,} IT93-121, March 1994.
+\bibitem{Wl:BasicCTW} F.M.J. Willems, Y.M.Shtarkov and Tj.J. Tjalkens, ``The Context Weighting Method: Basic Properties,'' {\em IEEE Trans. Inform. Theory,} vol. IT-41, May 1995.
+\bibitem{KT:Incr} Tsutomu Kawabata and Frans M.J. Willems, ``A Context Tree Weighting Algorithm with an Incremental Context Set,'' {\em The 18th Symposium on Information Theory and Its Applications (SITA95),} 1995.
+\bibitem{Wl:ExtCTW} Frans M.J. Willems, ``The Context-Tree Weighting Method : Extensions,'' presented at the 1994 IEEE ISIT, Trondheim, Norway, June 27-July 1.
+\end{thebibliography}

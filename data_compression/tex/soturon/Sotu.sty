@@ -1,0 +1,106 @@
+\setlength{\oddsidemargin}{5mm}
+\setlength{\evensidemargin}{5mm}
+\setlength{\textwidth}{160mm}
+\addtolength{\topmargin}{1.0cm}
+\addtolength{\textheight}{-2cm}
+\addtolength{\footskip}{0.5cm}
+%###
+\newfont{\sueclogo}{ueclogo scaled 750}
+\def\logo{\underline{\hbox to \textwidth
+{\raisebox{0.7cm}{\sueclogo A}
+\begin{minipage}[b]{\textwidth}
+\baselineskip0pt\lineskip0pt\parindent0pt
+\hspace*{10mm}{\vspace{2mm}\font\frtnsf=cmssbx10 scaled
+\magstep2 \frtnsf THE UNIVERSITY OF
+ELECTRO-COMMUNICATIONS}\\ \hspace*{44.5mm} \elvrm Department
+of Communications and Systems Engineering \hfil
+\end{minipage}}}
+}
+%#####
+
+\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\vspace*{-2cm}\logo \vspace{3mm}\\目次
+\@mkboth{目次}{目次}}
+  \@starttoc{toc}\if@restonecol\twocolumn\fi}
+
+
+\def\ps@headings{% heading ページスタイルの定義
+  \let\@mkboth=\markboth
+  \def\@evenfoot{{\tiny \dg １９９８年度卒業論文} \hfil \thepage \hspace{30pt} \hfil }% 左ページのフット（脚部）なし
+ \def\@oddfoot{\hfil \hspace{30pt} \thepage \hfil {\tiny \dg 
+１９９８年度卒業論文}}% 右ページのフット（脚部）なし
+  \def\@evenhead{% 左ページのヘッド（頭部）
+    \underline{\hbox to \textwidth % 下線を引く
+      {
+       \hspace{1pt}\leftmark\hfil}}}% 15pt空けて柱
+  \def\@oddhead{% 右ページのヘッド（頭部）
+    \underline{\hbox to \textwidth % 下線を引く
+      {\hfil\rightmark\hspace{1pt}}
+	}}
+  \def\chaptermark##1{% 章見出しを柱に入れる命令
+    \markboth{% 左右ページの柱に出力
+      \ifnum \c@secnumdepth>\m@ne
+	  % もし secnumdepth カウンタの値が -1 より大なら
+        \@chapapp \ \
+      \fi
+      ##1}% 章の名前を左ページ柱に出力
+      {}}% 右ページ柱は空
+%  \def\sectionmark##1{% 節見出しを柱に入れる命令
+%    \markright{% 右ページの柱に出力
+%      \dg \bf \ifnum  \c@secnumdepth>\z@
+%          % もし secnumdepth カウンタの値が 0 より大なら
+%        \thesection. \ \ % 節番号
+%      \fi
+%      ##1}}}% 節の名前
+\def\chaptermark##1{% 章見出しを柱に入れる命令
+    \markright{% 右ページの柱に出力
+      \ifnum \c@secnumdepth>\m@ne
+          % もし secnumdepth カウンタの値が -1 より大なら
+        \@chapapp \ \
+      \fi
+      ##1}}}% 章の名前を左ページ柱に出力
+
+\hbadness=10000
+\hfuzz=34pt
+\vfuzz=15pt
+
+%\@addtoreset{equation}{section}
+%\def\theequation{\thesection.\arabic{equation}}
+%\@addtoreset{figure}{section}
+%\def\thefigure{\thesection.\arabic{figure}}
+%\newcounter{photo}
+%\@addtoreset{photo}{section}
+%\def\thephoto{\thesection.\arabic{photo}}
+%\def\appendix{\par 
+% \setcounter{chapter}{0}
+% \setcounter{section}{0}
+% \def\@chapapp{付録 \thechapter}
+% \def\thechapter{\Alph{chapter}}
+% \def\thesection{\thechapter.\arbic{section}}
+% \@addtoreset{equation}{chapter}
+% \def\theequation{\thechapter.\arabic{equation}}
+% \@addtoreset{figure}{chapter}
+% \def\thefigure{\thechapter.\arabic{figure}}
+% }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+\chapter{基礎定義}
+
+\section{suffix tree}
+$A=\{a_1,a_2,\ldots,a_m\}$を情報源アルファベットとし、その要素を文字と呼ぶ。バイナリ情報源の場合は、$A=\{0,1\}$となる。本論文では、基本的にバイナリアルファベットを用いる。また、対数の底を2とする。情報源は時刻$t$にシンボル$x_t\in A$を出力するものとする。シンボルの連結である系列(あるいは文字列)を表す$x_{i}^j$を、
+\[
+  x_{i}^j=
+   \left\{
+    \begin{array}{ll}
+     x_ix_i+1\ldots x_j & {\rm if\ }i \le j \\
+     \lambda & {\rm if\ } i > j
+    \end{array}
+   \right.
+\]
+と定義する。ここで、$\lambda$は空の系列である。ある系列$x_{i}^j$と$x_{i^\prime}^{j^\prime}$に対し、その連結を$x_{i}^jx_{i^\prime}^{j^\prime}=x_{i}x_{i+1}\cdots x_{j}x_{i^\prime}\cdots x_{j^\prime}$と書く。$l$文字から成る系列の集合を$A^l$で表し、$A^*:=\cup_{l=0}^\infty A^l$で全ての有限系列の集合を表す。$A$における順序$\prec$を、$i<j$の時$a_i\prec a_j$と定義し、$x,y\in A^*$に関する順序はその辞書式順序に従う。
+系列$x_{i}^j$に対し、$x_{i}^j,x_{i-1}^j,\cdots,x_j,\lambda$をそれぞれ$x_{i}^j$のsuffixといい、それから$x_{i}^j$自身を除いたものを固有suffixと呼ぶ。$T\subset A^*$において、$s\in T$の全てのsuffixが$T$に含まれる時、$T$をsuffix treeと呼ぶ。$T$の全ての葉の子の集合を、外部葉集合$\partial T$と定義する。このsuffix treeに対し、suffix関数$\beta_T(x_{-\infty}^{t})$を、系列$x_{-\infty}^{t}$の$\partial T$における唯一のsuffixを返す関数であると定義する。$T=\emptyset$のとき、$\partial T=\{\lambda\}$である。例として、$T=\{\lambda,0\}$、$\partial T=\{00,10,1\}$の時のイメージを図\ref{fig:suffixtree}に示す。この$T$に関して、例えば$\beta_T(\cdots 010010)=10$である。
+
+
+\section{木情報源}
+
+あるsuffix tree $T$を仮定する。この$T$の外部葉集合$\partial T$に対し、パラメータ集合$\Theta:=\{\theta_s:=\{\theta_{s}^a:a\in A\}:s\in\partial T\}$を与える。$0\le \theta_{s}^a\le 1$であり、$\sum_{a\in A}\theta_{s}^a=1$である。この時、木情報源は次のように定義される。
+
+\begin{Definition}[木情報源]~\\\rm
+$\beta_T(x_{-\infty}^{t-1})=s$である時(この$s$を{\bf 文脈}と呼ぶ)、シンボル$x_t$の生成確率が
+\begin{equation}
+  p(x_t=a|T,\Theta,x_{-\infty}^{t-1})=\theta_{s}^a
+\end{equation}
+となるような情報源を、木情報源と定義する。\hfill $\triangle$
+\end{Definition}
+
+木情報源においては、$T$が{\bf モデル}となる。ある木情報源は、モデルとパラメータと初期状態の組$(T,\Theta,x_{-\infty}^0)$で表現される。
+
+\begin{figure}[htb]
+\hspace{4.5cm}
+\begin{picture}(500,1300)
+\special{pn 8}%
+\special{sh 1}%
+\special{ar 800 -1100 50 50 0 6.29}%
+\put(900,1050){$\lambda$}%
+\special{pa 800 -1100}%
+\special{pa 400 -600}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -600 50 50 0 6.29}%
+\put(500,550){0}%
+\special{pa 400 -600}%
+\special{pa 0 -100}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 0 -100 50 50 0 6.29}%
+\put(100,50){00}%
+\special{pa 400 -600}%
+\special{pa 800 -100}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 800 -100 50 50 0 6.29}%
+\put(900,50){10}%
+\special{pa 800 -1100}%
+\special{pa 1200 -600}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 1200 -600 50 50 0 6.29}%
+\put(1300,550){1}%
+\special{sh 1}%
+\special{ar 1600 -1000 50 50 0 6.29}%
+\put(1700,950){$\in T$}%
+\special{sh 0}%
+\special{ar 1600 -700 50 50 0 6.29}%
+\put(1700,650){$\in \partial T$}%
+\end{picture}
+ \caption{suffix treeの例}
+ \label{fig:suffixtree}
+\end{figure}
+
+\begin{Example}[木情報源によるシンボル系列の生成]\label{ex:treesource}~\\\rm
+木情報源の例を図\ref{fig:treesource}に示す。バイナリなので、$\theta_{\cdot}^1$のみを表示している。当然、$\theta_{\cdot}^0=1-\theta_{\cdot}^1$である。初期状態$x_{-\infty}^{0}=\cdots 01$を仮定した時に、この木情報源が$x_{1}^3=010$を生成する確率は、
+\[
+  p(010|\cdots 01)=(1-\theta_{1}^1)\theta_{10}^1(1-\theta_{1}^1)=(1-0.8)\cdot 0.3\cdot(1-0.8)=0.012
+\]
+となる。\hfill$\triangle$
+\end{Example}
+
+\begin{figure}[htb]
+\hspace{4.5cm}
+\begin{picture}(500,1200)
+\special{pn 8}%
+\special{sh 1}%
+\special{ar 800 -1100 50 50 0 6.29}%
+\put(900,1050){$\lambda$}%
+\special{pa 800 -1100}%
+\special{pa 400 -600}%
+\special{fp}%
+\special{sh 1}%
+\special{ar 400 -600 50 50 0 6.29}%
+\put(500,550){0}%
+\special{pa 400 -600}%
+\special{pa 0 -100}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 0 -100 50 50 0 6.29}%
+\put(-250,-100){$\theta_{00}^1=0.1$}%
+\special{pa 400 -600}%
+\special{pa 800 -100}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 800 -100 50 50 0 6.29}%
+\put(550,-100){$\theta_{10}^1=0.3$}%
+\special{pa 800 -1100}%
+\special{pa 1200 -600}%
+\special{fp}%
+\special{sh 0}%
+\special{ar 1200 -600 50 50 0 6.29}%
+\put(950,400){$\theta_{1}^1=0.8$}%
+\special{sh 1}%
+\special{ar 1400 -1000 50 50 0 6.29}%
+\put(1500,950){$\in T$}%
+\special{sh 0}%
+\special{ar 1400 -700 50 50 0 6.29}%
+\put(1500,650){$\in \partial T$}%
+\end{picture}
+ \caption{木情報源の例}
+ \label{fig:treesource}
+\end{figure}

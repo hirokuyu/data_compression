@@ -1,0 +1,1 @@
+C:\tex\bin\mktexpk.exe --dpi 300 --bdpi 300 --mag 300/300 dmjkj12

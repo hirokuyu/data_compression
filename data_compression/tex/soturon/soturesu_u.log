@@ -1,0 +1,290 @@
+This is JTeX, Version 1.52, based on TeX C Version 3.141 (format=jlplain 95.9.23)  9 FEB 2000 10:10
+**soturesu_u
+(soturesu_u.tex
+** JLaTeX ver.1.3......Isozaki
+(resume.sty
+Document Style 'resume' 18, Oct, 1989.
+(/usr/local/lib/TEX-NTT/jinputs/jarticle.sty
+Document Style 'jarticle'. Released 4 Nov 1988
+(/usr/local/lib/TEX-NTT/jinputs/jart10.sty)
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\c@figure=\count88
+\c@table=\count89
+
+Conversion jlarge --> large etc.
+)
+\@titlespace=\skip41
+) (/usr/local/lib/TEX-NTT/jinputs/epsf.sty
+EPSF macro package for LaTeX. version 1.3 - Released October 31, 1990
+\@arga=\count90
+\@argb=\count91
+\@argc=\count92
+\@ctmpa=\count93
+\@ctmpb=\count94
+\@ctmpc=\count95
+\@ctmpd=\count96
+\@ctmpe=\count97
+\@darg=\dimen100
+\@bblen=\dimen101
+\ps@stream=\read1
+) (soturesu.tex (soturesu_u.aux)
+Underfull \hbox (badness 1622) in paragraph at lines 32--35
+で あ る と 言 う。 こ こ で $\tenmi ^^U$ は 空 の 系 列 で あ る。 順 序 $\ten
+sy ^^^$ は、
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.53249
+.\tendmjhira で
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira あ
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira る
+.etc.
+
+
+Overfull \hbox (90.59755pt too wide) in paragraph at lines 79--80
+[][] 
+
+\hbox(43.6615+0.0)x142.26378
+.\hbox(0.0+0.0)x0.0
+.\hbox(43.6615+0.0)x232.86133
+..\hbox(43.6615+0.0)x232.86133, glue set 232.86133fil
+...\glue 0.0
+...\hbox(43.32903+0.0)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+
+Underfull \hbox (badness 1675) in paragraph at lines 172--173
+[] []$\tenmi C\tenrm (\tenmi v[]; x[]\tenrm )$ が 真 な ら ば、 $\tensy T[] \te
+nrm := \tensy T[] [ f\tenmi v[]\tensy g$ と
+
+\hbox(8.78888+3.32217)x221.0748, glue set 2.56091
+.\hbox(0.0+0.0)x0.0
+.\glue 0.0
+.\hbox(6.67859+0.0)x5.0
+..\glue 0.0
+..\glue 5.0
+..\glue -5.0
+..\hbox(6.67859+0.0)x0.0
+...\glue 0.0 plus 1.0fil minus 1.0fil
+...\hbox(6.67859+0.0)x0.0, glue set - 5.55557fil []
+..\glue 5.0
+.\penalty 0
+.\mathon
+.etc.
+
+
+Underfull \hbox (badness 1127) in paragraph at lines 176--177
+ト ム アッ プ に、 $\tenmi p[]\tenrm (\tenmi s\tenrm ) := \tenmi p[]\tenrm (\te
+nmi s\tenrm )[]$、 $\tenmi p[]\tenrm (\tenmi s\tenrm ) :=
+
+\hbox(10.76703+4.44841)x229.0748, glue set 2.24364
+.\tendmjkata ト
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjkata ム
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjkata ア
+.etc.
+
+
+Underfull \hbox (badness 1024) in paragraph at lines 238--244
+し て お り、 $\tensy ^^M$ は、 $\tenmi @\tensy T[]$ に 含 ま れ て い る が、 
+カ ウ ン ト が ま
+
+\hbox(7.70879+1.94444)x244.0748, glue set 2.17415
+.\tendmjhira し
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira て
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira お
+.etc.
+
+[1
+
+
+]
+Underfull \hbox (badness 1127) in paragraph at lines 247--249
+ノー ド $\tenmi "s$ を 持っ て い る と 仮 定 す る。 $"s$ は、 「$s$ で カ ウ 
+ン
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.24315
+.\tendmjkata ノ
+.\tendmjsy ー
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjkata ド
+.\glue(\@@jmathkanjiskip) 2.28854
+.etc.
+
+
+Overfull \hbox (3.27455pt too wide) in paragraph at lines 313--314
+[][] 
+
+\hbox(36.38458+0.0)x142.26378
+.\hbox(0.0+0.0)x0.0
+.\hbox(36.38458+0.0)x145.53833
+..\hbox(36.38458+0.0)x145.53833, glue set 145.53833fil
+...\glue 0.0
+...\hbox(46.77304+11.95999)x0.0 []
+...\glue 0.0 plus 1.0fil minus 1.0fil
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+
+Underfull \hbox (badness 1874) in paragraph at lines 320--321
+布 に な る。 $\tenmi ^^U$ の 子 孫 に 対 し て も 同 様 の 置 き 換 え を 続 
+け れ
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.65977
+.\tendmjj 布
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira に
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira な
+.etc.
+
+
+Underfull \hbox (badness 1852) in paragraph at lines 320--321
+ば、 無 限 に 深 い 重 み 付 け 文 脈 木 を 考 え る こ と が 可 能 で あ
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.64696
+.\tendmjhira ば
+.\tendmjsy 、
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjk 無
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.etc.
+
+
+Underfull \hbox (badness 2050) in paragraph at lines 326--327
+[]次 に、 上 の ア ル ゴ リ ズ ム に よ り 仮 想 葉 ノー ド の 導 入 と
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.73795
+.\hbox(0.0+0.0)x10.00002
+.\tendmje 次
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira に
+.\tendmjsy 、
+.etc.
+
+
+Underfull \hbox (badness 2698) in paragraph at lines 326--327
+ず ま た \tenrm (5[]) の よ う に、 $[](\tenmi s\tenrm )$ を 求 め る 際 に 必 
+ず $[](0\tenmi s\tenrm )$ と
+
+\hbox(7.70879+2.5)x244.0748, glue set 3.00153
+.\tendmjhira ず
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira ま
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira た
+.etc.
+
+
+Underfull \hbox (badness 1033) in paragraph at lines 326--327
+[]\tenrm (1\tenmi s\tenrm )$ と の 積 を 取 ら れ る。 ま た、 $[]$ は (3[]) の
+ よ う に 乗 算
+
+\hbox(7.70879+2.5)x244.0748, glue set 2.17981
+.\vbox(6.67859+1.94444)x11.50465
+..\hbox(6.67859+0.0)x0.0, shifted 0.84898
+...\tenrm ~
+..\kern-4.30554
+..\hbox(4.30554+1.94444)x11.50465
+...\tenmi p
+...\hbox(3.01389+0.0)x6.4734, shifted 1.49998 []
+.\tenrm (
+.\tenrm 1
+.\tenmi s
+.\tenrm )
+.etc.
+
+
+Underfull \hbox (badness 4120) in paragraph at lines 326--327
+れ る の で、 結 果 と し て $\tenmi p[]\tenrm (1\tenmi s\tenrm )$ が $[](1\ten
+mi s\tenrm )$ の $\tenmi p[]\tenrm (\tenmi "s\tenrm )$ 倍 さ れ
+
+\hbox(7.70879+2.5)x244.0748, glue set 3.45476
+.\tendmjhira れ
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira る
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjhira の
+.etc.
+
+
+Overfull \hbox (7.3081pt too wide) in paragraph at lines 332--452
+[][]
+
+\hbox(42.88+37.88)x244.0748
+.\hbox(0.0+0.0)x0.0
+.\hbox(42.88+37.88)x251.3829
+..\mathon
+..\vbox(42.88+37.88)x251.3829
+...\rule(0.4+0.0)x251.3829
+...\hbox(26.92459+4.20004)x251.3829 []
+...\rule(0.4+0.0)x251.3829
+...\hbox(9.79996+4.20004)x251.3829 []
+...\rule(0.4+0.0)x251.3829
+...etc.
+..\mathoff
+.\glue(\rightskip) 0.0
+
+
+Underfull \hbox (badness 1910) in paragraph at lines 468--471
+増 分 \tenrm CTW 法 の 圧 縮 性 能 面 に お け る 優 位 性 を 表 す 例 と し
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.67665
+.\tendmjg 増
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjj 分
+.\glue(\@@jasciikanjiskip) 2.28854
+.\tenrm C
+.etc.
+
+epsf:[rg1.eps]
+BoundingBox: (50bp,50bp)--(410bp,302bp) =>(216bp,151bp)
+Overfull \hbox (17.64069pt too wide) in paragraph at lines 478--479
+[][] 
+
+\hbox(151.76697+0.0)x199.16928
+.\hbox(0.0+0.0)x0.0
+.\vbox(151.76697+0.0)x216.80997, glue set 151.76697fil
+..\hbox(0.0+0.0)x216.80997, glue set 216.80997fil
+...\special{epsfile=rg1.eps vscale=0.6 hscale=0.6 }
+...\glue 0.0 plus 1.0fil
+..\glue 0.0 plus 1.0fil
+.\penalty 10000
+.\glue(\parfillskip) 0.0 plus 1.0fil
+.\glue(\rightskip) 0.0
+
+
+Underfull \hbox (badness 1852) in paragraph at lines 488--489
+仮 想 葉 ノー ド が 任 意 の カ ウ ン ト を 持 ち 得 る よ う に し た こ
+
+\hbox(7.70879+1.44539)x244.0748, glue set 2.64696
+.\tendmja 仮
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjg 想
+.\glue(\@@jintercharskip) 0.0 plus 0.25
+.\tendmjk 葉
+.etc.
+
+[2] (soturesu_u.aux) ) ) 
+Here is how much of TeX's memory you used:
+ 289 strings out of 10525
+ 2786 string characters out of 75156
+ 52121 words of memory out of 262141
+ 3041 multiletter control sequences out of 9500
+ 22107 words of font info for 129 fonts, out of 100000 for 511
+ 14 hyphenation exceptions out of 607
+ 15i,11n,16p,1065b,431s stack positions out of 300i,80n,60p,3000b,4000s
+
+Output written on soturesu_u.dvi (2 pages, 23620 bytes).
